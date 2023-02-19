@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dota WebSite</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
     <div class="wrapper">
@@ -51,50 +51,18 @@
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                       <div class="row justify-content-between">
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="https://u.kanobu.ru/editor/images/31/cdba0dbb-1e04-450d-ab44-69196bb747d5.webp" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="https://u.kanobu.ru/editor/images/31/cdba0dbb-1e04-450d-ab44-69196bb747d5.webp" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
+                          {% for item in news %}
                               <div class="col">
                                   <div class="card w-100">
                                       <img src="https://u.kanobu.ru/editor/images/31/cdba0dbb-1e04-450d-ab44-69196bb747d5.webp" class="card-img-top" alt="...">
                                       <div class="card-body">
-                                        <h5 class="card-title">Mind Control состредоточен</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <h5 class="card-title">{{item.title}}</h5>
+                                        <p class="card-text">{{item.summary}}</p>
                                         <a href="#" class="btn btn-primary">Читать подробнее</a>
                                       </div>
                                     </div>
                               </div>
-                          </div>
-                          <div class="col">
-                              <div class="col">
-                                  <div class="card w-100">
-                                      <img src="https://u.kanobu.ru/editor/images/31/cdba0dbb-1e04-450d-ab44-69196bb747d5.webp" class="card-img-top" alt="...">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Mind Control состредоточен</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                      </div>
-                                    </div>
-                              </div>
-                          </div>
+                          {% endfor %}
                       </div>
                     </div>
                     <div class="carousel-item">
