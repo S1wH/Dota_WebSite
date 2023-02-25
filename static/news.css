@@ -1,0 +1,145 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.btn-outline-primary{
+    margin-left: 10px;
+}
+
+.today__news__title, .yesterday__news__title, .previous__news__title{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+}
+
+a.item__link{
+    text-decoration: none;
+    color: black;
+}
+
+.list__news {
+    padding:0;
+    list-style: none;
+    min-width: 500px;
+}
+
+.list__news li {
+    position: relative;
+    padding: 10px 30px;
+    background: linear-gradient(to left, #ADCEE9 0%, #FFF, #ADCEE9);
+    border: 2px solid #337AB7;
+    color: #506a6b;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0, .2);
+    margin-bottom: 5px;
+    text-align:center;
+    background-size: 100% 100%;
+    z-index: 1;
+}
+.list__news li:before {
+    content: "";
+    position:absolute;
+    width: 0;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    background: linear-gradient(to left, #EBF3FA 0%, #FFF, #EBF3FA);
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    z-index: -1;
+}
+.list__news li:hover:before {
+    width: 100%;
+    opacity: 1;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+}
+
+.footer-top{
+    margin-top: 50px;
+    padding-top: 10px;
+    background: #151515;
+    color: #fff;
+    border-bottom: 1px solid #222222;
+}
+
+.footer-top .footer-info{
+    margin-bottom: 3px;
+}
+
+.footer-top .footer-info h3{
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    line-height: 1;
+}
+
+.footer-top .social-links a{
+    width: 36px;
+    height: 36px;
+    background: #282828;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.footer-links{
+    margin-bottom: 30px;
+}
+
+.footer-links ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links a{
+    color: white;
+    text-decoration: none;
+}
+
+.download__text{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.downloads{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.google__play{
+    margin-right: 20px;
+}
+
+.app__store{
+    margin-left: 20px;
+}

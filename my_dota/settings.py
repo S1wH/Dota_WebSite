@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # OTHER
     # MY
     'mainapp',
+    'news',
 ]
 
 MIDDLEWARE = [
