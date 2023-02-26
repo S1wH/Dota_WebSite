@@ -1,20 +1,8 @@
 from django.shortcuts import render
+from .models import News
 
 
 def index_view(request):
     # some doing
-    news = [
-        {
-            'title': 'Кто то выиграл интернешенл',
-            'summary': 'Как круто это было',
-        },
-        {
-            'title': '2222',
-            'summary': '22222',
-        },
-        {
-            'title': 'Кто то выиграл интернешенл',
-            'summary': 'Как круто это было',
-        },
-    ]
+    news = News.objects.all()
     return render(request, 'mainapp/index.html', context={'news': news})
