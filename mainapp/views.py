@@ -5,4 +5,5 @@ from .models import News
 def index_view(request):
     # some doing
     news = News.objects.all()
-    return render(request, 'mainapp/index.html', context={'news': news})
+    videos = ['highlight.mp4', 'highlight.mp4', 'highlight.mp4', 'highlight.mp4']
+    return render(request, 'mainapp/index.html', context={'news': news, 'videos': videos})
