@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}
     Dota Новости
 {% endblock %}
+
 {% block page_css %}
-      <link rel="stylesheet" href="/static/news.css">
+      <link rel="stylesheet" href="{% static 'news.css' %}">
 {% endblock %}
 {% block content %}
             <div class="all__news">
