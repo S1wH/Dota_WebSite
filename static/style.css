@@ -27,14 +27,6 @@ body{
     right: -35px;
 }
 
-.carousel-control-prev-icon{
-    background-image: url(../dotaSite/images/back.png);
-}
-
-.carousel-control-next-icon{
-    background-image: url(../dotaSite/images/forward.png);
-}
-
 .main-news{
     padding-top: 20px;
     padding-bottom: 10px;
