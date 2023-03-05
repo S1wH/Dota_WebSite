@@ -16,7 +16,7 @@
                               {% for item in news %}
                                   <div class="col">
                                       <div class="card w-100">
-                                          <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
+                                          <img src="{{ item.author.avatar.url }}" class="card-img-top" alt="...">
                                           <div class="card-body">
                                             <h5 class="card-title">{{item.title}}</h5>
                                             <p class="card-text">{{item.summary}}</p>
