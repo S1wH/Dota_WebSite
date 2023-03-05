@@ -5,6 +5,7 @@ class Author(models.Model):
     nickname = models.CharField(max_length=15)
     first_publish_date = models.DateTimeField(blank=True, null=True)
     rating = models.FloatField(default=0)
+    avatar = models.ImageField(upload_to='avatars', blank=True, null=True)
 
     def __str__(self):
         return f'{self.nickname}'
