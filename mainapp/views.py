@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import News
+from news.models import News
 
 
 def index_view(request):

@@ -15,8 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from mainapp import views as main_views
-from news import views as news_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
