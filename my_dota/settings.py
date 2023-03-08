@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # MY
     'mainapp',
     'news',
+    'teams_and_players',
 ]
 
 MIDDLEWARE = [
