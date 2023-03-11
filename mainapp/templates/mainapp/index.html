@@ -5,145 +5,59 @@
       <link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock %}
 {% block content %}
-        <section>
-          <h2 class="main-news">Главные новости</h2>
-          <div class="container-xxl">
-              <div id="carouselExample" class="carousel slide">
-                  <div class="carousel-inner">
+    <section>
+      <h2 class="main-news">Главные новости</h2>
+      <div class="container-xxl">
+          <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                  {% for list in main_news %}
                     <div class="carousel-item active">
                       <div class="row justify-content-between">
-                          {% if news %}
-                              {% for item in news %}
-                                  <div class="col">
-                                      <div class="card w-100">
-                                          <img src="{{ item.author.avatar.url }}" class="card-img-top" alt="...">
-                                          <div class="card-body">
-                                            <h5 class="card-title">{{item.title}}</h5>
-                                            <p class="card-text">{{item.summary}}</p>
-                                            <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                          </div>
-                                        </div>
-                                  </div>
-                              {% endfor %}
-                          {% else %}
-                          <div class="col text-info">
-                            Сегодня нет новостей
-                              </div>
-                          {% endif %}
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <div class="row justify-content-between">
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
+                          {% for item in list %}
                               <div class="col">
                                   <div class="card w-100">
-                                      <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
+                                      <img src="{{ item.main_image.url }}" class="card-img-top" width="300" height="180" alt="...">
                                       <div class="card-body">
-                                        <h5 class="card-title">Mind Control состредоточен</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <h5 class="card-title">{{item.title}}</h5>
+                                        <p class="card-text">{{item.summary}}</p>
                                         <a href="#" class="btn btn-primary">Читать подробнее</a>
                                       </div>
-                                    </div>
+                                  </div>
                               </div>
-                          </div>
-                          <div class="col">
-                              <div class="col">
-                                  <div class="card w-100">
-                                      <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Mind Control состредоточен</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                      </div>
-                                    </div>
-                              </div>
-                          </div>
+                          {% endfor %}
                       </div>
                     </div>
-                    <div class="carousel-item">
-                      <div class="row justify-content-between">
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
-                              <div class="card w-100">
-                                  <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">Mind Control состредоточен</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <div class="col">
-                              <div class="col">
-                                  <div class="card w-100">
-                                      <img src="{% static 'photos/mind_control.jpg' %}" class="card-img-top" alt="...">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Mind Control состредоточен</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Читать подробнее</a>
-                                      </div>
-                                    </div>
-                              </div>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <img src="{% static 'photos/arrow_left.png' %}" class="carousel-control-prev-icon" alt="...">
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <img src="{% static 'photos/arrow_right.png' %}" class="carousel-control-next-icon" alt="...">
-                    <span class="visually-hidden">Next</span>
-                  </button>
+                  {% empty %}
+                    <div class="empty"> Сегодня нет новостей</div>
+                  {% endfor %}
               </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <img src="{% static 'photos/arrow_left.png' %}" class="carousel-control-prev-icon" alt="...">
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <img src="{% static 'photos/arrow_right.png' %}" class="carousel-control-next-icon" alt="...">
+                <span class="visually-hidden">Next</span>
+              </button>
           </div>
-        </section>
-        <div class="wrapper__highlights">
-          <h3 class="highlights">Хайлайты недели</h3>
-          <div class="items">
-            <div class="items__container">
-              <div class="items__body">
-                {% for video in videos %}
-                <div class="item">
-                  <div class="item__video">
-                    <video controls preload="metadata">
-                      <source src="{% static 'videos/' %}{{video}}" type="video/webm">
-                    </video>
-                  </div>
-                </div>
-                {% endfor %}
+      </div>
+    </section>
+    <div class="wrapper__highlights">
+      <h3 class="highlights">Хайлайты недели</h3>
+      <div class="items">
+        <div class="items__container">
+          <div class="items__body">
+            {% for video in videos %}
+            <div class="item">
+              <div class="item__video">
+                <video controls preload="metadata">
+                  <source src="{% static 'videos/' %}{{video}}" type="video/webm">
+                </video>
               </div>
             </div>
+            {% endfor %}
           </div>
         </div>
+      </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,94 @@
+html, body{
+    height: 100%;
+}
+
+body{
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.btn-outline-primary{
+    margin-left: 10px;
+}
+
+.table-responsive{
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+}
+
+.footer-top{
+    margin-top: 50px;
+    padding-top: 10px;
+    background: #151515;
+    color: #fff;
+    border-bottom: 1px solid #222222;
+}
+
+.footer-top .footer-info{
+    margin-bottom: 3px;
+}
+
+.footer-top .footer-info h3{
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    line-height: 1;
+}
+
+.footer-top .social-links a{
+    width: 36px;
+    height: 36px;
+    background: #282828;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.footer-links{
+    margin-bottom: 30px;
+}
+
+.footer-links ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links a{
+    color: white;
+    text-decoration: none;
+}
+
+.download__text{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.downloads{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.google__play{
+    margin-right: 20px;
+}
+
+.app__store{
+    margin-left: 20px;
+}
