@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import News
 
 # Create your views here.
 
@@ -49,3 +49,8 @@ def set_news_info(request):
         ],
     ]
     return render(request, 'news/news.html', context={'all_news': all_news})
+
+
+def get_one_news_view(request, news_id):
+    news = News.objects.get(id=news_id)
+    return render(request, 'news/one_news.html', context={'news': news})
