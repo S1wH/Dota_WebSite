@@ -10,15 +10,13 @@
       <div class="container-xxl">
           <div id="carouselExample" class="carousel slide">
               <div class="carousel-inner">
-                   {% for item in main_news %}
+                  {% for list in main_news %}
                     <div class="carousel-item active">
                       <div class="row justify-content-between">
-
+                        {% for item in list%}
                               <div class="col">
                                   <div class="card w-100">
-                                      {% if item.main_image %}
-                                        <img src="{{ item.main_image.url }}" class="card-img-top" width="300" height="180" alt="...">
-                                      {% endif %}
+                                      <img src="{{ item.main_image.url }}" class="card-img-top" width="300" height="180" alt="...">
                                       <div class="card-body">
                                         <h5 class="card-title">{{item.title}}</h5>
                                         <p class="card-text">{{item.summary}}</p>
@@ -26,6 +24,7 @@
                                       </div>
                                   </div>
                               </div>
+                          {% endfor %}
                       </div>
                     </div>
                   {% empty %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Команда {{team.name}}
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'teams_and_players.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'team.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="team_content" style="">
+        <div class="team_wrapper">
+            <div class="logo">
+                <img src="{{ team.logo.url }}" alt="" style="margin-left: 15px; width: 85px; height: 85px" class="rounded-circle"/>
+            </div>
+            <div class="team_name">{{ team.name }}</div>
+        </div>
+        <div class="team_info">
+            <div class="region">
+                <div class="country">Страна</div>
+                <div class="team_region">{{ team.country }}</div>
+            </div>
+            <div class="establish">
+                <div class="date">Дата основания</div>
+                <div class="establish_date">{{ team.establish_date }}</div>
+            </div>
+            <div class="prize">
+                <div class="prize_won">Призовые</div>
+                <div class="total_prize">${{ team.all_prize }}</div>
+            </div>
+            <div class="team_age">
+                <div class="avg_age">Средний возраст игроков</div>
+                <div class="avg_player_age">{{team.avg_age}}</div>
+            </div>
+        </div>
+        <div class="team_text">
+            <div class="team_text_header">Описание команды</div>
+            {{ team.biography }}
+        </div>
+        <div class="team_stats">
+            <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ team.all_matches }}</p>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ team.win_rate }}%" aria-valuenow="{{ team.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ team.draw_rate }}%" aria-valuenow="{{ team.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ team.lose_rate }}%" aria-valuenow="{{ team.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            <p class="text-muted mb-0" style="text-align: center">{{ team.all_win_matches }}({{ team.win_rate }}%)
+                  /{{ team.all_draw_matches }}({{ team.draw_rate }}%) / {{team.all_lose_matches}}({{ team.lose_rate }}%)
+            </p>
+        </div>
+        <div class="team_players">
+            {% if players %}
+                <div class="team_players_text">Текущий состав команды</div>
+                {% for player in players %}
+                    <div class="player">
+                        <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                  <img src="{{player.player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                                  <div class="ms-3">
+                                      <p class="fw-bold mb-1">{{player.player.nickname}}</p>
+                                      <p class="fw-bold mb-1">{{player.player.name}}</p>
+                                  </div>
+                              </div>
+                            </td>
+                            <td>
+                                <div class="role">
+                                    <p class="fw-bold mb-1">{{player.role}}</p>
+                                    <p class="fw-bold mb-1">с {{player.start_date}}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress_bar">
+                                    <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ player.all_matches }}</p>
+                                      <div class="progress" style="width: 500px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ player.win_rate }}%" aria-valuenow="{{ player.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ player.draw_rate }}%" aria-valuenow="{{ player.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.lose_rate }}%" aria-valuenow="{{ player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                      </div>
+                                    <p class="text-muted mb-0" style="text-align: center">{{ player.win_matches }}({{ player.win_rate }}%)
+                                          /{{ player.draw_matches }}({{ player.draw_rate }}%) / {{player.lose_matches}}({{ player.lose_rate }}%)</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no_players" style="text-align: center; font-size: 25px;">В данный момент у команды нет игроков</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

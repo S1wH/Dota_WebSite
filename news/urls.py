@@ -19,6 +19,6 @@ from news import views as main_views
 app_name = 'newsapp'
 
 urlpatterns = [
-    path('', main_views.set_news_info, name='index'),
+    path('', main_views.get_news_info, name='index'),
     path('<int:news_id>/', main_views.get_one_news_view, name='one_news'),
 ]

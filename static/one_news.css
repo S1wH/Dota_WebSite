@@ -1,0 +1,41 @@
+html, body{
+    height: 100%;
+}
+
+body{
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.news_content{
+    margin-top: 20px;
+    text-align: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.news_date{
+    color: grey;
+    text-align: right;
+    margin-right: 200px;
+}
+
+.summary{
+    color: grey;
+}
+
+.news_text{
+    margin-top: 50px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.news_images{
+    padding-top: 50px;
+}
+
+.news_image_wrapper{
+   margin-bottom: 25px;
+}

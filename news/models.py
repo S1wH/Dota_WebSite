@@ -7,7 +7,7 @@ class Author(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return f'{self.nickname}'
+        return f'{self.nickname} with rating {self.rating}'
 
 
 class News(models.Model):
@@ -15,8 +15,7 @@ class News(models.Model):
     summary = models.CharField(max_length=100)
     text = models.TextField()
     main_image = models.ImageField(upload_to='news_images', blank=True, null=True)
-    # author = models.ForeignKey(Author, on_delete=models.PROTECT, related_name='author_news')
-    author = models.ForeignKey(Author, on_delete=models.PROTECT)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='author_news')
     publish_date = models.DateTimeField(auto_now_add=True)
     importance_index = models.BooleanField(default=False)
     video = models.FileField(upload_to='news_videos', blank=True, null=True)
@@ -32,7 +31,7 @@ class News(models.Model):
 class Image(models.Model):
     title = models.CharField(max_length=15, unique=True)
     image = models.ImageField(upload_to='news_images')
-    news_id = models.ForeignKey(News, on_delete=models.PROTECT)
+    news_id = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_image')
 
     def __str__(self):
         return f'{self.title}'
