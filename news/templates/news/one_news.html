@@ -6,8 +6,36 @@
 {% endblock %}
 
 {% block page_css %}
-      <link rel="stylesheet" href="{% static 'news.css' %}">
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
 {% endblock %}
 {% block content %}
-         <h1>{{news.header}}</h1>
+    <div class="news_content">
+        <h1 class="news_header">{{news.header}}</h1>
+        <div class="one_news">
+            <div class="news_date">{{news.publish_date.year}}/{{news.publish_date.month}}/{{news.publish_date.day}} -
+                {{news.publish_date.time}}</div>
+            <h5 class="summary">{{news.summary}}</h5>
+            <div class="news_text">
+                {{news.text}}
+            </div>
+            <div class="news_images">
+                {% for image in images %}
+                    <div class="news_image_wrapper">
+                        <img src="{{ image.image.url }}" class="news_image" width="660" height="440" alt="...">
+                        <div class="image_signature">{{image.title}}</div>
+                    </div>
+                {% empty %}
+                    <div class="empty">No images were given</div>
+                {% endfor %}
+            </div>
+            <div class="news_video">
+                {% if video %}
+                    <video controls preload="metadata">
+                      <source src="{% static 'videos/' %}{{video}}" type="video/webm">
+                    </video>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

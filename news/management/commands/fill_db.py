@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from news.models import News, Author
+from django.db.models import Sum
 
 
 class Command(BaseCommand):
@@ -11,17 +12,10 @@ class Command(BaseCommand):
         News.objects.all().delete()
         Author.objects.all().delete()
 
-        print(Author.objects.all())
-        # create
+        # Create
         author = Author.objects.create(nickname='Andrey')
-        print(author.nickname)
-        #
-        print(Author.objects.all())
-
         author.nickname = 'Poll'
         author.save()
-
-        print(Author.objects.all())
 
         # создание новости
         news = News.objects.create(
@@ -38,25 +32,16 @@ class Command(BaseCommand):
             author=author
         )
 
-        print(news)
-
         # READ
-        # Все
+        # all objects
         all_news = News.objects.all()
-        print(all_news)
-        print(type(all_news))
 
-        # 1 объект
+        # one object
         author = Author.objects.get(id=author.id)
-
-        print(type(author))
 
         # filter
         authors = Author.objects.filter(nickname='Poll')
         # authors = Author.objects.filter(nickname='l')
-
-        print(authors)
-        print(type(authors))
 
         # get
         # 1
@@ -65,7 +50,6 @@ class Command(BaseCommand):
         Author.objects.create(nickname='Leo')
 
         authors = Author.objects.filter(rating=0)
-        print(authors)
 
         # authors = Author.objects.get(rating=0)
         # print(authors)
@@ -124,8 +108,9 @@ class Command(BaseCommand):
         print(News.objects.filter(author=author))
 
         # 2. related_name
-        # print(author.author_news.all())
+        print(author.author_news.all())
         print(author.news_set.all())
+
 
 
         print('DONE')

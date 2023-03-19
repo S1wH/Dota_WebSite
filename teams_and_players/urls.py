@@ -21,4 +21,6 @@ app_name = 'teams_and_players_app'
 urlpatterns = [
     path('teams/', main_views.teams_view, name='teams'),
     path('players/', main_views.players_view, name='players'),
+    path('teams/<int:team_id>/', main_views.get_one_team_view, name='one_team'),
+    path('players/<int:player_id>/', main_views.get_one_player_view, name='one_player'),
 ]

@@ -6,54 +6,54 @@
 {% endblock %}
 
 {% block page_css %}
-      <link rel="stylesheet" href="{% static 'news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
 {% endblock %}
 {% block content %}
             <div class="all__news">
                 <div class="today__news">
                     <h5 class="today__news__title">Сегодняшние новости</h5>
-                    <a class="item__link" href="#">
                         <div class="content">
                             <ul class="list__news">
-                                {% for item in all_news.0 %}
+                                {% for item in all_today_news %}
                                     <li class="item">
-                                        <div class="description">{{ item.description }}</div>
-                                        <div class="date">{{ item.date }}</div>
+                                        <a class="item__link" href="{% url 'newsapp:one_news' news_id=item.id %}">
+                                            <div class="description">{{ item.header }}</div>
+                                            <div class="date">{{ item.publish_date.date }}</div>
+                                        </a>
                                     </li>
                                 {% endfor %}
                             </ul>
                         </div>
-                    </a>
                 </div>
                 <div class="yesterday__news">
                     <h5 class="yesterday__news__title">Вчерашние новости</h5>
-                    <a class="item__link" href="#">
                         <div class="content">
                             <ul class="list__news">
-                                {% for item in all_news.1 %}
+                                {% for item in all_yesterday_news %}
                                     <li class="item">
-                                        <div class="description">{{ item.description }}</div>
-                                        <div class="date">{{ item.date }}</div>
+                                        <a class="item__link" href="{% url 'newsapp:one_news' news_id=item.id %}">
+                                            <div class="description">{{ item.header }}</div>
+                                            <div class="date">{{ item.publish_date.date }}</div>
+                                        </a>
                                     </li>
                                 {% endfor %}
                             </ul>
                         </div>
-                    </a>
                 </div>
                 <div class="previous__news">
                     <h5 class="previous__news__title">Новости прошлых дней</h5>
-                    <a class="item__link" href="#">
                         <div class="content">
                             <ul class="list__news">
-                                {% for item in all_news.2 %}
-                                    <li class="item">
-                                        <div class="description">{{ item.description }}</div>
-                                        <div class="date">{{ item.date }}</div>
-                                    </li>
+                                {% for item in all_previous_news %}
+                                <li class="item">
+                                    <a class="item__link" href="{% url 'newsapp:one_news' news_id=item.id %}">
+                                        <div class="description">{{ item.header }}</div>
+                                        <div class="date">{{ item.publish_date.date }}</div>
+                                    </a>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </div>
-                    </a>
                 </div>
             </div>
 {% endblock %}

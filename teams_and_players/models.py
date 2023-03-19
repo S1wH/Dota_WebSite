@@ -5,12 +5,12 @@ class Team(models.Model):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     establish_date = models.DateField()
+    logo = models.ImageField(upload_to='teams_logos')
+    biography = models.TextField()
     all_prize = models.IntegerField(default=0)
     all_win_matches = models.IntegerField(default=0)
     all_lose_matches = models.IntegerField(default=0)
     all_draw_matches = models.IntegerField(default=0)
-    logo = models.ImageField(upload_to='teams_logos')
-    biography = models.TextField()
 
     def __str__(self):
         return f'{self.name}'
@@ -24,19 +24,14 @@ class Player(models.Model):
     country = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='players_photos')
     biography = models.TextField()
-    all_prize = models.IntegerField(default=0)
-    all_win_matches = models.IntegerField(default=0)
-    all_lose_matches = models.IntegerField(default=0)
-    all_draw_matches = models.IntegerField(default=0)
-    current_team = models.ForeignKey(Team, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.nickname}'
 
 
 class CareerPeriod(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.PROTECT)
-    team = models.ForeignKey(Team, on_delete=models.PROTECT)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_career')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_career')
     role = models.CharField(max_length=15)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)

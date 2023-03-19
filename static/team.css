@@ -1,0 +1,85 @@
+.team_content{
+
+    padding-top: 50px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.team_wrapper{
+    display: flex;
+    flex-direction: row
+}
+
+.team_name{
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 35px;
+}
+
+.team_info{
+    display: flex;
+    flex-direction: row
+}
+
+.region{
+    margin-left: 150px;
+}
+
+.country, .date, .prize_won, .avg_age{
+    color: grey;
+    font-size: 20px;
+}
+
+.establish, .prize, .team_age{
+    margin-left: 50px;
+    text-align: center;
+}
+
+.establish_date, .team_region, .total_prize, .avg_player_age{
+    font-size: 20px;
+}
+
+.team_text_header{
+    text-align: center;
+    font-size: 25px;
+    padding-bottom: 25px;
+}
+
+.team_text{
+    margin-top: 75px;
+    margin-left: 150px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.team_stats{
+    margin-top: 25px;
+}
+
+.team_players{
+    margin-top: 100px;
+}
+
+.team_players_text{
+    font-size: 25px;
+    text-align: center;
+    margin-top: 75px;
+}
+
+.player{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.role{
+    min-width: 200px;
+    margin-left: 50px;
+}
+
+.progress_bar{
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
