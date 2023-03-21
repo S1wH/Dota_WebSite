@@ -129,7 +129,7 @@ class Command(BaseCommand):
                           'He won a lot of trophies and made all his'
                           'teams great once again.'
             )
-            player.photo = ImageFile(open(f'static/photos/player.jpg', 'rb'))
+            player.photo = ImageFile(open('static/photos/player.jpg', 'rb'), 'my_player.jpg')
             player.save()
             print(player)
             players.append(player)

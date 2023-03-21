@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Создание Новости
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+{% endblock %}
+{% block content %}
+   <h1>Создание Новости</h1>
+    <form method="POST" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Сохранить" class="btn btn-success">
+    </form>
+{% endblock %}
