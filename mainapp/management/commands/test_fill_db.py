@@ -4,6 +4,8 @@ from news.models import News, Author, Image
 from teams_and_players.models import Team, Player, CareerPeriod
 from django.core.files.images import ImageFile
 from random import choice, randint
+import os
+from django.conf import settings
 
 
 class Command(BaseCommand):
@@ -50,7 +52,8 @@ class Command(BaseCommand):
                 publish_date=datetime.now(),
                 importance_index=True if i < 9 else False,
             )
-            one_news.main_image = ImageFile(open(f'dota/news{i + 1}.jpg', 'rb'))
+            path = os.path.join(settings.BASE_DIR, f'static/photos/dota/news{i + 1}.jpg')
+            one_news.main_image = ImageFile(open(path, 'rb'), name=f'one_news{i + 1}.jpg')
             if 4 < i < 8:
                 one_news.publish_date = datetime.now() - timedelta(days=1)
             elif i > 8:
@@ -96,7 +99,8 @@ class Command(BaseCommand):
                 all_lose_matches=randint(500, 1200),
                 all_draw_matches=randint(10, 100),
             )
-            team.logo = ImageFile(open(f'static/photos/team{i + 1}.jpg', 'rb'))
+            path = os.path.join(settings.BASE_DIR, f'static/photos/team{i + 1}.jpg')
+            team.logo = ImageFile(open(path, 'rb'), name=f'team{i + 1}.jpg')
             team.save()
             print(team)
             teams.append(team)
@@ -126,10 +130,11 @@ class Command(BaseCommand):
                 birthday='2003-12-23',
                 country=choice(countries),
                 biography='This player is great. I am serious.'
-                          'He won a lot of trophies and made all his'
+                          'He won a lot of trophies and made all his '
                           'teams great once again.'
             )
-            player.photo = ImageFile(open(f'static/photos/player.jpg', 'rb'))
+            path = os.path.join(settings.BASE_DIR, 'static/photos/player.jpg')
+            player.photo = ImageFile(open(path, 'rb'), name=f'player{i + 1}.jpg')
             player.save()
             print(player)
             players.append(player)

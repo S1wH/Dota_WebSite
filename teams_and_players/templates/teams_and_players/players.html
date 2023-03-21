@@ -30,13 +30,15 @@
         {% for player in players %}
           <tr>
             <td>
-              <div class="d-flex align-items-center">
-                  <img src="{{player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{player.nickname}}</p>
-                      <p class="fw-bold mb-1">{{player.name}}</p>
+                <a href="{% url 'teams_and_players_app:one_player' player_id=player.id %}" class="team_link" style="text-decoration: none;">
+                  <div class="d-flex align-items-center">
+                      <img src="{{player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">{{player.nickname}}</p>
+                          <p class="fw-bold mb-1">{{player.name}}</p>
+                      </div>
                   </div>
-              </div>
+                </a>
             </td>
             <td>
               <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ player.all_matches }}</p>
