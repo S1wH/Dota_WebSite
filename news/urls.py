@@ -21,4 +21,6 @@ app_name = 'newsapp'
 urlpatterns = [
     path('', main_views.get_news_info, name='index'),
     path('<int:news_id>/', main_views.get_one_news_view, name='one_news'),
+    path('author/create/', main_views.create_author_view, name='create_author'),
+    path('news/create/', main_views.create_news_view, name='create_news'),
 ]

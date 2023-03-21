@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Создание Автора
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+{% endblock %}
+{% block content %}
+   <h1>Создание Автора</h1>
+    <form method="POST" class="form">
+        {% if is_error %}
+            <p class="text-danger">
+                {{error_text}}
+            </p>
+        {% endif %}
+        {% csrf_token %}
+        <input type="text" name="nickname" class="form-control" placeholder="Nickname">
+        <input type="number" min="0" name="rating" class="form-control" placeholder="Rating" value="0">
+        <input type="submit" value="Сохранить" class="btn btn-success">
+    </form>
+{% endblock %}
