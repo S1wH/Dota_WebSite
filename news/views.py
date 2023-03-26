@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from news.models import News, Author
 from .forms import NewsForm
-from _datetime import datetime, timedelta
+from datetime import datetime, timedelta
 
 
 def get_news_info(request):

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Создание Карьеры
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'teams_and_players.css' %}">
+{% endblock %}
+{% block content %}
+   <h1 style="font-size: 30px; text-align: center;">Создание Карьеры</h1>
+    <form method="POST" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Сохранить" class="btn btn-success">
+    </form>
+{% endblock %}

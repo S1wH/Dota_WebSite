@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Создание игрока
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'teams_and_players.css' %}">
+{% endblock %}
+
+{% block content %}
+   <h1 style="text-align:center">Создание Игрока</h1>
+    <form method="POST" class="form">
+        {% if is_error %}
+            <p class="text-danger" style="text-align:center; font-size: 20px;">
+                {{error_text}}
+            </p>
+        {% endif %}
+        {% csrf_token %}
+        <input type="text" name="name" minlength="5" maxlength="30" class="form-control" placeholder="Name">
+        <input type="text" name="nickname" minlength="5" maxlength="30" class="form-control" placeholder="Nickname">
+        <input type="number" min="0" max="99" name="age" class="form-control" placeholder="Age">
+        <input type="date" name="birthday" class="form-control" placeholder="birthday">
+        <input type="text" name="country" minlength="5" maxlength="20" class="form-control" placeholder="Country">
+        <input type="file" name="photo" class="form-control">
+        <input type="text" name="biography" class="form-control" placeholder="Your biography here">
+        <input type="submit" value="Сохранить" class="btn btn-success">
+    </form>
+{% endblock %}
