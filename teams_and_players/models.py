@@ -30,8 +30,6 @@ class Player(models.Model):
 
 
 class CareerPeriod(models.Model):
-    # select * from player p, career_period cp, team t where p.id = cp.player_id and cp.team_id = t.id
-    # and substr(p.name, 0) == substr(t.name)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_career')
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_career')
     role = models.CharField(max_length=15)
