@@ -5,11 +5,15 @@ from datetime import date
 from teams_and_players.forms import CareerPeriodForm
 
 
+WIN_RATE = 'win_rate'
+
+
 def check_percentage(info: dict):
-    if info['win_rate'] + info['lose_rate'] + info['draw_rate'] < 100:
-        info['win_rate'] += 1
-    elif info['win_rate'] + info['lose_rate'] + info['draw_rate'] > 100:
-        info['win_rate'] -= 1
+    rate = info[WIN_RATE] + info['lose_rate'] + info['draw_rate']
+    if rate < 100:
+        info[WIN_RATE] += 1
+    elif rate > 100:
+        info[WIN_RATE] -= 1
 
 
 def teams_view(request):
@@ -42,29 +46,29 @@ def players_view(request):
     players = Player.objects.all()
     all_players_info = []
 
-    for player in players:
-        all_career = player.player_career.all()
-        win_matches = sum([item.win_matches for item in all_career])
-        lose_matches = sum([item.lose_matches for item in all_career])
-        draw_matches = sum([item.draw_matches for item in all_career])
-        info = {'id': player.id,
-                'photo': player.photo,
-                'nickname': player.nickname,
-                'name': player.name,
-                'all_matches': win_matches + draw_matches + lose_matches,
-                'all_win_matches': win_matches,
-                'win_rate': round(win_matches / (win_matches + draw_matches + lose_matches) * 100),
-                'all_lose_matches': lose_matches,
-                'lose_rate': round(lose_matches / (win_matches + draw_matches + lose_matches) * 100),
-                'all_draw_matches': draw_matches,
-                'draw_rate': round(draw_matches / (win_matches + draw_matches + lose_matches) * 100),
-                'all_prize': sum([item.prize for item in all_career]),
-                'current_team': player.player_career.get(end_date=None).team,
-                }
-        print(player.player_career.get(end_date=None).team)
-        check_percentage(info)
-        all_players_info.append(info)
-    return render(request, 'teams_and_players/players.html', context={'players': all_players_info})
+    # for player in players:
+    #     all_career = player.player_career.all()
+        # win_matches = sum([item.win_matches for item in all_career])
+        # lose_matches = sum([item.lose_matches for item in all_career])
+        # draw_matches = sum([item.draw_matches for item in all_career])
+        # info = {'id': player.id,
+        #         'photo': player.photo,
+        #         'nickname': player.nickname,
+        #         'name': player.name,
+        #         'all_matches': win_matches + draw_matches + lose_matches,
+        #         'all_win_matches': win_matches,
+        #         'win_rate': round(win_matches / (win_matches + draw_matches + lose_matches) * 100),
+        #         'all_lose_matches': lose_matches,
+        #         'lose_rate': round(lose_matches / (win_matches + draw_matches + lose_matches) * 100),
+        #         'all_draw_matches': draw_matches,
+        #         'draw_rate': round(draw_matches / (win_matches + draw_matches + lose_matches) * 100),
+        #         'all_prize': sum([item.prize for item in all_career]),
+        #         'current_team': player.player_career.get(end_date=None).team,
+        #         }
+        # print(player.player_career.get(end_date=None).team)
+        # check_percentage(info)
+        # all_players_info.append(info)
+    return render(request, 'teams_and_players/players.html', context={'players': players})
 
 
 def get_one_team_view(request, team_id):
@@ -93,7 +97,7 @@ def get_one_team_view(request, team_id):
                  'biography': team.biography,
                  'all_matches': team.all_win_matches + team.all_draw_matches + team.all_lose_matches,
                  'all_win_matches': team.all_win_matches,
-                 'win_rate': round(team.all_win_matches / (team.all_win_matches + team.all_draw_matches +
+                 WIN_RATE: round(team.all_win_matches / (team.all_win_matches + team.all_draw_matches +
                                                            team.all_lose_matches) * 100),
                  'all_lose_matches': team.all_lose_matches,
                  'lose_rate': round(team.all_lose_matches / (team.all_win_matches + team.all_draw_matches +
@@ -112,27 +116,28 @@ def get_one_team_view(request, team_id):
 def get_one_player_view(request, player_id):
     player = Player.objects.get(id=player_id)
     career_periods = CareerPeriod.objects.filter(player=player)
-    player_info = {
-        'name': player.name,
-        'nickname': player.nickname,
-        'age': player.age,
-        'birthday': player.birthday,
-        'biography': player.biography,
-        'country': player.country,
-        'photo': player.photo,
-        'team': CareerPeriod.objects.get(player=player, end_date=None).team,
-        'prize': sum([career.prize for career in career_periods]),
-        'win_matches': sum([career.win_matches for career in career_periods]),
-        'lose_matches': sum([career.lose_matches for career in career_periods]),
-        'draw_matches': sum([career.draw_matches for career in career_periods]),
-    }
-    player_info['all_matches'] = player_info['win_matches'] + player_info['lose_matches'] + player_info['draw_matches']
-    player_info['win_rate'] = round(player_info['win_matches'] / player_info['all_matches'] * 100)
-    player_info['lose_rate'] = round(player_info['lose_matches'] / player_info['all_matches'] * 100)
-    player_info['draw_rate'] = round(player_info['draw_matches'] / player_info['all_matches'] * 100)
-    print(player_info['all_matches'])
-    check_percentage(player_info)
-    player_teammates = CareerPeriod.objects.filter(team=player_info['team'], end_date=None).exclude(player=player)
+    # player_info = {
+    #     'name': player.name,
+    #     'nickname': player.nickname,
+    #     'age': player.age,
+    #     'birthday': player.birthday,
+    #     'biography': player.biography,
+    #     'country': player.country,
+    #     'photo': player.photo,
+    #     'team': CareerPeriod.objects.get(player=player, end_date=None).team,
+    #     'prize': sum([career.prize for career in career_periods]),
+    #     'win_matches': sum([career.win_matches for career in career_periods]),
+    #     'lose_matches': sum([career.lose_matches for career in career_periods]),
+    #     'draw_matches': sum([career.draw_matches for career in career_periods]),
+    # }
+    # player_info['all_matches'] = player_info['win_matches'] + player_info['lose_matches'] + player_info['draw_matches']
+    # player_info['win_rate'] = round(player_info['win_matches'] / player_info['all_matches'] * 100)
+    # player_info['lose_rate'] = round(player_info['lose_matches'] / player_info['all_matches'] * 100)
+    # player_info['draw_rate'] = round(player_info['draw_matches'] / player_info['all_matches'] * 100)
+    # print(player_info['all_matches'])
+    # check_percentage(player_info)
+    team = CareerPeriod.objects.get(player=player, end_date=None).team
+    player_teammates = CareerPeriod.objects.filter(team=team, end_date=None).exclude(player=player)
     teammates = []
     for teammate in player_teammates:
 
@@ -141,7 +146,7 @@ def get_one_player_view(request, player_id):
             'nickname': teammate.player.nickname,
         }
         teammates.append(player_teammate_info)
-    return render(request, 'teams_and_players/one_player.html', context={'player': player_info, 'teammates': teammates})
+    return render(request, 'teams_and_players/one_player.html', context={'player': player, 'teammates': teammates})
 
 
 def create_player_view(request):

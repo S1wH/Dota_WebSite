@@ -47,7 +47,7 @@
                 <div class="progress-bar bg-warning" role="progressbar" style="width: {{ player.draw_rate }}%" aria-valuenow="{{ player.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
                 <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.lose_rate }}%" aria-valuenow="{{ player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <p class="text-muted mb-0" style="text-align: center">{{ player.all_win_matches }}({{ player.win_rate }}%)
+              <p class="text-muted mb-0" style="text-align: center">{{ player.win_matches }}({{ player.win_rate }}%)
                   /{{ player.all_draw_matches }}({{ player.draw_rate }}%) / {{player.all_lose_matches}}({{ player.lose_rate }}%)</p>
             </td>
             <td>
