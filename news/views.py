@@ -54,3 +54,15 @@ def create_news_view(request):
     else:
         form = NewsForm()
     return render(request, 'news/create_news.html', context={'form': form})
+
+
+def update_news_view(request, news_id):
+    news = News.objects.get(id=news_id)
+    if request.method == 'POST':
+        form = NewsForm(request.POST, files=request.FILES, instance=news)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/admin/')
+    else:
+        form = NewsForm(instance=news)
+    return render(request, 'news/create_news.html', context={'form': form})

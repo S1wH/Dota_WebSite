@@ -21,7 +21,7 @@ class News(models.Model):
     video = models.FileField(upload_to='news_videos', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.header}'
+        return f'{self.id} {self.header}'
 
     class Meta:
         verbose_name = 'News'

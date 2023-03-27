@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 
 class Team(models.Model):
@@ -25,8 +26,26 @@ class Player(models.Model):
     photo = models.ImageField(upload_to='players_photos')
     biography = models.TextField()
 
+    def team(self):
+        return CareerPeriod.objects.get(player=self, end_date=None).team
+
+    def prize(self):
+        return self.sum_parameter_career_period('prize')
+
+    def win_matches(self):
+        return self.sum_parameter_career_period('win_matches')
+
+    def lose_matches(self):
+        return self.sum_parameter_career_period('lose_matches')
+
+    def draw_matches(self):
+        return self.sum_parameter_career_period('draw_matches')
+
+    def sum_parameter_career_period(self, param):
+        result = self.player_career.all().aggregate(Sum(param))[f'{param}__sum']
+        return result
     def __str__(self):
-        return f'{self.nickname}'
+        return f'name: {self.nickname}' # Player(name='Вася') -> должно в админке написано быть name: Вася
 
 
 class CareerPeriod(models.Model):
