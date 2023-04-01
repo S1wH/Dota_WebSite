@@ -52,13 +52,13 @@
             </p>
         </div>
         <div class="team_players">
-            {% if players %}
+            {% if team.players_careers %}
                 <div class="team_players_text">Текущий состав команды</div>
-                {% for player in players %}
+                {% for player in team.players_careers %}
                     <div class="player">
                         <tr>
                             <td>
-                              <div class="d-flex align-items-center">
+                              <div class="d-flex align-items-center" style="max-width: 120px;">
                                   <img src="{{player.player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
                                   <div class="ms-3">
                                       <p class="fw-bold mb-1">{{player.player.nickname}}</p>
@@ -76,9 +76,9 @@
                                 <div class="progress_bar">
                                     <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ player.all_matches }}</p>
                                       <div class="progress" style="width: 500px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ player.win_rate }}%" aria-valuenow="{{ player.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ player.draw_rate }}%" aria-valuenow="{{ player.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.lose_rate }}%" aria-valuenow="{{ player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ player.player.win_rate }}%" aria-valuenow="{{ player.player.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ player.player.draw_rate }}%" aria-valuenow="{{ player.player.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.player.lose_rate }}%" aria-valuenow="{{ player.player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
                                       </div>
                                     <p class="text-muted mb-0" style="text-align: center">{{ player.win_matches }}({{ player.win_rate }}%)
                                           /{{ player.draw_matches }}({{ player.draw_rate }}%) / {{player.lose_matches}}({{ player.lose_rate }}%)</p>

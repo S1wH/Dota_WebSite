@@ -48,13 +48,13 @@
                 <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.lose_rate }}%" aria-valuenow="{{ player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <p class="text-muted mb-0" style="text-align: center">{{ player.win_matches }}({{ player.win_rate }}%)
-                  /{{ player.all_draw_matches }}({{ player.draw_rate }}%) / {{player.all_lose_matches}}({{ player.lose_rate }}%)</p>
+                  /{{ player.draw_matches }}({{ player.draw_rate }}%) / {{player.lose_matches}}({{ player.lose_rate }}%)</p>
             </td>
             <td>
-              <h5 style="text-align: center">$ {{player.all_prize}}</h5>
+              <h5 style="text-align: center">$ {{player.prize}}</h5>
             </td>
             <td>
-              <h5 style="text-align: center">{{player.current_team}}</h5>
+              <h5 style="text-align: center">{{player.team}}</h5>
             </td>
           </tr>
         {% endfor %}

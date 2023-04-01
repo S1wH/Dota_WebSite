@@ -1,5 +1,7 @@
+from datetime import datetime, timedelta
 from django.test import TestCase
-from .models import Author
+from news.models import Author, News, Image
+from mixer.backend.django import mixer
 
 
 class TestAuthor(TestCase):
@@ -7,3 +9,27 @@ class TestAuthor(TestCase):
     def test_str(self):
         author = Author.objects.create(nickname='Pishkin', rating=1)
         self.assertEqual(str(author), 'Pishkin with rating 1')
+
+
+class TestNews(TestCase):
+    def test_today_news(self):
+        news1 = mixer.blend(News, publish_date=datetime.now().date())
+        news2 = mixer.blend(News, publish_date=datetime.now().date())
+        self.assertEqual([news for news in News.today_news()], [news1, news2])
+
+    def test_yesterday_news(self):
+        date = datetime.now() - timedelta(days=1)
+        news1 = mixer.blend(News, publish_date=date)
+        news2 = mixer.blend(News, publish_date=date)
+        self.assertEqual([news for news in News.yesterday_news()], [news1, news2])
+
+    def test_previous_news(self):
+        news1 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=3))
+        news2 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=10))
+        self.assertEqual([news for news in News.previous_news()], [news1, news2])
+
+    def test_images(self):
+        news = mixer.blend(News)
+        image1 = mixer.blend(Image, news_id=news)
+        image2 = mixer.blend(Image, news_id=news)
+        self.assertEqual([image for image in News.images(news)],[image1, image2])
