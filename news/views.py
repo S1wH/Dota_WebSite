@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
+
 from news.models import News, Author
 from .forms import NewsForm
-from datetime import datetime, timedelta
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 def get_news_info(request):
@@ -34,7 +36,7 @@ def create_author_view(request):
                           context={
                               'is_error': True,
                               'error_text': 'Рейтинг должен быть от 0 до 5'
-                                   }
+                          }
                           )
         Author.objects.create(nickname=nickname, rating=rating)
         return HttpResponseRedirect('/admin/')
@@ -61,3 +63,34 @@ def update_news_view(request, news_id):
     else:
         form = NewsForm(instance=news)
     return render(request, 'news/create_news.html', context={'form': form})
+
+
+# 1.
+# CRUD - Create Read Update Delete
+# 5 list, detail
+
+class NewsListView(ListView):
+    model = News
+
+
+class NewsDetailView(DetailView):
+    model = News
+
+
+class NewsCreateView(CreateView):
+    model = News
+    # fields = '__all__'
+    form_class = NewsForm
+    success_url = reverse_lazy('newsapp:news_list')
+
+
+class NewsUpdateView(UpdateView):
+    model = News
+    # fields = '__all__'
+    form_class = NewsForm
+    success_url = reverse_lazy('newsapp:news_list')
+
+
+class NewsDeleteView(DeleteView):
+    model = News
+    success_url = reverse_lazy('newsapp:news_list')

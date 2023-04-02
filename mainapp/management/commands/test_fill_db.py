@@ -59,6 +59,7 @@ class Command(BaseCommand):
             elif i > 8:
                 one_news.publish_date = datetime.now().date() - timedelta(days=5)
             one_news.save()
+            # print('TRUE DATE', one_news.publish_date)
             print(one_news, one_news.publish_date)
             news.append(one_news)
         print('\nAll news successfully created\n')

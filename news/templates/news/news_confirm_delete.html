@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Dota Новости
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+{% endblock %}
+{% block content %}
+Вы действительно хотите удалить ?
+{{object.header}}
+{{object.text}}
+
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Да</button>
+</form>
+
+{% endblock %}

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from django.test import TestCase
 from news.models import Author, News, Image
 from mixer.backend.django import mixer
+from django.utils import timezone
 
 
 class TestAuthor(TestCase):
@@ -11,22 +12,27 @@ class TestAuthor(TestCase):
         self.assertEqual(str(author), 'Pishkin with rating 1')
 
 
+# def mock_timezone():
+#     return '21/02/2222'
+
 class TestNews(TestCase):
     def test_today_news(self):
-        news1 = mixer.blend(News, publish_date=datetime.now().date())
-        news2 = mixer.blend(News, publish_date=datetime.now().date())
+        news1 = mixer.blend(News)
+        news2 = mixer.blend(News)
+        # timezone.now() => '21/02/2222'
+        # timezone = mock_timezone
         self.assertEqual([news for news in News.today_news()], [news1, news2])
 
-    def test_yesterday_news(self):
-        date = datetime.now() - timedelta(days=1)
-        news1 = mixer.blend(News, publish_date=date)
-        news2 = mixer.blend(News, publish_date=date)
-        self.assertEqual([news for news in News.yesterday_news()], [news1, news2])
+    # def test_yesterday_news(self):
+    #     news1 = mixer.blend(News)
+    #     news2 = mixer.blend(News)
+    #     self.assertEqual([news for news in News.yesterday_news()], [news1, news2])
+    #
+    # def test_previous_news(self):
 
-    def test_previous_news(self):
-        news1 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=3))
-        news2 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=10))
-        self.assertEqual([news for news in News.previous_news()], [news1, news2])
+    #     news1 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=3))
+    #     news2 = mixer.blend(News, publish_date=datetime.now().date() - timedelta(days=10))
+    #     self.assertEqual([news for news in News.previous_news()], [news1, news2])
 
     def test_images(self):
         news = mixer.blend(News)

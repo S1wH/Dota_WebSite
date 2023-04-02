@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime, timedelta
 
+from django.utils import timezone
+
 
 class Author(models.Model):
     nickname = models.CharField(max_length=15)
@@ -17,13 +19,13 @@ class News(models.Model):
     text = models.TextField()
     main_image = models.ImageField(upload_to='news_images', blank=True, null=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='author_news')
-    publish_date = models.DateTimeField()
+    publish_date = models.DateTimeField(auto_now=True)
     importance_index = models.BooleanField(default=False)
     video = models.FileField(upload_to='news_videos', blank=True, null=True)
 
     @staticmethod
     def today_news():
-        return News.objects.filter(publish_date__gte=datetime.now().date())
+        return News.objects.filter(publish_date__gte=timezone.now().date())
 
     @staticmethod
     def yesterday_news():
