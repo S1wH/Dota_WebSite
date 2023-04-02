@@ -61,14 +61,14 @@
         </div>
         <div class="player_teammates_text" style="margin-top: 30px;">Сокомандники</div>
         <div class="player_teammates">
-            {% for teammate in teammates %}
+            {% for teammate in player.teammates %}
                 <div class="teammate">
                     <tr>
                         <td>
-                          <div class="align-items-center">
-                              <img src="{{teammate.photo.url}}" alt="" style="margin-left: 15px; width: 100px; height: 100px" class="rounded-circle"/>
+                          <div class="pl">
+                              <img src="{{teammate.player.photo.url}}" alt="" style="margin-left: 15px; width: 100px; height: 100px" class="rounded-circle"/>
                               <div class="ms-3" style="font-size: 25px; padding-top: 10px;">
-                                  <p class="fw-bold mb-1">{{teammate.nickname}}</p>
+                                  <p class="fw-bold mb-1">{{teammate.player.nickname}}</p>
                               </div>
                           </div>
                         </td>

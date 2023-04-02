@@ -20,7 +20,7 @@
                 {{news.text}}
             </div>
             <div class="news_images">
-                {% for image in images %}
+                {% for image in news.images %}
                     <div class="news_image_wrapper">
                         <img src="{{ image.image.url }}" class="news_image" width="660" height="440" alt="...">
                         <div class="image_signature">{{image.title}}</div>

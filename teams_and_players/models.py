@@ -1,17 +1,53 @@
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Count
+
+# CONST
+WIN_MATCHES = 'win_matches'
+LOSE_MATCHES = 'lose_matches'
+DRAW_MATCHES = 'draw_matches'
+PRIZE = 'prize'
 
 
-class Team(models.Model):
+class Abstract(models.Model):
+    win_matches = models.IntegerField(default=0)
+    lose_matches = models.IntegerField(default=0)
+    draw_matches = models.IntegerField(default=0)
+
+    class Meta:
+        abstract = True
+
+    def all_matches(self):
+        return self.win_matches + self.draw_matches + self.lose_matches
+
+    def rate(self, param):
+        return round(param / self.all_matches() * 100)
+
+    def win_rate(self):
+        return self.rate(self.win_matches)
+
+    def lose_rate(self):
+        return self.rate(self.lose_matches)
+
+    def draw_rate(self):
+        return self.rate(self.draw_matches)
+
+
+class Team(Abstract):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     establish_date = models.DateField()
     logo = models.ImageField(upload_to='teams_logos')
     biography = models.TextField()
     all_prize = models.IntegerField(default=0)
-    all_win_matches = models.IntegerField(default=0)
-    all_lose_matches = models.IntegerField(default=0)
-    all_draw_matches = models.IntegerField(default=0)
+
+    def players_careers(self):
+        current_players_careers = CareerPeriod.objects.filter(team=self, end_date=None)
+        return current_players_careers
+
+    def avg_age(self):
+        all_players = Player.objects.filter(player_career__team=self, player_career__end_date=None)
+        avg_age = round(all_players.aggregate(Sum('age'))['age__sum'] / all_players.aggregate(Count('id'))['id__count'], 1)
+        return avg_age
 
     def __str__(self):
         return f'{self.name}'
@@ -26,38 +62,56 @@ class Player(models.Model):
     photo = models.ImageField(upload_to='players_photos')
     biography = models.TextField()
 
+    def sum_parameter_career_period(self, param):
+        result = CareerPeriod.objects.filter(player=self).aggregate(Sum(param))[f'{param}__sum']
+        return result
+
     def team(self):
         return CareerPeriod.objects.get(player=self, end_date=None).team
 
     def prize(self):
-        return self.sum_parameter_career_period('prize')
+        return self.sum_parameter_career_period(PRIZE)
 
     def win_matches(self):
-        return self.sum_parameter_career_period('win_matches')
+        return self.sum_parameter_career_period(WIN_MATCHES)
 
     def lose_matches(self):
-        return self.sum_parameter_career_period('lose_matches')
+        return self.sum_parameter_career_period(LOSE_MATCHES)
 
     def draw_matches(self):
-        return self.sum_parameter_career_period('draw_matches')
+        return self.sum_parameter_career_period(DRAW_MATCHES)
 
-    def sum_parameter_career_period(self, param):
-        result = self.player_career.all().aggregate(Sum(param))[f'{param}__sum']
-        return result
+    def all_matches(self):
+        return self.win_matches() + self.draw_matches() + self.lose_matches()
+
+    def win_rate(self):
+        return self.rate(self.win_matches())
+
+    def lose_rate(self):
+        return self.rate(self.lose_matches())
+
+    def draw_rate(self):
+        return self.rate(self.draw_matches())
+
+    def rate(self, param):
+        return round(param / self.all_matches() * 100)
+
+    def teammates(self):
+        team = self.team()
+        player_teammates = CareerPeriod.objects.filter(team=team, end_date=None).exclude(player=self)
+        return player_teammates
+
     def __str__(self):
-        return f'name: {self.nickname}' # Player(name='Вася') -> должно в админке написано быть name: Вася
+        return f'name: {self.nickname}'
 
 
-class CareerPeriod(models.Model):
+class CareerPeriod(Abstract):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_career')
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_career')
     role = models.CharField(max_length=15)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     prize = models.IntegerField(default=0)
-    win_matches = models.IntegerField(default=0)
-    lose_matches = models.IntegerField(default=0)
-    draw_matches = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.player} in {self.team} at period {self.start_date} - {self.end_date}'

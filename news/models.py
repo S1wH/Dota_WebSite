@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime, timedelta
 
 
 class Author(models.Model):
@@ -16,9 +17,31 @@ class News(models.Model):
     text = models.TextField()
     main_image = models.ImageField(upload_to='news_images', blank=True, null=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='author_news')
-    publish_date = models.DateTimeField(auto_now_add=True)
+    publish_date = models.DateTimeField()
     importance_index = models.BooleanField(default=False)
     video = models.FileField(upload_to='news_videos', blank=True, null=True)
+
+    @staticmethod
+    def today_news():
+        return News.objects.filter(publish_date__gte=datetime.now().date())
+
+    @staticmethod
+    def yesterday_news():
+        return News.objects.filter(publish_date__lt=datetime.now().date(),
+                                   publish_date__gte=datetime.now().date() - timedelta(days=1))
+
+    @staticmethod
+    def previous_news():
+        return News.objects.filter(publish_date__lte=datetime.now().date() - timedelta(days=2))
+
+    def images(self):
+        return self.news_image.all()
+
+    @staticmethod
+    def important_news():
+        news = News.objects.all().order_by('importance_index', '-publish_date')
+        news = news[:len(news) - (len(news) % 4)]
+        return [news[i:i + 4] for i in range(0, len(news), 4)]
 
     def __str__(self):
         return f'{self.id} {self.header}'

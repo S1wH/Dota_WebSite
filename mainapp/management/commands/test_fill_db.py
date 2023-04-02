@@ -55,11 +55,11 @@ class Command(BaseCommand):
             path = os.path.join(settings.BASE_DIR, f'static/photos/dota/news{i + 1}.jpg')
             one_news.main_image = ImageFile(open(path, 'rb'), name=f'one_news{i + 1}.jpg')
             if 4 < i < 8:
-                one_news.publish_date = datetime.now() - timedelta(days=1)
+                one_news.publish_date = datetime.now().date() - timedelta(days=1)
             elif i > 8:
-                one_news.publish_date = datetime.now() - timedelta(days=5)
+                one_news.publish_date = datetime.now().date() - timedelta(days=5)
             one_news.save()
-            print(one_news)
+            print(one_news, one_news.publish_date)
             news.append(one_news)
         print('\nAll news successfully created\n')
 
@@ -95,9 +95,9 @@ class Command(BaseCommand):
                 biography=f'{teams_names[i]} is a really great team. '
                           f'It was performing wonderfully',
                 all_prize=randint(1000000, 15000000),
-                all_win_matches=randint(1000, 2000),
-                all_lose_matches=randint(500, 1200),
-                all_draw_matches=randint(10, 100),
+                win_matches=randint(1000, 2000),
+                lose_matches=randint(500, 1200),
+                draw_matches=randint(10, 100),
             )
             path = os.path.join(settings.BASE_DIR, f'static/photos/team{i + 1}.jpg')
             team.logo = ImageFile(open(path, 'rb'), name=f'team{i + 1}.jpg')
