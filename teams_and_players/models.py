@@ -8,7 +8,7 @@ DRAW_MATCHES = 'draw_matches'
 PRIZE = 'prize'
 
 
-class Abstract(models.Model):
+class MatchStatistic(models.Model):
     win_matches = models.IntegerField(default=0)
     lose_matches = models.IntegerField(default=0)
     draw_matches = models.IntegerField(default=0)
@@ -32,7 +32,7 @@ class Abstract(models.Model):
         return self.rate(self.draw_matches)
 
 
-class Team(Abstract):
+class Team(MatchStatistic):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     establish_date = models.DateField()
@@ -105,7 +105,7 @@ class Player(models.Model):
         return f'name: {self.nickname}'
 
 
-class CareerPeriod(Abstract):
+class CareerPeriod(MatchStatistic):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_career')
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_career')
     role = models.CharField(max_length=15)

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Dota Новости
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+{% endblock %}
+{% block content %}
+<ul class="list-group">
+    {% for item in object_list %}
+    <li class="list-group-item">
+        <a href="{% url 'newsapp:news_detail' pk=item.pk %}">{{item.header}}</a>
+        <span>
+            <a class="btn btn-warning" href="{% url 'newsapp:news_update' pk=item.pk %}">update</a>
+        </span>
+        <span>
+            <a class="btn btn-danger" href="{% url 'newsapp:news_delete' pk=item.pk %}">delete</a>
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+<p></p>
+<a class="btn btn-primary" href="{% url 'newsapp:news_create' %}">Создать</a>
+
+{% endblock %}
