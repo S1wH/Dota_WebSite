@@ -2,22 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from teams_and_players.models import Player, Team
 from datetime import date
-from teams_and_players.forms import CareerPeriodForm
-
-
-def teams_view(request):
-    teams = Team.objects.all()
-    return render(request, 'teams_and_players/teams.html', context={'teams': teams})
+from teams_and_players.forms import CareerPeriodForm, TeamForm, PlayerForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 def players_view(request):
     players = Player.objects.all()
     return render(request, 'teams_and_players/players.html', context={'players': players})
-
-
-def get_one_team_view(request, team_id):
-    team = Team.objects.get(id=team_id)
-    return render(request, 'teams_and_players/one_team.html', context={'team': team})
 
 
 def get_one_player_view(request, player_id):
@@ -46,7 +38,8 @@ def create_player_view(request):
         elif len(country) > 20 or len(country) < 5:
             error_text = 'country length should be in range from 5 to 20'
         try:
-            d = date(year=int(birthday.split('-')[0]), month=int(birthday.split('-')[1]), day=int(birthday.split('-')[2]))
+            d = date(year=int(birthday.split('-')[0]), month=int(birthday.split('-')[1]),
+                     day=int(birthday.split('-')[2]))
         except ValueError:
             error_text = 'incorrect date'
         if error_text is not None:
@@ -74,3 +67,52 @@ def create_career_view(request):
         form = CareerPeriodForm()
     return render(request, 'teams_and_players/create_career.html', context={'form': form})
 
+
+class TeamListView(ListView):
+    model = Team
+
+
+class TeamDetailView(DetailView):
+    model = Team
+
+
+class TeamCreateView(CreateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy('teams_and_players_app:team_list')
+
+
+class TeamUpdateView(UpdateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy('teams_and_players_app:team_list')
+
+
+class TeamDeleteView(DeleteView):
+    model = Team
+    success_url = reverse_lazy('teams_and_players_app:team_list')
+
+
+class PlayerListView(ListView):
+    model = Player
+
+
+class PlayerDetailView(DetailView):
+    model = Player
+
+
+class PlayerCreateView(CreateView):
+    model = Player
+    form_class = PlayerForm
+    success_url = reverse_lazy('teams_and_players_app:player_list')
+
+
+class PlayerUpdateView(UpdateView):
+    model = Player
+    form_class = PlayerForm
+    success_url = reverse_lazy('teams_and_players_app:player_list')
+
+
+class PlayerDeleteView(DeleteView):
+    model = Player
+    success_url = reverse_lazy('teams_and_players_app:player_list')

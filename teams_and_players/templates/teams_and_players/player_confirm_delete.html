@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Удаление {{object.name}}
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_player.css' %}">
+    <link rel="stylesheet" href="{% static 'teams_and_players.css' %}">
+{% endblock %}
+{% block content %}
+<h3 style="">Вы действительно хотите удалить игрока {{ object.name }}? </h3>
+
+<form method="POST">
+  {% csrf_token %}
+  <button style="" type="submit" class="btn btn-danger">Так точно</button>
+</form>
+
+{% endblock %}

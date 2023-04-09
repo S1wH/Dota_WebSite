@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-
 from news.models import News, Author
 from .forms import NewsForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView

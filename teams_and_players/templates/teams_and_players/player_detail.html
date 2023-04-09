@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Игрок {{player.nickname}}
+    Игрок {{object.nickname}}
 {% endblock %}
 
 {% block page_css %}
@@ -14,54 +14,54 @@
     <div class="player_content" style="">
         <div class="player_wrapper">
             <div class="avatar">
-                <img src="{{ player.photo.url }}" alt="" style="margin-left: 15px; width: 85px; height: 85px" class="rounded-circle"/>
+                <img src="{{ object.photo.url }}" alt="" style="margin-left: 15px; width: 85px; height: 85px" class="rounded-circle"/>
             </div>
-            <div class="player_nickname">{{ player.nickname }}</div>
+            <div class="player_nickname">{{ object.nickname }}</div>
         </div>
         <div class="player_info">
             <div class="name" style="text-align: center;">
                 <div class="full_name">Имя</div>
-                <div class="player_name">{{ player.name }}</div>
+                <div class="player_name">{{ object.name }}</div>
             </div>
             <div class="team">
                 <div class="current_team">Команда</div>
-                <div class="player_team">{{ player.team }}</div>
+                <div class="player_team">{{ object.team }}</div>
             </div>
             <div class="age">
                 <div class="now_age">Возраст</div>
-                <div class="player_age">{{ player.age }}</div>
+                <div class="player_age">{{ object.age }}</div>
             </div>
             <div class="birthday">
                 <div class="birthday_date">День рождения</div>
-                <div class="player_birthday">{{ player.birthday }}</div>
+                <div class="player_birthday">{{ object.birthday }}</div>
             </div>
             <div class="country">
                 <div class="country_born">Страна</div>
-                <div class="player_country">{{player.country}}</div>
+                <div class="player_country">{{object.country}}</div>
             </div>
             <div class="prize">
                 <div class="prize_won">Призовые</div>
-                <div class="player_prize">${{player.prize}}</div>
+                <div class="player_prize">${{object.prize}}</div>
             </div>
         </div>
         <div class="player_text">
             <div class="player_text_header">Описание игрока</div>
-            {{ player.biography }}
+            {{ object.biography }}
         </div>
         <div class="player_stats">
-            <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ player.all_matches }}</p>
+            <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ object.all_matches }}</p>
               <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: {{ player.win_rate }}%" aria-valuenow="{{ player.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ player.draw_rate }}%" aria-valuenow="{{ player.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ player.lose_rate }}%" aria-valuenow="{{ player.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ object.win_rate }}%" aria-valuenow="{{ object.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ object.draw_rate }}%" aria-valuenow="{{ object.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ object.lose_rate }}%" aria-valuenow="{{ object.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-            <p class="text-muted mb-0" style="text-align: center">{{ player.win_matches }}({{ player.win_rate }}%)
-                  /{{ player.draw_matches }}({{ player.draw_rate }}%) / {{ player.lose_matches }}({{ player.lose_rate }}%)
+            <p class="text-muted mb-0" style="text-align: center">{{ object.win_matches }}({{ object.win_rate }}%)
+                  /{{ object.draw_matches }}({{ object.draw_rate }}%) / {{ object.lose_matches }}({{ object.lose_rate }}%)
             </p>
         </div>
         <div class="player_teammates_text" style="margin-top: 30px;">Сокомандники</div>
         <div class="player_teammates">
-            {% for teammate in player.teammates %}
+            {% for teammate in object.teammates %}
                 <div class="teammate">
                     <tr>
                         <td>

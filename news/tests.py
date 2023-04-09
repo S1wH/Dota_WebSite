@@ -1,8 +1,6 @@
-from datetime import datetime, timedelta
 from django.test import TestCase
 from news.models import Author, News, Image
 from mixer.backend.django import mixer
-from django.utils import timezone
 
 
 class TestAuthor(TestCase):
@@ -38,4 +36,4 @@ class TestNews(TestCase):
         news = mixer.blend(News)
         image1 = mixer.blend(Image, news_id=news)
         image2 = mixer.blend(Image, news_id=news)
-        self.assertEqual([image for image in News.images(news)],[image1, image2])
+        self.assertEqual([image for image in News.images(news)], [image1, image2])

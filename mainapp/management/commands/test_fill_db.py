@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 from news.models import News, Author, Image
 from teams_and_players.models import Team, Player, CareerPeriod
 from django.core.files.images import ImageFile
@@ -49,17 +49,12 @@ class Command(BaseCommand):
                      'Although this text makes sense. I am glad to write it, because I do it instead of listening '
                      'to my Physics teacher',
                 author=choice(authors),
-                publish_date=datetime.now(),
+                publish_date=timezone.now(),
                 importance_index=True if i < 9 else False,
             )
             path = os.path.join(settings.BASE_DIR, f'static/photos/dota/news{i + 1}.jpg')
-            one_news.main_image = ImageFile(open(path, 'rb'), name=f'one_news{i + 1}.jpg')
-            if 4 < i < 8:
-                one_news.publish_date = datetime.now().date() - timedelta(days=1)
-            elif i > 8:
-                one_news.publish_date = datetime.now().date() - timedelta(days=5)
+            one_news.main_image = ImageFile(open(path, 'rb'), name=f'news{i + 1}.jpg')
             one_news.save()
-            # print('TRUE DATE', one_news.publish_date)
             print(one_news, one_news.publish_date)
             news.append(one_news)
         print('\nAll news successfully created\n')
@@ -95,7 +90,7 @@ class Command(BaseCommand):
                 establish_date='2003-12-23',
                 biography=f'{teams_names[i]} is a really great team. '
                           f'It was performing wonderfully',
-                all_prize=randint(1000000, 15000000),
+                prize=randint(1000000, 15000000),
                 win_matches=randint(1000, 2000),
                 lose_matches=randint(500, 1200),
                 draw_matches=randint(10, 100),
