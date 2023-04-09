@@ -12,6 +12,7 @@ class MatchStatistic(models.Model):
     win_matches = models.IntegerField(default=0)
     lose_matches = models.IntegerField(default=0)
     draw_matches = models.IntegerField(default=0)
+    prize = models.IntegerField(default=0)
 
     class Meta:
         abstract = True
@@ -38,7 +39,6 @@ class Team(MatchStatistic):
     establish_date = models.DateField()
     logo = models.ImageField(upload_to='teams_logos')
     biography = models.TextField()
-    all_prize = models.IntegerField(default=0)
 
     def players_careers(self):
         current_players_careers = CareerPeriod.objects.filter(team=self, end_date=None)
@@ -50,7 +50,7 @@ class Team(MatchStatistic):
         return avg_age
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.id} {self.name}'
 
 
 class Player(models.Model):
@@ -82,6 +82,7 @@ class Player(models.Model):
         return self.sum_parameter_career_period(DRAW_MATCHES)
 
     def all_matches(self):
+        print(self)
         return self.win_matches() + self.draw_matches() + self.lose_matches()
 
     def win_rate(self):
@@ -102,7 +103,7 @@ class Player(models.Model):
         return player_teammates
 
     def __str__(self):
-        return f'name: {self.nickname}'
+        return f'name: {self.id} {self.nickname}'
 
 
 class CareerPeriod(MatchStatistic):
@@ -111,7 +112,6 @@ class CareerPeriod(MatchStatistic):
     role = models.CharField(max_length=15)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    prize = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.player} in {self.team} at period {self.start_date} - {self.end_date}'

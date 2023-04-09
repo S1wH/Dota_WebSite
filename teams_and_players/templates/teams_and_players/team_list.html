@@ -1,13 +1,17 @@
 {% extends "teams_and_players_content.html" %}
 {% load static %}
 
+{% block title %}
+    Team List View
+{% endblock %}
+
 {% block links %}
     <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'teams_and_players_app:teams' %}">Команды</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'teams_and_players_app:team_list' %}">Команды</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'teams_and_players_app:players' %}">Игроки</a>
+          <a class="nav-link" href="{% url 'teams_and_players_app:player_list' %}">Игроки</a>
         </li>
     </ul>
 {% endblock %}
@@ -27,10 +31,10 @@
 
 {% block table_body %}
     <tbody>
-        {% for team in teams %}
+        {% for team in object_list %}
           <tr>
             <td>
-                <a href="{% url 'teams_and_players_app:one_team' team_id=team.id %}" class="team_link" style="text-decoration: none;">
+                <a href="{% url 'teams_and_players_app:one_team' pk=team.id %}" class="team_link" style="text-decoration: none;">
                   <div class="d-flex align-items-center">
                       <img src="{{ team.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
                       <div class="ms-3">
@@ -50,7 +54,7 @@
                   /{{ team.draw_matches }}({{ team.draw_rate }}%) / {{team.lose_matches}}({{ team.lose_rate }}%)</p>
             </td>
             <td>
-              <h5 style="text-align: center">$ {{ team.all_prize }}</h5>
+              <h5 style="text-align: center">$ {{ team.prize }}</h5>
             </td>
             <td>
               <h5 style="text-align: center">{{ team.establish_date }}</h5>

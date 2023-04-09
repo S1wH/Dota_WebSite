@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.utils import timezone
 
@@ -29,12 +29,12 @@ class News(models.Model):
 
     @staticmethod
     def yesterday_news():
-        return News.objects.filter(publish_date__lt=datetime.now().date(),
-                                   publish_date__gte=datetime.now().date() - timedelta(days=1))
+        return News.objects.filter(publish_date__lt=timezone.now().date(),
+                                   publish_date__gte=timezone.now().date() - timedelta(days=1))
 
     @staticmethod
     def previous_news():
-        return News.objects.filter(publish_date__lte=datetime.now().date() - timedelta(days=2))
+        return News.objects.filter(publish_date__lte=timezone.now().date() - timedelta(days=2))
 
     def images(self):
         return self.news_image.all()

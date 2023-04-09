@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Создание Команды
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'team.css' %}">
+    <link rel="stylesheet" href="{% static 'teams_and_players.css' %}">
+{% endblock %}
+{% block content %}
+   <h1 style="text-align: center">Создание Команды</h1>
+    <form method="POST" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Сохранить" class="btn btn-success">
+    </form>
+{% endblock %}
