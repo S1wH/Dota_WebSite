@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -68,28 +69,43 @@ def update_news_view(request, news_id):
 # CRUD - Create Read Update Delete
 # 5 list, detail
 
+# Любой может смотреть список новостей
 class NewsListView(ListView):
     model = News
 
-
-class NewsDetailView(DetailView):
+# Только авторизованный может читать
+class NewsDetailView(LoginRequiredMixin, DetailView):
     model = News
 
-
-class NewsCreateView(CreateView):
-    model = News
-    # fields = '__all__'
-    form_class = NewsForm
-    success_url = reverse_lazy('newsapp:news_list')
-
-
-class NewsUpdateView(UpdateView):
+# Админ
+class NewsCreateView(UserPassesTestMixin, CreateView):
     model = News
     # fields = '__all__'
     form_class = NewsForm
     success_url = reverse_lazy('newsapp:news_list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class NewsDeleteView(DeleteView):
+# Править может сотрудник сайта
+class NewsUpdateView(UserPassesTestMixin, UpdateView):
+    model = News
+    # fields = '__all__'
+    form_class = NewsForm
+    success_url = reverse_lazy('newsapp:news_list')
+
+    def test_func(self):
+        user = self.request.user
+        return user.is_staff and user.username == 'user' and 1 == 1
+
+
+class IsAdmin(UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+# Админ
+class NewsDeleteView(IsAdmin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:news_list')
+
