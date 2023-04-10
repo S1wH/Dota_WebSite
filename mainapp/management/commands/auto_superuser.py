@@ -1,16 +1,16 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from users.models import MyUser
 
 
 class Command(BaseCommand):
     help = 'script that creates a superuser'
 
     def handle(self, *args, **options):
-        User.objects.get(username='admin', is_superuser=True).delete()
+        MyUser.objects.filter(username='admin', is_superuser=True).delete()
 
         # Creating superuser
         print('\nCreating superuser...\n')
-        superuser = User.objects.create_user(username='admin',
+        superuser = MyUser.objects.create_user(username='admin',
                                              email='admin@admin.ru',
                                              password='admin123',
                                              is_staff=True,
