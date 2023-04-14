@@ -11,7 +11,5 @@ class RegistrationView(CreateView):
     form_class = RegistrationForm
 
 
-
 class LoginView(LoginViewAuth):
     template_name = 'users/login.html'
-

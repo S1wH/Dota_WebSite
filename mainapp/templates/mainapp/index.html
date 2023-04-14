@@ -8,38 +8,40 @@
     <section>
       <h2 class="main-news">Главные новости</h2>
       <div class="container-xxl">
-          <div id="carouselExample" class="carousel slide">
-              <div class="carousel-inner">
-                  {% for list in main_news %}
-                    <div class="carousel-item active">
-                      <div class="row justify-content-between">
-                        {% for item in list%}
-                              <div class="col">
-                                  <div class="card w-100">
-                                      <img src="{{ item.main_image.url }}" class="card-img-top" width="300" height="180" alt="...">
-                                      <div class="card-body">
-                                        <h5 class="card-title">{{item.title}}</h5>
-                                        <p class="card-text">{{item.summary}}</p>
-                                        <a href="{% url 'newsapp:one_news' news_id=item.id %}" class="btn btn-primary">Читать подробнее</a>
+          {% if main_news %}
+              <div id="carouselExample" class="carousel slide">
+                  <div class="carousel-inner">
+                      {% for list in main_news %}
+                        <div class="carousel-item active">
+                          <div class="row justify-content-between">
+                            {% for item in list%}
+                                  <div class="col">
+                                      <div class="card w-100">
+                                          <img src="{{ item.main_image.url }}" class="card-img-top" width="300" height="180" alt="...">
+                                          <div class="card-body">
+                                            <h5 class="card-title">{{item.title}}</h5>
+                                            <p class="card-text">{{item.summary}}</p>
+                                            <a href="{% url 'newsapp:one_news' news_id=item.id %}" class="btn btn-primary">Читать подробнее</a>
+                                          </div>
                                       </div>
                                   </div>
-                              </div>
-                          {% endfor %}
-                      </div>
-                    </div>
-                  {% empty %}
-                    <div class="empty"> Сегодня нет новостей</div>
-                  {% endfor %}
+                              {% endfor %}
+                          </div>
+                        </div>
+                      {% endfor %}
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <img src="{% static 'photos/arrow_left.png' %}" class="carousel-control-prev-icon" alt="...">
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <img src="{% static 'photos/arrow_right.png' %}" class="carousel-control-next-icon" alt="...">
+                    <span class="visually-hidden">Next</span>
+                  </button>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <img src="{% static 'photos/arrow_left.png' %}" class="carousel-control-prev-icon" alt="...">
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <img src="{% static 'photos/arrow_right.png' %}" class="carousel-control-next-icon" alt="...">
-                <span class="visually-hidden">Next</span>
-              </button>
-          </div>
+          {% else %}
+            <div class="no-news" style="font-size:20px; text-align: center;">Сегодня нет новостей</div>
+          {% endif %}
       </div>
     </section>
     <div class="wrapper__highlights">
