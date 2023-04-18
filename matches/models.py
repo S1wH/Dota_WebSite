@@ -1,33 +1,40 @@
 from django.db import models
 from teams_and_players.models import Team, Player
 
+INCOMING = 'Incoming'
+ONGOING = 'Ongoing'
+PLAYED = 'Played'
+
+BO1 = 'bo1'
+BO3 = 'bo3'
+BO5 = 'bo5'
+
 
 class Match(models.Model):
+    statuses = [
+        (1, INCOMING),
+        (2, ONGOING),
+        (3, PLAYED),
+    ]
+    formats = [
+        (1, BO1),
+        (2, BO3),
+        (3, BO5),
+    ]
     start_date = models.DateTimeField()
-
-    class Meta:
-        abstract = True
-
-
-class PlayedMatch(Match):
     end_date = models.DateTimeField()
+    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1_match')
+    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2_match')
+    status = models.CharField(max_length=10, choices=statuses, default=1)
+    format = models.CharField(max_length=3, choices=formats, default=2)
 
-
-class IncomingMatch(Match):
-    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1_incoming_match')
-    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2_incoming_match')
-
-
-class OnGoingMatch(Match):
-    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1_incoming_match')
-    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2_incoming_match')
+    # TODO: tournament foreign key
 
 
 class MatchPeriod(models.Model):
     win_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_period_win')
-    lose_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='lose_period_win')
     duration = models.DurationField()
-    match = models.ForeignKey()
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='match_period')
 
 
 class PlayerStats(models.Model):
@@ -40,4 +47,4 @@ class PlayerStats(models.Model):
     money_earned = models.IntegerField(default=0)
     support_money_spent = models.IntegerField(default=0)
     match_period = models.ForeignKey(MatchPeriod, on_delete=models.CASCADE, related_name='period_stats')
-    player = models.ForeignKey(Player, on_delete=models.SET_NULL, related_name='player_stats')
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_stats')

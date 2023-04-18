@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from teams_and_players.models import Player, Team
@@ -76,21 +78,30 @@ class TeamDetailView(DetailView):
     model = Team
 
 
-class TeamCreateView(CreateView):
+class TeamCreateView(UserPassesTestMixin, CreateView):
     model = Team
     form_class = TeamForm
     success_url = reverse_lazy('teams_and_players_app:team_list')
 
+    def test_func(self):
+        return self.request.user.is_staff
 
-class TeamUpdateView(UpdateView):
+
+class TeamUpdateView(UserPassesTestMixin, UpdateView):
     model = Team
     form_class = TeamForm
     success_url = reverse_lazy('teams_and_players_app:team_list')
 
+    def test_func(self):
+        return self.request.user.is_staff
 
-class TeamDeleteView(DeleteView):
+
+class TeamDeleteView(UserPassesTestMixin, DeleteView):
     model = Team
     success_url = reverse_lazy('teams_and_players_app:team_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class PlayerListView(ListView):
@@ -101,18 +112,27 @@ class PlayerDetailView(DetailView):
     model = Player
 
 
-class PlayerCreateView(CreateView):
+class PlayerCreateView(UserPassesTestMixin, CreateView):
     model = Player
     form_class = PlayerForm
     success_url = reverse_lazy('teams_and_players_app:player_list')
 
+    def test_func(self):
+        return self.request.user.is_staff
 
-class PlayerUpdateView(UpdateView):
+
+class PlayerUpdateView(UserPassesTestMixin, UpdateView):
     model = Player
     form_class = PlayerForm
     success_url = reverse_lazy('teams_and_players_app:player_list')
 
+    def test_func(self):
+        return self.request.user.is_staff
 
-class PlayerDeleteView(DeleteView):
+
+class PlayerDeleteView(UserPassesTestMixin, DeleteView):
     model = Player
     success_url = reverse_lazy('teams_and_players_app:player_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser

@@ -73,9 +73,11 @@ def update_news_view(request, news_id):
 class NewsListView(ListView):
     model = News
 
+
 # Только авторизованный может читать
 class NewsDetailView(LoginRequiredMixin, DetailView):
     model = News
+
 
 # Админ
 class NewsCreateView(UserPassesTestMixin, CreateView):
@@ -86,6 +88,7 @@ class NewsCreateView(UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
 
 # Править может сотрудник сайта
 class NewsUpdateView(UserPassesTestMixin, UpdateView):
@@ -104,8 +107,8 @@ class IsAdmin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser
 
+
 # Админ
 class NewsDeleteView(IsAdmin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:news_list')
-

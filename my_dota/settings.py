@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'news',
     'teams_and_players',
     'users',
+    'matches',
 ]
 
 MIDDLEWARE = [
