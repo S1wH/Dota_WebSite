@@ -73,10 +73,28 @@ def update_news_view(request, news_id):
 class NewsListView(ListView):
     model = News
 
+    def get(self, request, *args, **kwargs):
+        print('REQUEST DATA: ', request.GET)
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # return News.objects.filter(importance_index=True)
+        return super().get_queryset().filter(importance_index=True)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['some text'] = 'some text example'
+        return context
+
 
 # Только авторизованный может читать
 class NewsDetailView(LoginRequiredMixin, DetailView):
     model = News
+
+    # get
+    # get_context_data
+    # get_queryset
+    # get_object
 
 
 # Админ
@@ -88,6 +106,14 @@ class NewsCreateView(UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
+    # get
+    # get_context_data
+    # get_form_kwargs
+    # post
+    # form_valid
+    # form_invalid
+    # get_success_url
 
 
 # Править может сотрудник сайта
@@ -101,6 +127,14 @@ class NewsUpdateView(UserPassesTestMixin, UpdateView):
         user = self.request.user
         return user.is_staff and user.username == 'user' and 1 == 1
 
+    # get
+    # get_context_data
+    # get_form_kwargs
+    # post
+    # form_valid
+    # form_invalid
+    # get_success_url
+
 
 class IsAdmin(UserPassesTestMixin):
 
@@ -112,3 +146,8 @@ class IsAdmin(UserPassesTestMixin):
 class NewsDeleteView(IsAdmin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:news_list')
+
+    # get
+    # get_context_data
+    # post
+    # get_success_url
