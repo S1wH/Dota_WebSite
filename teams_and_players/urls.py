@@ -21,10 +21,10 @@ app_name = 'teams_and_players_app'
 urlpatterns = [
     # player urls
     path('players/', views.PlayerListView.as_view(), name='player_list'),
-    path('players/<int:pk>', views.PlayerDetailView.as_view(), name='one_player'),
+    path('players/<int:pk>/', views.PlayerDetailView.as_view(), name='one_player'),
     path('players/create/', views.PlayerCreateView.as_view(), name='create_player'),
-    path('players/update/<int:pk>', views.PlayerUpdateView.as_view(), name='update_player'),
-    path('players/delete/<int:pk>', views.PlayerDeleteView.as_view(), name='delete_player'),
+    path('players/update/<int:pk>/', views.PlayerUpdateView.as_view(), name='update_player'),
+    path('players/delete/<int:pk>/', views.PlayerDeleteView.as_view(), name='delete_player'),
 
     # career period urls
     path('career_period/create/', views.create_career_view, name='create_career'),
