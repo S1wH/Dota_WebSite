@@ -1,6 +1,6 @@
 from django.test import TestCase
 from mixer.backend.django import mixer
-from .models import Player, Team, CareerPeriod
+from teams_and_players.models import Player, Team, CareerPeriod
 
 
 class TestPlayer(TestCase):

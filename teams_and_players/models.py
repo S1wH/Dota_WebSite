@@ -21,7 +21,9 @@ class MatchStatistic(models.Model):
         return self.win_matches + self.draw_matches + self.lose_matches
 
     def rate(self, param):
-        return round(param / self.all_matches() * 100)
+        if self.all_matches() != 0:
+            return round(param / self.all_matches() * 100)
+        return 0
 
     def win_rate(self):
         return self.rate(self.win_matches)
@@ -46,8 +48,10 @@ class Team(MatchStatistic):
 
     def avg_age(self):
         all_players = Player.objects.filter(player_career__team=self, player_career__end_date=None)
-        avg_age = round(all_players.aggregate(Sum('age'))['age__sum'] / all_players.aggregate(Count('id'))['id__count'], 1)
-        return avg_age
+        if all_players:
+            avg_age = round(all_players.aggregate(Sum('age'))['age__sum'] / all_players.aggregate(Count('id'))['id__count'], 1)
+            return avg_age
+        return 0
 
     def __str__(self):
         return f'{self.id} {self.name}'
@@ -64,7 +68,9 @@ class Player(models.Model):
 
     def sum_parameter_career_period(self, param):
         result = CareerPeriod.objects.filter(player=self).aggregate(Sum(param))[f'{param}__sum']
-        return result
+        if result:
+            return result
+        return 0
 
     def team(self):
         return CareerPeriod.objects.get(player=self, end_date=None).team
@@ -95,6 +101,8 @@ class Player(models.Model):
         return self.rate(self.draw_matches())
 
     def rate(self, param):
+        if self.all_matches() == 0:
+            return 0
         return round(param / self.all_matches() * 100)
 
     def teammates(self):
