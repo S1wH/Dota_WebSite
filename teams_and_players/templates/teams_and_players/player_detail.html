@@ -25,7 +25,13 @@
             </div>
             <div class="team">
                 <div class="current_team">Команда</div>
-                <div class="player_team">{{ object.team }}</div>
+                    <div class="player_team">
+                        {% if object.team %}
+                            <a href="{% url 'teams_and_players_app:one_team' pk=object.team.id %}">{{ object.team }}</a>
+                        {% else %}
+                            <div class="no-team">Нет команды</div>
+                        {% endif %}
+                    </div>
             </div>
             <div class="age">
                 <div class="now_age">Возраст</div>
@@ -65,12 +71,14 @@
                 <div class="teammate">
                     <tr>
                         <td>
-                          <div class="pl">
-                              <img src="{{teammate.player.photo.url}}" alt="" style="margin-left: 15px; width: 100px; height: 100px" class="rounded-circle"/>
-                              <div class="ms-3" style="font-size: 25px; padding-top: 10px;">
-                                  <p class="fw-bold mb-1">{{teammate.player.nickname}}</p>
+                            <a href="{% url 'teams_and_players_app:one_player' pk=teammate.player.id %}">
+                              <div class="pl">
+                                  <img src="{{teammate.player.photo.url}}" alt="" style="margin-left: 15px; width: 100px; height: 100px" class="rounded-circle"/>
+                                  <div class="ms-3" style="font-size: 25px; padding-top: 10px;">
+                                      <p class="fw-bold mb-1">{{teammate.player.nickname}}</p>
+                                  </div>
                               </div>
-                          </div>
+                            </a>
                         </td>
                     </tr>
                 </div>

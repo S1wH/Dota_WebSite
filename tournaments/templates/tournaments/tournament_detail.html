@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Турнир {{object.name}}
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tournaments.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'one_tournament.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% for stage in object.tournament_stages.all %}
+        <div class="stage">{{stage.stage}}</div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "tournaments_content.html" %}
+{% load static %}
+
+{% block choices %}
+    <ul class="nav nav-pills" style="max-width: 400px; margin-left: auto; margin-right: auto; margin-top: 15px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'tournaments_app:tournaments_previous_list' %}">Прошедшие</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tournaments_app:tournaments_current_list' %}">Текущие</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tournaments_app:tournaments_future_list' %}">Будущие</a>
+        </li>
+    </ul>
+{% endblock %}
