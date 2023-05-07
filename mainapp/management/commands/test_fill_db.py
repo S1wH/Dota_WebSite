@@ -3,7 +3,7 @@ from django.utils import timezone
 from news.models import News, Author, Image
 from teams_and_players.models import Team, Player, CareerPeriod
 from tournaments.models import Tournament, TournamentStage
-from matches.models import Match, MatchPeriod
+from matches.models import Match, MatchPeriod, INCOMING, PLAYED, ONGOING, BO1, BO3, BO5
 from django.core.files.images import ImageFile
 from random import choice, randint
 from datetime import timedelta
@@ -234,8 +234,7 @@ class Command(BaseCommand):
 
         # Creating matches
         print('Creating matches...\n')
-        matches = []
-        formats = ['BO1', 'BO3', 'BO5']
+        formats = [BO1, BO3, BO5]
         for tournament in tournaments:
             teams = tournament.teams.all()
             for i in range(4):
@@ -247,7 +246,7 @@ class Command(BaseCommand):
                         end_date=None,
                         team1=team1,
                         team2=team2,
-                        status='Incoming',
+                        status=INCOMING,
                         format=choice(formats),
                         tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
                     )
@@ -257,7 +256,7 @@ class Command(BaseCommand):
                         end_date=tournament.tournament_stages.get(stage='Group Stage').start_date + timedelta(hours=3),
                         team1=team1,
                         team2=team2,
-                        status='Played',
+                        status=PLAYED,
                         format=choice(formats),
                         tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
                     )
@@ -267,26 +266,24 @@ class Command(BaseCommand):
                         end_date=None,
                         team1=team1,
                         team2=team2,
-                        status='Ongoing',
+                        status=ONGOING,
                         format=choice(formats),
                         tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
                     )
-                matches.append(match)
                 print(match)
         print('\nall matches successfully created\n')
 
         # Creating matches' periods
         print("Creating matches' periods...\n")
-        for match in matches:
-            if match.status == 'Played':
-                teams = [match.team1, match.team2]
-                for i in range(int(match.format[-1])):
-                    match_period = MatchPeriod.objects.create(
-                        win_team=choice(teams),
-                        duration=timedelta(minutes=randint(20, 30)),
-                        match=match
-                    )
-                    print(match_period)
+        for match in Match.objects.filter(status=PLAYED):
+            teams = [match.team1, match.team2]
+            for i in range(int(match.format)):
+                match_period = MatchPeriod.objects.create(
+                    win_team=choice(teams),
+                    duration=timedelta(minutes=randint(20, 30)),
+                    match=match
+                )
+                print(match_period)
         print("\nall matches' periods successfully created\n")
 
         print('DONE')

@@ -13,5 +13,10 @@
 {% block content %}
     {% for stage in object.tournament_stages.all %}
         <div class="stage">{{stage.stage}}</div>
+        <div class="matches">
+            {% for match in stage.tournamentstage_matches.all %}
+                <div class="match" style="text-align:center;">{{ match }}</div>
+            {% endfor %}
+        </div>
     {% endfor %}
 {% endblock %}

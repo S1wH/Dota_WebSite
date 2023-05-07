@@ -14,11 +14,3 @@
         </li>
     </ul>
 {% endblock %}
-
-{% block score %}
-    {% if match.match_period.all %}
-        <div class="score"> 1:0 </div>
-    {% else %}
-        <div class="score"> 0:0 </div>
-    {% endif %}
-{% endblock %}

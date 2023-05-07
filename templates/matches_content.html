@@ -33,8 +33,7 @@
                             </div>
                         </div>
                         <div class="score" style="margin-left: 25px;">
-                            {% block score %}
-                            {% endblock %}
+                            {{ match.score }}
                         </div>
                         <div class="team2" style="width: 150px; margin-left: 50px;">
                             <img src="{{ match.team2.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
@@ -43,6 +42,11 @@
                             </div>
                         </div>
                     </td>
+                      <td>
+                          <div class="tournament">
+                            {{ match.tournament_stage.tournament.name }}
+                          </div>
+                      </td>
                   </tr>
                 {% endfor %}
           </tbody>
