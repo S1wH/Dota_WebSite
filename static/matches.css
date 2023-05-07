@@ -1,0 +1,127 @@
+html, body{
+    height: 100%;
+}
+
+body{
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.btn-outline-primary{
+    margin-left: 10px;
+}
+
+.table-responsive{
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.match{
+    max-width: 400px;
+    min-width: 300px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.score{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col{
+    text-align: center;
+}
+
+.tournament_link{
+    color: #000 !important;
+    text-decoration: none;
+}
+
+.card-title{
+    font-size: 28px;
+}
+
+.card-subtitle{
+    font-size: 12px;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+}
+
+.footer-top{
+    margin-top: 50px;
+    padding-top: 10px;
+    background: #151515;
+    color: #fff;
+    border-bottom: 1px solid #222222;
+}
+
+.footer-top .footer-info{
+    margin-bottom: 3px;
+}
+
+.footer-top .footer-info h3{
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    line-height: 1;
+}
+
+.footer-top .social-links a{
+    width: 36px;
+    height: 36px;
+    background: #282828;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.footer-links{
+    margin-bottom: 30px;
+}
+
+.footer-links ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links a{
+    color: white;
+    text-decoration: none;
+}
+
+.download__text{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.downloads{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.google__play{
+    margin-right: 20px;
+}
+
+.app__store{
+    margin-left: 20px;
+}

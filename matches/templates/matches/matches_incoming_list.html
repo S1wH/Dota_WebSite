@@ -1,0 +1,20 @@
+{% extends "matches_content.html" %}
+{% load static %}
+
+{% block choices %}
+    <ul class="nav nav-pills" style="max-width: 400px; margin-left: auto; margin-right: auto; margin-top: 15px;">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'matchesapp:matches_played_list' %}">Сыгранные</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'matchesapp:matches_ongoing_list' %}">Текущие</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'matchesapp:matches_incoming_list' %}">Будущие</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block score %}
+    <div class="score"> VS </div>
+{% endblock %}

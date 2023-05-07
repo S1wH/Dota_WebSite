@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Турниры
+{% endblock %}
+
+{% block page_css %}
+      <link rel="stylesheet" href="{% static 'tournaments.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% block choices %}
+    {% endblock %}
+    <div class="tournaments">
+        {% for tournament in object_list %}
+            <div class="tournament">
+                <div class="row">
+                    <a href="{% url 'tournaments_app:one_tournament' pk=tournament.id %} " class="tournament_link">
+                      <div class="col">
+                        <div class="card h-100" style="background-color: #337AB7;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{tournament.name}}</h5>
+                                <h6 class="card-subtitle" style="margin-top: 10px; font-size: 17px;">Даты проведения турнира</h6>
+                                <h6 class="card-subtitle" style="margin-top: 5px;">{{tournament.start_date}} - {{tournament.end_date}}</h6>
+                                <p class="card-subtitle" style="margin-top: 10px; font-size: 20px;">Призовые</p>
+                                <p class="card-subtitle">${{tournament.prize}}</p>
+                            </div>
+                        </div>
+                      </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

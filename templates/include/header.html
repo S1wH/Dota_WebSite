@@ -11,10 +11,10 @@
                 <a class="nav-link active" href="{% url 'newsapp:index' %}">Новости</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Турниры</a>
+                <a class="nav-link active" href="{% url 'tournaments_app:tournaments_current_list' %}">Турниры</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Матчи</a>
+                <a class="nav-link active" href="{% url 'matchesapp:matches_played_list' %}">Матчи</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="{% url 'teams_and_players_app:team_list' %}">Игроки и команды</a>

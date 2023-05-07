@@ -27,8 +27,8 @@ def create_author_view(request):
     if request.method == 'GET':
         return render(request, 'news/create_author.html', context={'is_error': False})
     else:
-        print(request)
-        print(request.POST)
+        # print(request)
+        # print(request.POST)
         nickname = request.POST.get('nickname', 'guest')
         rating = int(request.POST.get('rating', 0))
         if rating < 0 or rating > 5:
@@ -74,7 +74,7 @@ class NewsListView(ListView):
     model = News
 
     def get(self, request, *args, **kwargs):
-        print('REQUEST DATA: ', request.GET)
+        # print('REQUEST DATA: ', request.GET)
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):

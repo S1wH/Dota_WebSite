@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Матчи
+{% endblock %}
+
+{% block page_css %}
+      <link rel="stylesheet" href="{% static 'matches.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% block choices %}
+    {% endblock %}
+    <div class="table-responsive" style="padding-top: 20px;">
+      <div class="table">
+        <table class="table table-hover table-info align-middle bg-white">
+            <tbody>
+                {% for match in object_list %}
+                  <tr>
+                    <td style="max-width: 100px;">
+                      <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <p class="fw-bold mb-1">{{ match.start_date.date|date:"d.m.y" }}  {{match.start_date.time}}</p>
+                          </div>
+                      </div>
+                    </td>
+                    <td style="display: flex; flex-direction: row; max-width: 350px; margin-left: 215px;">
+                        <div class="team1" style="width: 150px;">
+                            <img src="{{ match.team1.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ match.team1.name }}</p>
+                            </div>
+                        </div>
+                        <div class="score" style="margin-left: 25px;">
+                            {% block score %}
+                            {% endblock %}
+                        </div>
+                        <div class="team2" style="width: 150px; margin-left: 50px;">
+                            <img src="{{ match.team2.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ match.team2.name }}</p>
+                            </div>
+                        </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}

@@ -48,7 +48,7 @@ class Team(MatchStatistic):
 
     def avg_age(self):
         all_players = Player.objects.filter(player_career__team=self, player_career__end_date=None)
-        if all_players:
+        if all_players.exists():
             avg_age = round(all_players.aggregate(Sum('age'))['age__sum'] / all_players.aggregate(Count('id'))['id__count'], 1)
             return avg_age
         return 0

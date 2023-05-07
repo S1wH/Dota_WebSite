@@ -14,9 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from matches import views
 
 app_name = 'matchesapp'
 
 urlpatterns = [
-
+    path('ongoing_matches/', views.MatchesOngoingListView.as_view(), name='matches_ongoing_list'),
+    path('incoming_matches/', views.MatchesIncomingListView.as_view(), name='matches_incoming_list'),
+    path('played_matches/', views.MatchesPlayedListView.as_view(), name='matches_played_list'),
 ]

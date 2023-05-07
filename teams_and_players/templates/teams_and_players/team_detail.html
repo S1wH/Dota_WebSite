@@ -58,13 +58,15 @@
                     <div class="player">
                         <tr>
                             <td>
-                              <div class="d-flex align-items-center" style="max-width: 120px;">
-                                  <img src="{{player.player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
-                                  <div class="ms-3">
-                                      <p class="fw-bold mb-1">{{player.player.nickname}}</p>
-                                      <p class="fw-bold mb-1">{{player.player.name}}</p>
+                                <a href="{% url 'teams_and_players_app:one_player' pk=player.player.id %}">
+                                  <div class="d-flex align-items-center" style="max-width: 120px;">
+                                      <img src="{{player.player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                                      <div class="ms-3">
+                                          <p class="fw-bold mb-1">{{player.player.nickname}}</p>
+                                          <p class="fw-bold mb-1">{{player.player.name}}</p>
+                                      </div>
                                   </div>
-                              </div>
+                                </a>
                             </td>
                             <td>
                                 <div class="role">
