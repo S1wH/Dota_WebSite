@@ -1,6 +1,7 @@
 from django.db import models
 from teams_and_players.models import Team, Player
 from tournaments.models import TournamentStage
+from matches.errors import EmptyMatchPeriodError
 
 INCOMING = 'I'
 ONGOING = 'O'
@@ -12,6 +13,7 @@ BO5 = '5'
 
 
 class Match(models.Model):
+    # TODO: переопределние статуса матча из played в incoming
     statuses = (
         (INCOMING, 'Incoming'),
         (ONGOING, 'Ongoing'),
@@ -31,11 +33,26 @@ class Match(models.Model):
     tournament_stage = models.ForeignKey(TournamentStage, on_delete=models.CASCADE,
                                          related_name='tournamentstage_matches')
 
+    def get_win_periods(self, team):
+        return self.match_period.filter(win_team=team).count()
+
+    def score(self):
+        if self.status == PLAYED and not self.match_period.all().exists():
+            raise EmptyMatchPeriodError(self.id)
+        if self.status == INCOMING:
+            return 'VS'
+        else:
+            return f'{self.get_win_periods(self.team1)}:{self.get_win_periods(self.team2)}'
+
+    def match_winner(self):
+        return self.team1 if self.get_win_periods(self.team1) > self.get_win_periods(self.team2) else self.team2
+
     def __str__(self):
         return f'Match between {self.team1} and {self.team2}'
 
 
 class MatchPeriod(models.Model):
+    # TODO: нельзя удалить матч период у сыгранного матча
     win_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_period_win')
     duration = models.DurationField()
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='match_period')

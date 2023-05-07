@@ -88,7 +88,6 @@ class Player(models.Model):
         return self.sum_parameter_career_period(DRAW_MATCHES)
 
     def all_matches(self):
-        print(self)
         return self.win_matches() + self.draw_matches() + self.lose_matches()
 
     def win_rate(self):
