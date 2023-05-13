@@ -3,3 +3,50 @@
     text-align: center;
     font-size: 25px;
 }
+
+.group_stage_table{
+    background: linear-gradient(to left, #ADCEE9 0%, #FFF, #ADCEE9);
+    border: 2px solid #337AB7;
+    color: #506a6b;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0, .2);
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+}
+
+.matches, .wins, .loses, .points{
+    text-align: center;
+}
+
+.matches{
+    margin-top: 20px;
+}
+
+.match{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.team1, .team2, .score{
+    font-size: 20px;
+}
+
+.team1, .team2{
+    min-width: 150px;
+}
+
+.no_matches{
+    font-size: 25px;
+}
+
+.team_link{
+    color: black;
+    text-decoration: none;
+}

@@ -53,6 +53,9 @@ class Team(MatchStatistic):
             return avg_age
         return 0
 
+    def amount_tournament_matches(self):
+        self
+
     def __str__(self):
         return f'{self.id} {self.name}'
 

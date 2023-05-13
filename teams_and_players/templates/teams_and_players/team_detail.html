@@ -58,7 +58,7 @@
                     <div class="player">
                         <tr>
                             <td>
-                                <a href="{% url 'teams_and_players_app:one_player' pk=player.player.id %}">
+                                <a href="{% url 'teams_and_players_app:one_player' pk=player.player.id %}" style="color: black; text-decoration: none;">
                                   <div class="d-flex align-items-center" style="max-width: 120px;">
                                       <img src="{{player.player.photo.url}}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
                                       <div class="ms-3">
