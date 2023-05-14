@@ -3,10 +3,21 @@ from mixer.backend.django import mixer
 from matches.models import Match, INCOMING, PLAYED, ONGOING, MatchPeriod
 from datetime import timedelta
 from teams_and_players.models import Team
-from matches.errors import EmptyMatchPeriodError
+from matches.errors import EmptyMatchPeriodError, PlayedMatchPeriodDeleteError
 
 
 class TestMatch(TestCase):
+
+    def test_create_incoming(self):
+        match = mixer.blend(Match, status=INCOMING)
+        self.assertEqual(match.status, INCOMING)
+
+    # def test_create_not_incoming(self):
+    #     match = mixer.blend(Match, status=PLAYED)
+    #     self.assertEqual(match.status, INCOMING)
+    #     match = mixer.blend(Match, status=ONGOING)
+    #     self.assertEqual(match.status, INCOMING)
+
 
     def test_score_incoming(self):
         match = mixer.blend(Match, status=INCOMING)
@@ -34,3 +45,27 @@ class TestMatch(TestCase):
         team2 = mixer.blend(Team)
         match = mixer.blend(Match, status=ONGOING, team1=team1, team2=team2)
         self.assertEqual(match.score(), '0:0')
+
+
+class TestMatchPeriod(TestCase):
+
+    def test_delete_not_played(self):
+        match_period = mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match__status=INCOMING)
+        match_period.delete()
+        self.assertFalse(MatchPeriod.objects.all().exists())
+
+    def test_delete_played(self):
+        match_period = mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match__status=PLAYED)
+        with self.assertRaises(PlayedMatchPeriodDeleteError):
+            match_period.delete()
+
+    def test_delete_played_queryset(self):
+        match_period = mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match__status=PLAYED)
+        MatchPeriod.not_played.all().delete()
+        self.assertTrue(MatchPeriod.objects.filter(id=match_period.id).exists())
+
+
+    def test_delete_played_queryset_delete(self):
+        mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match__status=PLAYED)
+        with self.assertRaises(Exception):
+            MatchPeriod.objects.all().delete()
