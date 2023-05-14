@@ -11,6 +11,27 @@ import os
 from django.conf import settings
 
 
+def create_match(stage, team1, team2, formats):
+    match = Match.objects.create(start_date=stage.start_date,
+                                 end_date=stage.start_date + timedelta(minutes=40),
+                                 team1=team1,
+                                 team2=team2,
+                                 tournament_stage=stage,
+                                 status=PLAYED, format=choice(formats))
+    for k in range(int(match.format)):
+        MatchPeriod.objects.create(win_team=choice([match.team1, match.team2]),
+                                   duration=timedelta(minutes=45),
+                                   match=match)
+    print(match)
+
+
+def create_matches(stage, formats):
+    teams = stage.shuffle_teams()
+    for pair in teams:
+        team1, team2 = pair
+        create_match(stage, team1, team2, formats)
+
+
 class Command(BaseCommand):
     help = 'Filling database with test data'
 
@@ -23,6 +44,8 @@ class Command(BaseCommand):
         CareerPeriod.objects.all().delete()
         Tournament.objects.all().delete()
         TournamentStage.objects.all().delete()
+        Match.objects.all().delete()
+        MatchPeriod.objects.all().delete()
 
         # Creating authors
         print('Creating authors...\n')
@@ -85,10 +108,21 @@ class Command(BaseCommand):
             'PSG.LGD',
             'team Secret',
             "Na'Vi",
+            'BetBoom',
+            'Nemiga',
+            'One Move',
+            'VP',
+            'Entity',
+            'OG',
+            'Evil Geniuses',
+            'Gladiators',
+            'Thunder',
+            'BOOM',
+            'Aster'
         ]
-        countries = ['Russia', 'US', 'Germany']
+        countries = ['Russia', 'US', 'Germany', 'Brazil', 'Spain', 'UK']
 
-        for i in range(5):
+        for i in range(16):
             team = Team.objects.create(
                 name=teams_names[i],
                 country=choice(countries),
@@ -220,9 +254,15 @@ class Command(BaseCommand):
 
         # Creating tournament's stages
         print("Creating tournament's stages...\n")
-        stages = ['Group Stage', '1/16', '1/8', '1/4', '1/2', 'Final']
+        stages = [
+            TournamentStage.GROUP_STAGE,
+            TournamentStage.ONE_EIGHT,
+            TournamentStage.QUARTER_FINALS,
+            TournamentStage.SEMI_FINALS,
+            TournamentStage.FINAL,
+        ]
         for tournament in tournaments:
-            for i in range(6):
+            for i in range(5):
                 tournaments_stage = TournamentStage.objects.create(
                     stage=stages[i],
                     tournament=tournament,
@@ -232,59 +272,32 @@ class Command(BaseCommand):
                 print(tournaments_stage)
         print("\nall tournament's stages successfully created\n")
 
-        # Creating matches
-        print('Creating matches...\n')
+        # Creating matches and matches' periods
+        print("Creating matches and matches' periods...\n")
         formats = [BO1, BO3, BO5]
         for tournament in tournaments:
-            teams = tournament.teams.all()
-            for i in range(4):
-                team1 = choice(teams)
-                team2 = choice(teams.exclude(id=team1.id))
-                if tournament.start_date > timezone.now().date():
-                    match = Match.objects.create(
-                        start_date=tournament.tournament_stages.get(stage='Group Stage').start_date + timedelta(hours=2),
-                        end_date=None,
-                        team1=team1,
-                        team2=team2,
-                        status=INCOMING,
-                        format=choice(formats),
-                        tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
-                    )
-                elif tournament.end_date < timezone.now().date():
-                    match = Match.objects.create(
-                        start_date=tournament.tournament_stages.get(stage='Group Stage').start_date + timedelta(hours=2),
-                        end_date=tournament.tournament_stages.get(stage='Group Stage').start_date + timedelta(hours=3),
-                        team1=team1,
-                        team2=team2,
-                        status=PLAYED,
-                        format=choice(formats),
-                        tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
-                    )
-                else:
-                    match = Match.objects.create(
-                        start_date=tournament.tournament_stages.get(stage='Group Stage').start_date + timedelta(hours=2),
-                        end_date=None,
-                        team1=team1,
-                        team2=team2,
-                        status=ONGOING,
-                        format=choice(formats),
-                        tournament_stage=tournament.tournament_stages.get(stage='Group Stage')
-                    )
-                print(match)
-        print('\nall matches successfully created\n')
+            participants = tournament.teams.all()
+            if tournament.end_date < timezone.now().date():
+                group_stage = tournament.tournament_stages.get(stage=TournamentStage.GROUP_STAGE)
+                for i in range(len(participants)):
+                    for j in range(i + 1, len(participants)):
+                        create_match(group_stage, participants[i], participants[j], formats)
 
-        # Creating matches' periods
-        print("Creating matches' periods...\n")
-        for match in Match.objects.filter(status=PLAYED):
-            teams = [match.team1, match.team2]
-            for i in range(int(match.format)):
-                match_period = MatchPeriod.objects.create(
-                    win_team=choice(teams),
-                    duration=timedelta(minutes=randint(20, 30)),
-                    match=match
-                )
-                print(match_period)
-        print("\nall matches' periods successfully created\n")
+                one_eight = tournament.tournament_stages.get(stage=TournamentStage.ONE_EIGHT)
+                create_matches(one_eight, formats)
+
+                quarter_finals = tournament.tournament_stages.get(stage=TournamentStage.QUARTER_FINALS)
+                create_matches(quarter_finals, formats)
+
+                semi_finals = tournament.tournament_stages.get(stage=TournamentStage.SEMI_FINALS)
+                create_matches(semi_finals, formats)
+
+                final = tournament.tournament_stages.get(stage=TournamentStage.FINAL)
+                teams = final.shuffle_teams()
+                team1, team2 = teams[0]
+                create_match(final, team1, team2, formats)
+
+        print("\nall matches and matches' successfully created\n")
 
         print('DONE')
 

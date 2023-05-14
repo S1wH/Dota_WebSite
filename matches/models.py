@@ -47,8 +47,11 @@ class Match(models.Model):
     def match_winner(self):
         return self.team1 if self.get_win_periods(self.team1) > self.get_win_periods(self.team2) else self.team2
 
+    def match_loser(self):
+        return self.team1 if self.get_win_periods(self.team1) < self.get_win_periods(self.team2) else self.team2
+
     def __str__(self):
-        return f'Match between {self.team1} and {self.team2}'
+        return f'Match between {self.team1} and {self.team2} on {self.tournament_stage}'
 
 
 class MatchPeriod(models.Model):

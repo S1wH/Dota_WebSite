@@ -12,11 +12,52 @@
 
 {% block content %}
     {% for stage in object.tournament_stages.all %}
-        <div class="stage">{{stage.stage}}</div>
+        <div class="stage">{{ stage.stage }}</div>
+        {% if stage.stage == "GS" %}
+            <div class="group_stage_table">
+                <table class="table table-sm">
+                  <thead style="padding-bottom: 10px;">
+                    <tr>
+                        <th class="col-5" scope="col" style="padding-left: 35px;">Команда</th>
+                        <th class="col-1 matches" scope="col">Матчи</th>
+                        <th class="col-1 wins" scope="col">Победы</th>
+                        <th class="col-1 loses" scope="col">Поражения</th>
+                        <th class="col-1 points" scope="col">Очки</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for team, stats in stage.group_stage_table.items %}
+                        <tr>
+                            <th scope="row">
+                                {{ forloop.counter }}
+                                <a class="team_link" href="{% url 'teams_and_players_app:one_team' pk=team.id %}">
+                                    <img src="{{ team.logo.url }}" alt="" style="margin-right:7px; margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                                    {{ team.name }}
+                                </a>
+                            </th>
+                            <td class="matches">{{ stats.0 }}</td>
+                            <td class="wins">{{ stats.1 }}</td>
+                            <td class="loses">{{ stats.2 }}</td>
+                            <td class="points">{{ stats.3 }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
         <div class="matches">
             {% for match in stage.tournamentstage_matches.all %}
-                <div class="match" style="text-align:center;">{{ match }}</div>
+                <div class="match" style="text-align: center;">
+                    <img src="{{ match.team1.logo.url }}" alt="" style="margin-right:7px; margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                    <div class="team1">{{ match.team1.name }}</div>
+                    <div class="score">{{ match.score }}</div>
+                    <div class="team2">{{ match.team2.name }}</div>
+                    <img src="{{ match.team2.logo.url }}" alt="" style="margin-right:7px; margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                </div>
+            {% empty %}
+                <div class="no_matches">Пока не было сыграно матчей на этой стадии</div>
             {% endfor %}
         </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}

@@ -34,8 +34,9 @@
         {% for team in object_list %}
           <tr>
             <td>
-                <a href="{% url 'teams_and_players_app:one_team' pk=team.id %}" class="team_link" style="text-decoration: none;">
+                <a href="{% url 'teams_and_players_app:one_team' pk=team.id %}" class="team_link" style="text-decoration: none; color: black;">
                   <div class="d-flex align-items-center">
+                      <p style="font-size:20px; padding-top: 10px;">{{ forloop.counter }}</p>
                       <img src="{{ team.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
                       <div class="ms-3">
                         <p class="fw-bold mb-1">{{ team.name }}</p>
