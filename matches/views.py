@@ -25,4 +25,4 @@ class MatchesPlayedListView(ListView):
     model = Match
 
     def get_queryset(self):
-        return super().get_queryset().filter(end_date__lt=timezone.now())
+        return super().get_queryset().filter(end_date__lt=timezone.now()).select_related('team1', 'team2')

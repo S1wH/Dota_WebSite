@@ -114,3 +114,4 @@ class TestTeam(TestCase):
         mixer.blend(CareerPeriod, player=player1, team=team, end_date=None)
         mixer.blend(CareerPeriod, player=player2, team=team, end_date=None)
         self.assertEqual(team.avg_age(), round((player1.age + player2.age) / 2, 1))
+
