@@ -17,7 +17,7 @@ def create_match(stage, team1, team2, formats):
                                  team1=team1,
                                  team2=team2,
                                  tournament_stage=stage,
-                                 status=PLAYED, format=choice(formats))
+                                 format=choice(formats))
     for k in range(int(match.format)):
         MatchPeriod.objects.create(win_team=choice([match.team1, match.team2]),
                                    duration=timedelta(minutes=45),

@@ -2,11 +2,13 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from teams_and_players.models import Player, Team
+from teams_and_players.models import Player, Team, CareerPeriod
 from datetime import date
 from teams_and_players.forms import CareerPeriodForm, TeamForm, PlayerForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db.models import F, Sum, Prefetch
+from django.db.models.functions import Round
 
 
 def players_view(request):
@@ -107,9 +109,38 @@ class TeamDeleteView(UserPassesTestMixin, DeleteView):
 class PlayerListView(ListView):
     model = Player
 
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('player_career').annotate(
+            win_matches=Sum('player_career__win_matches'),
+            lose_matches=Sum('player_career__lose_matches'),
+            draw_matches=Sum('player_career__draw_matches'),
+            prize=Sum('player_career__prize'),
+        ).annotate(
+            all_matches=F('win_matches') + F('lose_matches') + F('draw_matches')
+        ).annotate(
+            win_rate=Round(F('win_matches') * 100 / F('all_matches')),
+            lose_rate=Round(F('lose_matches') * 100 / F('all_matches')),
+            draw_rate=Round(F('draw_matches') * 100 / F('all_matches')),
+        )
+
 
 class PlayerDetailView(DetailView):
     model = Player
+
+    def get_queryset(self):
+        print(super().get_queryset())
+        return super().get_queryset().prefetch_related('player_career').annotate(
+            win_matches=Sum('player_career__win_matches'),
+            lose_matches=Sum('player_career__lose_matches'),
+            draw_matches=Sum('player_career__draw_matches'),
+            prize=Sum('player_career__prize'),
+        ).annotate(
+            all_matches=F('win_matches') + F('lose_matches') + F('draw_matches')
+        ).annotate(
+            win_rate=Round(F('win_matches') * 100 / F('all_matches')),
+            lose_rate=Round(F('lose_matches') * 100 / F('all_matches')),
+            draw_rate=Round(F('draw_matches') * 100 / F('all_matches')),
+        )
 
 
 class PlayerCreateView(UserPassesTestMixin, CreateView):

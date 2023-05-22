@@ -69,43 +69,45 @@ class Player(models.Model):
     photo = models.ImageField(upload_to='players_photos')
     biography = models.TextField()
 
-    def sum_parameter_career_period(self, param):
-        result = CareerPeriod.objects.filter(player=self).aggregate(Sum(param))[f'{param}__sum']
-        if result:
-            return result
-        return 0
+    # def sum_parameter_career_period(self, param):
+    #     result = CareerPeriod.objects.filter(player=self).aggregate(Sum(param))[f'{param}__sum']
+    #     if result:
+    #         return result
+    #     return 0
 
     def team(self):
         return CareerPeriod.objects.get(player=self, end_date=None).team
 
-    def prize(self):
-        return self.sum_parameter_career_period(PRIZE)
-
-    def win_matches(self):
-        return self.sum_parameter_career_period(WIN_MATCHES)
-
-    def lose_matches(self):
-        return self.sum_parameter_career_period(LOSE_MATCHES)
-
-    def draw_matches(self):
-        return self.sum_parameter_career_period(DRAW_MATCHES)
-
-    def all_matches(self):
-        return self.win_matches() + self.draw_matches() + self.lose_matches()
-
-    def win_rate(self):
-        return self.rate(self.win_matches())
-
-    def lose_rate(self):
-        return self.rate(self.lose_matches())
-
-    def draw_rate(self):
-        return self.rate(self.draw_matches())
-
-    def rate(self, param):
-        if self.all_matches() == 0:
-            return 0
-        return round(param / self.all_matches() * 100)
+    # def prize(self):
+    #     return self.sum_parameter_career_period(PRIZE)
+    #
+    # def win_matches(self):
+    #     print('ABOBA')
+    #     return self.sum_parameter_career_period(WIN_MATCHES)
+    #
+    # def lose_matches(self):
+    #     return self.sum_parameter_career_period(LOSE_MATCHES)
+    #
+    # def draw_matches(self):
+    #     return self.sum_parameter_career_period(DRAW_MATCHES)
+    #
+    # def all_matches(self):
+    #     print(self, type(self))
+    #     return self.win_matches() + self.draw_matches() + self.lose_matches()
+    #
+    # def win_rate(self):
+    #     return self.rate(self.win_matches())
+    #
+    # def lose_rate(self):
+    #     return self.rate(self.lose_matches())
+    #
+    # def draw_rate(self):
+    #     return self.rate(self.draw_matches())
+    #
+    # def rate(self, param):
+    #     if self.all_matches() == 0:
+    #         return 0
+    #     return round(param / self.all_matches() * 100)
 
     def teammates(self):
         team = self.team()

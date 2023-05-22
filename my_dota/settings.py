@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # OTHER
-    "debug_toolbar",
     # MY
     'mainapp',
     'news',
@@ -47,6 +45,9 @@ INSTALLED_APPS = [
     'users',
     'matches',
     'tournaments',
+    # OTHER
+    "debug_toolbar",
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +147,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 INTERNAL_IPS = [
-    # ...
     "127.0.0.1",
-    # ...
 ]
