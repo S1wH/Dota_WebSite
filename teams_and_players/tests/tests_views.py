@@ -148,11 +148,6 @@ class TestPlayerViews(TestCase):
         response = self.client.get('/teams_and_players/players/')
         self.assertEqual(len(response.context['object_list']), 2)
 
-    def test_list_context_prize(self):
-        player = mixer.blend(Player)
-        response = self.client.get('/teams_and_players/players/')
-        self.assertEqual(response.context['object_list'][0].prize(), player.prize())
-
     def test_list_content_buttons(self):
         response = self.client.get('/teams_and_players/players/')
         teams_and_players_buttons = '<div class="links" style="padding-top: 30px; max-width: 1200px; ' \

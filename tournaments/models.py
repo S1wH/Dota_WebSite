@@ -36,16 +36,17 @@ class TournamentStage(models.Model):
     end_date = models.DateField()
 
     def group_stage_table(self):
+        # matches, wins, loses, points
         matches = self.tournamentstage_matches.all()
         teams = {team: [0, 0, 0, 0] for team in self.tournament.teams.all()}
         for match in matches:
             winner = match.match_winner()
             loser = match.match_loser()
             teams[winner][0] += 1
-            teams[winner][1] += 1
-            teams[winner][3] += 3
             teams[loser][0] += 1
+            teams[winner][1] += 1
             teams[loser][2] += 1
+            teams[winner][3] += 3
         return dict(sorted(teams.items(), key=lambda x: x[1], reverse=True))
 
     def get_previous_stage(self):
@@ -81,7 +82,7 @@ class TournamentStage(models.Model):
                 try:
                     match = self.tournamentstage_matches.get(team1=team2, team2=team1)
                 except ObjectDoesNotExist:
-                    raise MatchNotfound
+                    raise MatchNotfound(team1, team2, self)
             winners.append(match.match_winner())
         return winners
 

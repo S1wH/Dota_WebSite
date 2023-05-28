@@ -1,7 +1,7 @@
 from django.db import models
 from teams_and_players.models import Team, Player
 from tournaments.models import TournamentStage
-from matches.errors import EmptyMatchPeriodError, PlayedMatchPeriodDeleteError
+from matches.errors import EmptyMatchPeriodError
 
 INCOMING = 'I'
 ONGOING = 'O'
@@ -11,9 +11,10 @@ BO1 = '1'
 BO3 = '3'
 BO5 = '5'
 
+MATCH_PERIOD = 'MP'
+
 
 class Match(models.Model):
-    # TODO: переопределние статуса матча из played в incoming
     statuses = (
         (INCOMING, 'Incoming'),
         (ONGOING, 'Ongoing'),
@@ -28,25 +29,22 @@ class Match(models.Model):
     end_date = models.DateTimeField(blank=True, null=True)
     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1_match')
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2_match')
-    status = models.CharField(max_length=1, choices=statuses, default=INCOMING)
+    status = models.CharField(max_length=1, choices=statuses, default=INCOMING, editable=False)
     format = models.CharField(max_length=1, choices=formats, default=BO3)
     tournament_stage = models.ForeignKey(TournamentStage, on_delete=models.CASCADE,
                                          related_name='tournamentstage_matches')
 
-    # def save(
-    #     self, force_insert=False, force_update=False, using=None, update_fields=None
-    # ):
-    #     # update, create
-    #     # Как узнать что это update
-    #     if self.id:
-    #         # update
-    #         pass
-    #     else:
-    #         # create
-    #         self.status = INCOMING
-    #
-    #     return super().save(force_insert=force_insert, force_update=force_update,
-    #                         using=using, update_fields=update_fields)
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None, *args, **kwargs):
+        if self.id and kwargs['extra'] == MATCH_PERIOD:
+            periods_played = self.match_period.all().count()
+            if periods_played == int(self.format):
+                self.status = PLAYED
+            elif periods_played == 0:
+                self.status = INCOMING
+            else:
+                self.status = ONGOING
+        return super().save(force_insert=force_insert, force_update=force_update,
+                            using=using, update_fields=update_fields)
 
     def get_win_periods(self, team):
         return self.match_period.filter(win_team=team).count()
@@ -76,10 +74,7 @@ class NotPlayedMatchPeriodManager(models.Manager):
 
 
 class MatchPeriodQuerySet(models.query.QuerySet):
-    '''
-    QuerySet whose delete() does not delete items, but instead marks the
-    rows as not active, and updates the timestamps
-    '''
+
     def delete(self):
         if self.filter(match__status=PLAYED).exists():
             raise Exception('Есть сыгранный матч, нельзя удалить выборку')
@@ -87,12 +82,10 @@ class MatchPeriodQuerySet(models.query.QuerySet):
 
 
 class MatchPeriodManager(models.Manager):
-    '''
-    Manager that returns a DeactivateQuerySet,
-    to prevent object deletion.
-    '''
+
     def get_queryset(self):
         return MatchPeriodQuerySet(self.model, using=self._db)
+
 
 class MatchPeriod(models.Model):
     objects = MatchPeriodManager()
@@ -101,18 +94,6 @@ class MatchPeriod(models.Model):
     win_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_period_win')
     duration = models.DurationField()
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='match_period')
-
-    # def save(
-    #     self, force_insert=False, force_update=False, using=None, update_fields=None
-    # ):
-
-
-
-    def delete(self, using=None, keep_parents=False):
-        if self.match.status == PLAYED:
-            raise PlayedMatchPeriodDeleteError(self)
-
-        super().delete(using=using, keep_parents=keep_parents)
 
     def __str__(self):
         return f'period in match {self.match}, win team is {self.win_team}'

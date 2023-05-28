@@ -15,7 +15,7 @@ class TestTournament(TestCase):
         for i in range(len(teams)):
             for j in range(i + 1, len(teams)):
                 match = mixer.blend(Match, team1=teams[i], team2=teams[j],
-                                    tournament_stage=tournament_stage, status=PLAYED, format=BO3)
+                                    tournament_stage=tournament_stage, format=BO3)
                 mixer.cycle(3).blend(MatchPeriod, win_team=match.team1, duration=timedelta(minutes=45), match=match)
         teams = {team: [4,
                         len(teams) - teams.index(team) - 1,
