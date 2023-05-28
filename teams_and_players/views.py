@@ -128,7 +128,6 @@ class PlayerDetailView(DetailView):
     model = Player
 
     def get_queryset(self):
-        print(super().get_queryset())
         return super().get_queryset().prefetch_related('player_career').annotate(
             win_matches=Sum('player_career__win_matches'),
             lose_matches=Sum('player_career__lose_matches'),

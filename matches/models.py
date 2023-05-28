@@ -1,7 +1,7 @@
 from django.db import models
 from teams_and_players.models import Team, Player
 from tournaments.models import TournamentStage
-from matches.errors import EmptyMatchPeriodError, PlayedMatchPeriodDeleteError
+from matches.errors import EmptyMatchPeriodError
 
 INCOMING = 'I'
 ONGOING = 'O'
@@ -11,9 +11,10 @@ BO1 = '1'
 BO3 = '3'
 BO5 = '5'
 
+MATCH_PERIOD = 'MP'
+
 
 class Match(models.Model):
-    # TODO: переопределние статуса матча из played в incoming
     statuses = (
         (INCOMING, 'Incoming'),
         (ONGOING, 'Ongoing'),
@@ -34,8 +35,8 @@ class Match(models.Model):
                                          related_name='tournamentstage_matches')
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None, *args, **kwargs):
-        if self.id and kwargs['extra'] == 'MP':
-            periods_played = self.match_period.all().count() + 1
+        if self.id and kwargs['extra'] == MATCH_PERIOD:
+            periods_played = self.match_period.all().count()
             if periods_played == int(self.format):
                 self.status = PLAYED
             elif periods_played == 0:
@@ -93,18 +94,6 @@ class MatchPeriod(models.Model):
     win_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_period_win')
     duration = models.DurationField()
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='match_period')
-
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if not self.id:
-            self.match.save(extra='MP')
-        return super().save(force_insert=force_insert, force_update=force_update,
-                            using=using, update_fields=update_fields)
-
-    def delete(self, using=None, keep_parents=False):
-        if self.match.status == PLAYED:
-            raise PlayedMatchPeriodDeleteError(self)
-
-        super().delete(using=using, keep_parents=keep_parents)
 
     def __str__(self):
         return f'period in match {self.match}, win team is {self.win_team}'
