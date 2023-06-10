@@ -54,7 +54,7 @@ class News(models.Model):
 
 
 class Image(models.Model):
-    title = models.CharField(max_length=15, unique=True)
+    title = models.CharField(max_length=100, unique=True)
     image = models.ImageField(upload_to='news_images')
     news_id = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_image')
 
