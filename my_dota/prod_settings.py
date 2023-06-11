@@ -5,11 +5,6 @@ POSTGRES_PASSWORD = 'POSTGRES_PASSWORD'
 POSTGRES_DB = 'POSTGRES_DB'
 POSTGRES_PORT = 'POSTGRES_PORT'
 
-print('--------------')
-print(os.getenv(POSTGRES_DB))
-print(os.getenv(POSTGRES_USER))
-print(os.getenv(POSTGRES_PASSWORD))
-print(os.getenv(POSTGRES_PORT))
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
