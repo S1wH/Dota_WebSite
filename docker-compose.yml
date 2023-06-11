@@ -24,6 +24,8 @@ services:
       - ${DJANGO_PORT}
     volumes:
       - static:/static/
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
     command: bash -c "
       ./wait-for-postgres.sh database ${POSTGRES_USER} ${POSTGRES_PASSWORD} ${POSTGRES_DB}
       && python manage.py migrate --settings=my_dota.prod_settings
