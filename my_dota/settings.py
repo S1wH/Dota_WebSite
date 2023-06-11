@@ -3,6 +3,8 @@ from .base_settings import *
 
 DEBUG = True
 
+SECRET_KEY = 'SECRET_KEY'
+
 ALLOWED_HOSTS = []
 
 DATABASES = {
