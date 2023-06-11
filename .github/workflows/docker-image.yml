@@ -15,4 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
+    - env:
+        POSTGRES_USER: "user"
+        POSTGRES_PASSWORD: "user123456"
+        POSTGRES_DB: "Dota_WebSite"
+        POSTGRES_PORT: "5432"
       run: docker compose build
