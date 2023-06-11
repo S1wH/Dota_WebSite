@@ -5,6 +5,11 @@ POSTGRES_PASSWORD = 'POSTGRES_PASSWORD'
 POSTGRES_DB = 'POSTGRES_DB'
 POSTGRES_PORT = 'POSTGRES_PORT'
 
+print('--------------')
+print(os.getenv(POSTGRES_DB))
+print(os.getenv(POSTGRES_USER))
+print(os.getenv(POSTGRES_PASSWORD))
+print(os.getenv(POSTGRES_PORT))
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
@@ -12,11 +17,11 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env(POSTGRES_DB),
-        'USER': env(POSTGRES_USER),
-        'PASSWORD': env(POSTGRES_PASSWORD),
+        'NAME': os.getenv(POSTGRES_DB),
+        'USER': os.getenv(POSTGRES_USER),
+        'PASSWORD': os.getenv(POSTGRES_PASSWORD),
         'HOST': 'database',
-        'PORT': env(POSTGRES_PORT),
+        'PORT': os.getenv(POSTGRES_PORT),
     }
 }
 
