@@ -1,8 +1,8 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from teams_and_players.models import Team
 from tournaments.errors import WrongAmountTeamsError, NoPreviousStageError
 from matches.errors import MatchNotfound
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class Tournament(models.Model):
@@ -54,19 +54,19 @@ class TournamentStage(models.Model):
     def get_previous_stage(self):
         if self.stage == self.GROUP_STAGE:
             raise NoPreviousStageError(self)
-        elif self.stage == self.ONE_EIGHT:
+        if self.stage == self.ONE_EIGHT:
             return self.tournament.tournament_stages.get(
                 stage=TournamentStage.GROUP_STAGE
             )
-        elif self.stage == self.QUARTER_FINALS:
+        if self.stage == self.QUARTER_FINALS:
             return self.tournament.tournament_stages.get(
                 stage=TournamentStage.ONE_EIGHT
             )
-        elif self.stage == self.SEMI_FINALS:
+        if self.stage == self.SEMI_FINALS:
             return self.tournament.tournament_stages.get(
                 stage=TournamentStage.QUARTER_FINALS
             )
-        elif self.stage == self.FINAL:
+        if self.stage == self.FINAL:
             return self.tournament.tournament_stages.get(
                 stage=TournamentStage.SEMI_FINALS
             )
@@ -80,12 +80,7 @@ class TournamentStage(models.Model):
         length = len(teams)
         if length % 2 != 0:
             raise WrongAmountTeamsError(self)
-        return [
-            (team1, team2)
-            for team1, team2 in zip(
-                teams[: length // 2], teams[-1 : -length // 2 - 1 : -1]
-            )
-        ]
+        return [list(zip(teams[:length // 2], teams[-1:-length // 2 - 1:-1]))]
 
     def stage_winners(self):
         winners = []
@@ -96,8 +91,8 @@ class TournamentStage(models.Model):
             except ObjectDoesNotExist:
                 try:
                     match = self.tournamentstage_matches.get(team1=team2, team2=team1)
-                except ObjectDoesNotExist:
-                    raise MatchNotfound(team1, team2, self)
+                except ObjectDoesNotExist as e:
+                    raise MatchNotfound(team1, team2, self) from e
             winners.append(match.match_winner())
         return winners
 

@@ -18,7 +18,7 @@ class TestPlayer(TestCase):
         mixer.blend(CareerPeriod, player=player, team=team, end_date=None)
         career1 = mixer.blend(CareerPeriod, player=teammate1, team=team, end_date=None)
         career2 = mixer.blend(CareerPeriod, player=teammate2, team=team, end_date=None)
-        self.assertEqual([player for player in player.teammates()], [career1, career2])
+        self.assertEqual(list(player.teammates()), [career1, career2])
 
 
 class TestTeam(TestCase):
@@ -28,9 +28,7 @@ class TestTeam(TestCase):
         player2 = mixer.blend(Player)
         career1 = mixer.blend(CareerPeriod, player=player1, team=team, end_date=None)
         career2 = mixer.blend(CareerPeriod, player=player2, team=team, end_date=None)
-        self.assertEqual(
-            [career for career in team.players_careers()], [career1, career2]
-        )
+        self.assertEqual(list(team.players_careers()), [career1, career2])
 
     def test_avg_age(self):
         team = mixer.blend(Team)

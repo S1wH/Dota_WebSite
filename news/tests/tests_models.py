@@ -1,6 +1,6 @@
 from django.test import TestCase
-from news.models import Author, News, Image
 from mixer.backend.django import mixer
+from news.models import Author, News, Image
 
 
 class TestAuthor(TestCase):
@@ -19,7 +19,7 @@ class TestNews(TestCase):
         news2 = mixer.blend(News)
         # timezone.now() => '21/02/2222'
         # timezone = mock_timezone
-        self.assertEqual([news for news in News.today_news()], [news1, news2])
+        self.assertEqual(list(News.today_news()), [news1, news2])
 
     # def test_yesterday_news(self):
     #     news1 = mixer.blend(News)
@@ -36,4 +36,4 @@ class TestNews(TestCase):
         news = mixer.blend(News)
         image1 = mixer.blend(Image, news_id=news)
         image2 = mixer.blend(Image, news_id=news)
-        self.assertEqual([image for image in News.images(news)], [image1, image2])
+        self.assertEqual(list(News.images(news)), [image1, image2])

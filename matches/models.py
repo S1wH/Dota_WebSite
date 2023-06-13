@@ -49,7 +49,6 @@ class Match(models.Model):
         force_update=False,
         using=None,
         update_fields=None,
-        *args,
         **kwargs,
     ):
         if self.id and kwargs["extra"] == MATCH_PERIOD:
@@ -75,10 +74,7 @@ class Match(models.Model):
             raise EmptyMatchPeriodError(self.id)
         if self.status == INCOMING:
             return "VS"
-        else:
-            return (
-                f"{self.get_win_periods(self.team1)}:{self.get_win_periods(self.team2)}"
-            )
+        return f"{self.get_win_periods(self.team1)}:{self.get_win_periods(self.team2)}"
 
     def match_winner(self):
         return (
@@ -106,7 +102,7 @@ class NotPlayedMatchPeriodManager(models.Manager):
 class MatchPeriodQuerySet(models.query.QuerySet):
     def delete(self):
         if self.filter(match__status=PLAYED).exists():
-            raise Exception("Есть сыгранный матч, нельзя удалить выборку")
+            raise KeyError("Есть сыгранный матч, нельзя удалить выборку")
         return super().delete()
 
 

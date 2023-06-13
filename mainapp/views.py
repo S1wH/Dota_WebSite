@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from news.models import News
 
@@ -28,4 +27,5 @@ def index_view(request):
 # @user_passes_test(is_superuser)
 # def other(request):
 #     videos = ['highlight.mp4', 'highlight.mp4', 'highlight.mp4', 'highlight.mp4']
-#     return render(request, 'mainapp/index.html', context={'main_news': News.important_news(), 'videos': videos})
+#     return render(request, 'mainapp/index.html',
+#     context={'main_news': News.important_news(), 'videos': videos})
