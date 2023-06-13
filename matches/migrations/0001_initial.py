@@ -3,6 +3,16 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+ID_KEY = (
+    "id",
+    models.BigAutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name="ID",
+    )
+)
+
 
 class Migration(migrations.Migration):
     initial = True
@@ -15,15 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Match",
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
+                ID_KEY,
                 ("start_date", models.DateTimeField()),
                 ("end_date", models.DateTimeField()),
                 (
@@ -63,15 +65,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="MatchPeriod",
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
+                ID_KEY,
                 ("duration", models.DurationField()),
                 (
                     "match",
@@ -94,15 +88,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PlayerStats",
             fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
+                ID_KEY,
                 ("kills_amount", models.IntegerField(default=0)),
                 ("deaths_amount", models.IntegerField(default=0)),
                 ("assist_amount", models.IntegerField(default=0)),
