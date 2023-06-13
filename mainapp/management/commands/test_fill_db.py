@@ -335,7 +335,7 @@ def create_all_matches():
 class Command(BaseCommand):
     help = "Filling database with test data"
 
-    def handle(self, *args, **options):
+    def handle(self):
         # Delete all previous data
         Author.objects.all().delete()
         News.objects.all().delete()
