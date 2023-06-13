@@ -1,5 +1,5 @@
 import os
-from .base_settings import *
+from my_dota.base_settings import BASE_DIR
 
 DEBUG = True
 

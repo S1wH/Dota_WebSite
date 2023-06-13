@@ -1,4 +1,5 @@
-from .base_settings import *
+import os
+from my_dota.base_settings import BASE_DIR
 
 POSTGRES_USER = "POSTGRES_USER"
 POSTGRES_PASSWORD = "POSTGRES_PASSWORD"

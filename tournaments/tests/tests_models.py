@@ -1,10 +1,10 @@
+from datetime import timedelta
 from django.test import TestCase
 from mixer.backend.django import mixer
 from tournaments.models import TournamentStage, Tournament
+from tournaments.errors import NoPreviousStageError, WrongAmountTeamsError
 from teams_and_players.models import Team
 from matches.models import Match, MatchPeriod, BO3, PLAYED
-from datetime import timedelta
-from tournaments.errors import NoPreviousStageError, WrongAmountTeamsError
 
 
 class TestTournament(TestCase):

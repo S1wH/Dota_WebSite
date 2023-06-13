@@ -1,9 +1,9 @@
+from datetime import timedelta
 from django.test import TestCase
 from mixer.backend.django import mixer
 from matches.models import Match, INCOMING, PLAYED, ONGOING, MatchPeriod, BO1
-from datetime import timedelta
+from matches.errors import EmptyMatchPeriodError
 from teams_and_players.models import Team
-from matches.errors import EmptyMatchPeriodError, PlayedMatchPeriodDeleteError
 
 
 class TestMatch(TestCase):

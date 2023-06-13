@@ -15,7 +15,7 @@ class TestTeamViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create_get(self):
-        url = f"/teams_and_players/teams/create/"
+        url = "/teams_and_players/teams/create/"
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -97,7 +97,7 @@ class TestPlayerViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create_get(self):
-        url = f"/teams_and_players/players/create/"
+        url = "/teams_and_players/players/create/"
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)

@@ -1,8 +1,6 @@
-from django.db.models import Count, F
-from django.shortcuts import render
 from django.utils import timezone
-from matches.models import Match
 from django.views.generic import ListView
+from matches.models import Match
 
 
 class MatchesOngoingListView(ListView):
