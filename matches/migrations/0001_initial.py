@@ -17,37 +17,93 @@ class Migration(migrations.Migration):
             name='Match',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_date', models.DateTimeField()),
-                ('end_date', models.DateTimeField()),
-                ('status', models.CharField(choices=[(1, 'Incoming'), (2, 'Ongoing'), (3, 'Played')], default=1, max_length=10)),
-                ('format', models.CharField(choices=[(1, 'bo1'), (2, 'bo3'), (3, 'bo5')], default=2, max_length=3)),
-                ('team1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team1_match', to='teams_and_players.team')),
-                ('team2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team2_match', to='teams_and_players.team')),
+                ("start_date", models.DateTimeField()),
+                ("end_date", models.DateTimeField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[(1, "Incoming"), (2, "Ongoing"), (3, "Played")],
+                        default=1,
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "format",
+                    models.CharField(
+                        choices=[(1, "bo1"), (2, "bo3"), (3, "bo5")],
+                        default=2,
+                        max_length=3,
+                    ),
+                ),
+                (
+                    "team1",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="team1_match",
+                        to="teams_and_players.team",
+                    ),
+                ),
+                (
+                    "team2",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="team2_match",
+                        to="teams_and_players.team",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='MatchPeriod',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('duration', models.DurationField()),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='match_period', to='matches.match')),
-                ('win_team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team_period_win', to='teams_and_players.team')),
+                ("duration", models.DurationField()),
+                (
+                    "match",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="match_period",
+                        to="matches.match",
+                    ),
+                ),
+                (
+                    "win_team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="team_period_win",
+                        to="teams_and_players.team",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='PlayerStats',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('kills_amount', models.IntegerField(default=0)),
-                ('deaths_amount', models.IntegerField(default=0)),
-                ('assist_amount', models.IntegerField(default=0)),
-                ('damage_dealt', models.IntegerField(default=0)),
-                ('damage_received', models.IntegerField(default=0)),
-                ('heal_amount', models.IntegerField(default=0)),
-                ('money_earned', models.IntegerField(default=0)),
-                ('support_money_spent', models.IntegerField(default=0)),
-                ('match_period', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='period_stats', to='matches.matchperiod')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='player_stats', to='teams_and_players.player')),
+                ("kills_amount", models.IntegerField(default=0)),
+                ("deaths_amount", models.IntegerField(default=0)),
+                ("assist_amount", models.IntegerField(default=0)),
+                ("damage_dealt", models.IntegerField(default=0)),
+                ("damage_received", models.IntegerField(default=0)),
+                ("heal_amount", models.IntegerField(default=0)),
+                ("money_earned", models.IntegerField(default=0)),
+                ("support_money_spent", models.IntegerField(default=0)),
+                (
+                    "match_period",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="period_stats",
+                        to="matches.matchperiod",
+                    ),
+                ),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="player_stats",
+                        to="teams_and_players.player",
+                    ),
+                ),
             ],
         ),
     ]
