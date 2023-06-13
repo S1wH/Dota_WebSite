@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('matches', '0005_alter_match_end_date'),
+        ("matches", "0005_alter_match_end_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='match',
-            name='status',
-            field=models.CharField(choices=[('I', 'Incoming'), ('O', 'Ongoing'), ('P', 'Played')], default='I', editable=False, max_length=1),
+            model_name="match",
+            name="status",
+            field=models.CharField(
+                choices=[("I", "Incoming"), ("O", "Ongoing"), ("P", "Played")],
+                default="I",
+                editable=False,
+                max_length=1,
+            ),
         ),
     ]

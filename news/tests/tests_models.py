@@ -4,14 +4,14 @@ from mixer.backend.django import mixer
 
 
 class TestAuthor(TestCase):
-
     def test_str(self):
-        author = Author.objects.create(nickname='Pishkin', rating=1)
-        self.assertEqual(str(author), 'Pishkin with rating 1')
+        author = Author.objects.create(nickname="Pishkin", rating=1)
+        self.assertEqual(str(author), "Pishkin with rating 1")
 
 
 # def mock_timezone():
 #     return '21/02/2222'
+
 
 class TestNews(TestCase):
     def test_today_news(self):

@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tournaments', '0002_alter_tournamentstage_tournament'),
+        ("tournaments", "0002_alter_tournamentstage_tournament"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='tournamentstage',
-            name='stage',
-            field=models.CharField(choices=[('GS', 'Group Stage'), ('1/8', '1/8'), ('1/4', '1/4'), ('1/2', '1/2'), ('F', 'Final')], max_length=20),
+            model_name="tournamentstage",
+            name="stage",
+            field=models.CharField(
+                choices=[
+                    ("GS", "Group Stage"),
+                    ("1/8", "1/8"),
+                    ("1/4", "1/4"),
+                    ("1/2", "1/2"),
+                    ("F", "Final"),
+                ],
+                max_length=20,
+            ),
         ),
     ]

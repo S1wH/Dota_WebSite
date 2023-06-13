@@ -3,7 +3,6 @@ from .models import MyUser
 
 
 class RegistrationForm(UserCreationForm):
-
     class Meta:
         model = MyUser
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ("username", "email", "password1", "password2")
