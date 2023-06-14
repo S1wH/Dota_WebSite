@@ -1,8 +1,8 @@
+from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
 from mixer.backend.django import mixer
 from tournaments.models import Tournament, TournamentStage
-from datetime import timedelta
 
 
 class TestTournamentView(TestCase):

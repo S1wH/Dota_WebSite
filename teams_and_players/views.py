@@ -1,10 +1,7 @@
+from datetime import date
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from teams_and_players.models import Player, Team, CareerPeriod
-from datetime import date
-from teams_and_players.forms import CareerPeriodForm, TeamForm, PlayerForm
 from django.views.generic import (
     ListView,
     DetailView,
@@ -13,8 +10,10 @@ from django.views.generic import (
     DeleteView,
 )
 from django.urls import reverse_lazy
-from django.db.models import F, Sum, Prefetch
+from django.db.models import F, Sum
 from django.db.models.functions import Round
+from teams_and_players.models import Player, Team
+from teams_and_players.forms import CareerPeriodForm, TeamForm, PlayerForm
 
 
 def players_view(request):
@@ -36,47 +35,46 @@ def create_player_view(request):
         return render(
             request, "teams_and_players/create_player.html", context={"is_error": False}
         )
-    else:
-        error_text = None
-        nickname = request.POST.get("name")
-        name = request.POST.get("nickname")
-        age = int(request.POST.get("age"))
-        birthday = request.POST.get("birthday")
-        country = request.POST.get("country")
-        image = request.POST.get("photo")
-        biography = request.POST.get("biography")
-        if len(nickname) > 30 or len(nickname) < 5:
-            error_text = "nickname length should be in range from 5 to 30"
-        elif len(name) > 30 or len(name) < 5:
-            error_text = "name length should be in range from 5 to 30"
-        elif age > 99 or age <= 0:
-            error_text = "age should be in range from 1 to 99"
-        elif len(country) > 20 or len(country) < 5:
-            error_text = "country length should be in range from 5 to 20"
-        try:
-            d = date(
-                year=int(birthday.split("-")[0]),
-                month=int(birthday.split("-")[1]),
-                day=int(birthday.split("-")[2]),
-            )
-        except ValueError:
-            error_text = "incorrect date"
-        if error_text is not None:
-            return render(
-                request,
-                "teams_and_players/create_player.html",
-                context={"is_error": True, "error_text": error_text},
-            )
-        Player.objects.create(
-            nickname=nickname,
-            name=name,
-            age=age,
-            birthday=birthday,
-            country=country,
-            photo=image,
-            biography=biography,
+    error_text = None
+    nickname = request.POST.get("name")
+    name = request.POST.get("nickname")
+    age = int(request.POST.get("age"))
+    birthday = request.POST.get("birthday")
+    country = request.POST.get("country")
+    image = request.POST.get("photo")
+    biography = request.POST.get("biography")
+    if len(nickname) > 30 or len(nickname) < 5:
+        error_text = "nickname length should be in range from 5 to 30"
+    elif len(name) > 30 or len(name) < 5:
+        error_text = "name length should be in range from 5 to 30"
+    elif age > 99 or age <= 0:
+        error_text = "age should be in range from 1 to 99"
+    elif len(country) > 20 or len(country) < 5:
+        error_text = "country length should be in range from 5 to 20"
+    try:
+        date(
+            year=int(birthday.split("-")[0]),
+            month=int(birthday.split("-")[1]),
+            day=int(birthday.split("-")[2]),
         )
-        return HttpResponseRedirect("/")
+    except ValueError:
+        error_text = "incorrect date"
+    if error_text is not None:
+        return render(
+            request,
+            "teams_and_players/create_player.html",
+            context={"is_error": True, "error_text": error_text},
+        )
+    Player.objects.create(
+        nickname=nickname,
+        name=name,
+        age=age,
+        birthday=birthday,
+        country=country,
+        photo=image,
+        biography=biography,
+    )
+    return HttpResponseRedirect("/")
 
 
 def create_career_view(request):

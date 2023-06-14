@@ -1,6 +1,6 @@
+from mixer.backend.django import mixer
 from django.test import TestCase
 from news.models import News
-from mixer.backend.django import mixer
 from users.models import MyUser
 
 
