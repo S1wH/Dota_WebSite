@@ -1,7 +1,6 @@
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from matches.errors import PlayedMatchPeriodDeleteError
-from matches.models import MatchPeriod, MATCH_PERIOD, PLAYED
+from matches.models import MatchPeriod, MATCH_PERIOD
 
 
 @receiver(post_save, sender=MatchPeriod)

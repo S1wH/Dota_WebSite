@@ -2,8 +2,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from news.models import News, Author
-from .forms import NewsForm
 from django.views.generic import (
     ListView,
     DetailView,
@@ -11,6 +9,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from news.models import News, Author
+from news.forms import NewsForm
 
 
 def get_news_info(request):
@@ -37,22 +37,19 @@ def create_author_view(request):
     # заголовки, url - адрес, тело запроса
     if request.method == "GET":
         return render(request, "news/create_author.html", context={"is_error": False})
-    else:
-        # print(request)
-        # print(request.POST)
-        nickname = request.POST.get("nickname", "guest")
-        rating = int(request.POST.get("rating", 0))
-        if rating < 0 or rating > 5:
-            return render(
-                request,
-                "news/create_author.html",
-                context={
-                    "is_error": True,
-                    "error_text": "Рейтинг должен быть от 0 до 5",
-                },
-            )
-        Author.objects.create(nickname=nickname, rating=rating)
-        return HttpResponseRedirect("/admin/")
+    nickname = request.POST.get("nickname", "guest")
+    rating = int(request.POST.get("rating", 0))
+    if rating < 0 or rating > 5:
+        return render(
+            request,
+            "news/create_author.html",
+            context={
+                "is_error": True,
+                "error_text": "Рейтинг должен быть от 0 до 5",
+            },
+        )
+    Author.objects.create(nickname=nickname, rating=rating)
+    return HttpResponseRedirect("/admin/")
 
 
 def create_news_view(request):
@@ -86,10 +83,6 @@ def update_news_view(request, news_id):
 # Любой может смотреть список новостей
 class NewsListView(ListView):
     model = News
-
-    def get(self, request, *args, **kwargs):
-        # print('REQUEST DATA: ', request.GET)
-        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         # return News.objects.filter(importance_index=True)
@@ -139,7 +132,7 @@ class NewsUpdateView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         user = self.request.user
-        return user.is_staff and user.username == "user" and 1 == 1
+        return user.is_staff and user.username == "user"
 
     # get
     # get_context_data

@@ -1,3 +1,4 @@
+import os
 from .base_settings import *
 
 POSTGRES_USER = "POSTGRES_USER"

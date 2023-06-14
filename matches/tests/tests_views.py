@@ -1,8 +1,8 @@
+from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
 from mixer.backend.django import mixer
-from matches.models import Match, MatchPeriod
-from datetime import timedelta
+from matches.models import Match
 
 
 class TestMatchView(TestCase):

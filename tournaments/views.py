@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from tournaments.models import Tournament
 from django.utils import timezone
+from tournaments.models import Tournament
 
 
 class TournamentsCurrentListView(ListView):

@@ -441,7 +441,9 @@ disable=raw-checker-failed,
         invalid-name,
         too-many-ancestors,
         inconsistent-return-statements,
-        consider-using-enumerate
+        consider-using-enumerate,
+        unused-wildcard-import,
+        wildcard-import
 
 
 # Enable the message, report, category or checker with the given id(s). You can
