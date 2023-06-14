@@ -80,7 +80,7 @@ class TournamentStage(models.Model):
         length = len(teams)
         if length % 2 != 0:
             raise WrongAmountTeamsError(self)
-        return [list(zip(teams[:length // 2], teams[-1:-length // 2 - 1:-1]))]
+        return list(zip(teams[:length // 2], teams[-1:-length // 2 - 1:-1]))
 
     def stage_winners(self):
         winners = []

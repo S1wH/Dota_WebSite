@@ -22,10 +22,3 @@ def index_view(request):
         "mainapp/index.html",
         context={"main_news": News.important_news(), "videos": videos},
     )
-
-
-# @user_passes_test(is_superuser)
-# def other(request):
-#     videos = ['highlight.mp4', 'highlight.mp4', 'highlight.mp4', 'highlight.mp4']
-#     return render(request, 'mainapp/index.html',
-#     context={'main_news': News.important_news(), 'videos': videos})

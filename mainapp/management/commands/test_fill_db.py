@@ -43,17 +43,15 @@ def create_news():
             header=f"News №{i + 1}",
             summary=f"This is a brief summary of a news with a header News №{i + 1}",
             text=f"Here should be a really long text about news with a header News №{i + 1},"
-                 f" but I am kinda lazy.\n"
-                 "Although this text makes sense. I am glad to write it,"
-                 " because I do it instead of listening "
-                 "to my Physics teacher",
+            f" but I am kinda lazy.\n"
+            "Although this text makes sense. I am glad to write it,"
+            " because I do it instead of listening "
+            "to my Physics teacher",
             author=choice(AUTHORS),
             publish_date=timezone.now(),
             importance_index=i < 9,
         )
-        path = os.path.join(
-            settings.BASE_DIR, f"static/photos/dota/news{i + 1}.jpg"
-        )
+        path = os.path.join(settings.BASE_DIR, f"static/photos/dota/news{i + 1}.jpg")
         with open(path, "rb") as file:
             one_news.main_image = ImageFile(file, name=f"news{i + 1}.jpg")
             one_news.save()
@@ -99,7 +97,7 @@ def create_teams():
             country=choice(COUNTRIES),
             establish_date="2003-12-23",
             biography=f"{teams_names[i]} is a really great team. "
-                      f"It was performing wonderfully",
+            f"It was performing wonderfully",
             prize=randint(1000000, 15000000),
             win_matches=randint(1000, 2000),
             lose_matches=randint(500, 1200),
@@ -136,8 +134,8 @@ def create_players():
             birthday="2003-12-23",
             country=choice(COUNTRIES),
             biography="This player is great. I am serious."
-                      "He won a lot of trophies and made all his "
-                      "teams great once again.",
+            "He won a lot of trophies and made all his "
+            "teams great once again.",
         )
         path = os.path.join(settings.BASE_DIR, "static/photos/player.jpg")
         with open(path, "rb") as file:

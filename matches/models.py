@@ -102,7 +102,7 @@ class NotPlayedMatchPeriodManager(models.Manager):
 class MatchPeriodQuerySet(models.query.QuerySet):
     def delete(self):
         if self.filter(match__status=PLAYED).exists():
-            raise KeyError("Есть сыгранный матч, нельзя удалить выборку")
+            raise ValueError("Есть сыгранный матч, нельзя удалить выборку")
         return super().delete()
 
 

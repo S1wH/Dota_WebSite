@@ -1,10 +1,8 @@
 import os
-from my_dota.base_settings import BASE_DIR
+from .base_settings import *
 
 DEBUG = True
-
 SECRET_KEY = "SECRET_KEY"
-
 ALLOWED_HOSTS = []
 
 DATABASES = {

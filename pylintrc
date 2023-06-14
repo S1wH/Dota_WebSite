@@ -441,7 +441,9 @@ disable=raw-checker-failed,
         invalid-name,
         too-many-ancestors,
         inconsistent-return-statements,
-        consider-using-enumerate
+        consider-using-enumerate,
+        unused-wildcard-import,
+        wildcard-import
 
 
 # Enable the message, report, category or checker with the given id(s). You can
@@ -461,9 +463,8 @@ timeout-methods=requests.api.delete,requests.api.get,requests.api.head,requests.
 [MISCELLANEOUS]
 
 # List of note tags to take in consideration, separated by a comma.
-notes=FIXME,
-      XXX,
-      TODO
+notes=XXX,
+
 
 # Regular expression of note tags to take in consideration.
 notes-rgx=

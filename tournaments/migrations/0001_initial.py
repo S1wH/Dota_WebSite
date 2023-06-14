@@ -3,16 +3,6 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
-ID_KEY = (
-    "id",
-    models.BigAutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name="ID",
-    )
-)
-
 
 class Migration(migrations.Migration):
     initial = True
@@ -25,7 +15,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Tournament",
             fields=[
-                ID_KEY,
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=30, unique=True)),
                 ("prize", models.IntegerField(default=0)),
                 ("place", models.CharField(max_length=30)),
@@ -37,7 +35,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="TournamentStage",
             fields=[
-                ID_KEY,
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 (
                     "stage",
                     models.CharField(

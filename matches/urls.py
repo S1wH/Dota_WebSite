@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 from matches import views
 
-app_name: str = "matchesapp"
+app_name = "matchesapp"
 
 urlpatterns = [
     path(

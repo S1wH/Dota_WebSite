@@ -3,15 +3,6 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
-ID_KEY = (
-    "id",
-    models.BigAutoField(
-        auto_created=True,
-        primary_key=True,
-        serialize=False,
-        verbose_name="ID")
-)
-
 
 class Migration(migrations.Migration):
     initial = True
@@ -22,7 +13,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Player",
             fields=[
-                ID_KEY,
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=30)),
                 ("nickname", models.CharField(max_length=15)),
                 ("age", models.IntegerField()),
@@ -35,7 +34,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Team",
             fields=[
-                ID_KEY,
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("win_matches", models.IntegerField(default=0)),
                 ("lose_matches", models.IntegerField(default=0)),
                 ("draw_matches", models.IntegerField(default=0)),
@@ -53,7 +60,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="CareerPeriod",
             fields=[
-                ID_KEY,
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("win_matches", models.IntegerField(default=0)),
                 ("lose_matches", models.IntegerField(default=0)),
                 ("draw_matches", models.IntegerField(default=0)),

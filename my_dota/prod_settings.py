@@ -1,11 +1,10 @@
 import os
-from my_dota.base_settings import BASE_DIR
+from .base_settings import *
 
 POSTGRES_USER = "POSTGRES_USER"
 POSTGRES_PASSWORD = "POSTGRES_PASSWORD"
 POSTGRES_DB = "POSTGRES_DB"
 POSTGRES_PORT = "POSTGRES_PORT"
-
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
