@@ -5,16 +5,15 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('teams_and_players', '0001_initial'),
+        ("teams_and_players", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Match',
+            name="Match",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ("start_date", models.DateTimeField()),
@@ -54,7 +53,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='MatchPeriod',
+            name="MatchPeriod",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ("duration", models.DurationField()),
@@ -77,7 +76,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PlayerStats',
+            name="PlayerStats",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ("kills_amount", models.IntegerField(default=0)),

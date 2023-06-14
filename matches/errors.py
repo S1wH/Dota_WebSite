@@ -1,9 +1,9 @@
 class EmptyMatchPeriodError(Exception):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, match_id):
+        self.match_id: int = match_id
 
     def __str__(self):
-        return f'У сыгранного матча {self.id} должны быть периоды'
+        return f"У сыгранного матча {self.match_id} должны быть периоды"
 
 
 class MatchNotfound(Exception):
@@ -13,13 +13,13 @@ class MatchNotfound(Exception):
         self.stage = stage
 
     def __str__(self):
-        return f'Не найден матч между командами {self.team1} и {self.team2} на стадии {self.stage}'
+        return f"Не найден матч между командами {self.team1} и {self.team2} на стадии {self.stage}"
 
 
 class PlayedMatchPeriodDeleteError(Exception):
-
     def __init__(self, match_period):
         self.match_period = match_period
 
     def __str__(self):
-        return f'Нельзя удалить MatchPeriod {self.match_period} у сыгранного матча {self.match_period.match}'
+        return f"Нельзя удалить MatchPeriod {self.match_period} " \
+               f"у сыгранного матча {self.match_period.match}"
