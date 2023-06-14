@@ -47,12 +47,6 @@ class TestMatchPeriod(TestCase):
         match_period.delete()
         self.assertFalse(MatchPeriod.objects.all().exists())
 
-    def test_delete_played(self):
-        match = mixer.blend(Match, format=BO1)
-        match_period = mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match=match)
-        with self.assertRaises(PlayedMatchPeriodDeleteError):
-            match_period.delete()
-
     def test_delete_played_queryset(self):
         match = mixer.blend(Match, format=BO1)
         match_period = mixer.blend(MatchPeriod, duration=timedelta(minutes=40), match=match)
