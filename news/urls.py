@@ -16,18 +16,18 @@ Including another URLconf
 from django.urls import path
 from news import views
 
-app_name = 'newsapp'
+app_name = "newsapp"
 
 urlpatterns = [
-    path('', views.get_news_info, name='index'),
-    path('<int:news_id>/', views.get_one_news_view, name='one_news'),
-    path('author/create/', views.create_author_view, name='create_author'),
-    path('news/create/', views.create_news_view, name='create_news'),
-    path('news/update/<int:news_id>/', views.update_news_view, name='update_news'),
+    path("", views.get_news_info, name="index"),
+    path("<int:news_id>/", views.get_one_news_view, name="one_news"),
+    path("author/create/", views.create_author_view, name="create_author"),
+    path("news/create/", views.create_news_view, name="create_news"),
+    path("news/update/<int:news_id>/", views.update_news_view, name="update_news"),
     # CBV
-    path('list/', views.NewsListView.as_view(), name='news_list'),
-    path('detail/<int:pk>/', views.NewsDetailView.as_view(), name='news_detail'),
-    path('update/<int:pk>/', views.NewsUpdateView.as_view(), name='news_update'),
-    path('delete/<int:pk>/', views.NewsDeleteView.as_view(), name='news_delete'),
-    path('create/', views.NewsCreateView.as_view(), name='news_create'),
+    path("list/", views.NewsListView.as_view(), name="news_list"),
+    path("detail/<int:pk>/", views.NewsDetailView.as_view(), name="news_detail"),
+    path("update/<int:pk>/", views.NewsUpdateView.as_view(), name="news_update"),
+    path("delete/<int:pk>/", views.NewsDeleteView.as_view(), name="news_delete"),
+    path("create/", views.NewsCreateView.as_view(), name="news_create"),
 ]

@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker compose build
+      env:
+        POSTGRES_USER: "user"
+        POSTGRES_PASSWORD: "user123456"
+        POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        POSTGRES_PORT: "5432"
+        SECRET_KEY: "django-insecure-gkly7#_(3=y(dex9v1qc=4zl3p7fc!f-zhmouuw58#_9!d47ks"
+        DJANGO_PORT: "8080"
+        NGINX_PORT: "80"

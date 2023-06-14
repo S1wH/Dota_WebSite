@@ -3,36 +3,65 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+ID_KEY = (
+    "id",
+    models.BigAutoField(
+        auto_created=True,
+        primary_key=True,
+        serialize=False,
+        verbose_name="ID",
+    )
+)
+
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('teams_and_players', '0001_initial'),
+        ("teams_and_players", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tournament',
+            name="Tournament",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True)),
-                ('prize', models.IntegerField(default=0)),
-                ('place', models.CharField(max_length=30)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
-                ('teams', models.ManyToManyField(to='teams_and_players.team')),
+                ID_KEY,
+                ("name", models.CharField(max_length=30, unique=True)),
+                ("prize", models.IntegerField(default=0)),
+                ("place", models.CharField(max_length=30)),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField()),
+                ("teams", models.ManyToManyField(to="teams_and_players.team")),
             ],
         ),
         migrations.CreateModel(
-            name='TournamentStage',
+            name="TournamentStage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('stage', models.CharField(choices=[('GS', 'Group Stage'), ('1/16', '1/16'), ('1/8', '1/8'), ('1/4', '1/4'), ('1/2', '1/2'), ('F', 'Final')], max_length=20)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
-                ('tournament', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tournament_tournamentstages', to='tournaments.tournament')),
+                ID_KEY,
+                (
+                    "stage",
+                    models.CharField(
+                        choices=[
+                            ("GS", "Group Stage"),
+                            ("1/16", "1/16"),
+                            ("1/8", "1/8"),
+                            ("1/4", "1/4"),
+                            ("1/2", "1/2"),
+                            ("F", "Final"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField()),
+                (
+                    "tournament",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tournament_tournamentstages",
+                        to="tournaments.tournament",
+                    ),
+                ),
             ],
         ),
     ]
