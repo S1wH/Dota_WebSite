@@ -5,47 +5,89 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Author',
+            name="Author",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nickname', models.CharField(max_length=15)),
-                ('first_publish_date', models.DateTimeField(blank=True, null=True)),
-                ('rating', models.FloatField(default=0)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("nickname", models.CharField(max_length=15)),
+                ("first_publish_date", models.DateTimeField(blank=True, null=True)),
+                ("rating", models.FloatField(default=0)),
             ],
         ),
         migrations.CreateModel(
-            name='News',
+            name="News",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('header', models.CharField(max_length=30, unique=True)),
-                ('summary', models.CharField(max_length=100)),
-                ('text', models.TextField()),
-                ('main_image', models.ImageField(blank=True, null=True, upload_to='news_images')),
-                ('publish_date', models.DateTimeField(auto_now=True)),
-                ('importance_index', models.BooleanField(default=False)),
-                ('video', models.FileField(blank=True, null=True, upload_to='news_videos')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='author_news', to='news.author')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("header", models.CharField(max_length=30, unique=True)),
+                ("summary", models.CharField(max_length=100)),
+                ("text", models.TextField()),
+                (
+                    "main_image",
+                    models.ImageField(blank=True, null=True, upload_to="news_images"),
+                ),
+                ("publish_date", models.DateTimeField(auto_now=True)),
+                ("importance_index", models.BooleanField(default=False)),
+                (
+                    "video",
+                    models.FileField(blank=True, null=True, upload_to="news_videos"),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="author_news",
+                        to="news.author",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'News',
-                'verbose_name_plural': 'News',
+                "verbose_name": "News",
+                "verbose_name_plural": "News",
             },
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=15, unique=True)),
-                ('image', models.ImageField(upload_to='news_images')),
-                ('news_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='news_image', to='news.news')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=15, unique=True)),
+                ("image", models.ImageField(upload_to="news_images")),
+                (
+                    "news_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="news_image",
+                        to="news.news",
+                    ),
+                ),
             ],
         ),
     ]

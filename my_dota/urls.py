@@ -19,15 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('mainapp.urls')),
-    path('news/', include('news.urls')),
-    path('teams_and_players/', include('teams_and_players.urls')),
-    path('matches/', include('matches.urls')),
-    path('users/', include('users.urls')),
-    path('matches/', include('matches.urls')),
-    path('tournaments/', include('tournaments.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path("admin/", admin.site.urls),
+    path("", include("mainapp.urls")),
+    path("news/", include("news.urls")),
+    path("teams_and_players/", include("teams_and_players.urls")),
+    path("matches/", include("matches.urls")),
+    path("users/", include("users.urls")),
+    path("matches/", include("matches.urls")),
+    path("tournaments/", include("tournaments.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

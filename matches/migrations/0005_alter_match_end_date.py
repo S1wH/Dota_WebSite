@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('matches', '0004_alter_match_tournament_stage'),
+        ("matches", "0004_alter_match_tournament_stage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='match',
-            name='end_date',
+            model_name="match",
+            name="end_date",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

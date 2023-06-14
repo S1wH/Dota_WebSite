@@ -13,11 +13,17 @@ from news.models import News
 #
 #     return inner
 
+
 # @login_required
 # @is_admin
 def index_view(request):
-    videos = ['highlight.mp4', 'highlight.mp4', 'highlight.mp4', 'highlight.mp4']
-    return render(request, 'mainapp/index.html', context={'main_news': News.important_news(), 'videos': videos})
+    videos = ["highlight.mp4", "highlight.mp4", "highlight.mp4", "highlight.mp4"]
+    return render(
+        request,
+        "mainapp/index.html",
+        context={"main_news": News.important_news(), "videos": videos},
+    )
+
 
 # @user_passes_test(is_superuser)
 # def other(request):

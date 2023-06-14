@@ -6,8 +6,8 @@ from matches.models import MatchPeriod, MATCH_PERIOD, PLAYED
 
 @receiver(post_save, sender=MatchPeriod)
 def match_period_post_save(**kwargs):
-    if kwargs['update_fields'] is None:
-        match_period = kwargs['instance']
+    if kwargs["update_fields"] is None:
+        match_period = kwargs["instance"]
         match_period.match.save(extra=MATCH_PERIOD)
 
 

@@ -5,16 +5,19 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tournaments', '0001_initial'),
-        ('matches', '0003_match_tournament_stage'),
+        ("tournaments", "0001_initial"),
+        ("matches", "0003_match_tournament_stage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='match',
-            name='tournament_stage',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tournamentstage_matches', to='tournaments.tournamentstage'),
+            model_name="match",
+            name="tournament_stage",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tournamentstage_matches",
+                to="tournaments.tournamentstage",
+            ),
         ),
     ]

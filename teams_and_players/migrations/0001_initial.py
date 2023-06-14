@@ -5,60 +5,96 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Player',
+            name="Player",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('nickname', models.CharField(max_length=15)),
-                ('age', models.IntegerField()),
-                ('birthday', models.DateField()),
-                ('country', models.CharField(max_length=20)),
-                ('photo', models.ImageField(upload_to='players_photos')),
-                ('biography', models.TextField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30)),
+                ("nickname", models.CharField(max_length=15)),
+                ("age", models.IntegerField()),
+                ("birthday", models.DateField()),
+                ("country", models.CharField(max_length=20)),
+                ("photo", models.ImageField(upload_to="players_photos")),
+                ("biography", models.TextField()),
             ],
         ),
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('win_matches', models.IntegerField(default=0)),
-                ('lose_matches', models.IntegerField(default=0)),
-                ('draw_matches', models.IntegerField(default=0)),
-                ('prize', models.IntegerField(default=0)),
-                ('name', models.CharField(max_length=20)),
-                ('country', models.CharField(max_length=20)),
-                ('establish_date', models.DateField()),
-                ('logo', models.ImageField(upload_to='teams_logos')),
-                ('biography', models.TextField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("win_matches", models.IntegerField(default=0)),
+                ("lose_matches", models.IntegerField(default=0)),
+                ("draw_matches", models.IntegerField(default=0)),
+                ("prize", models.IntegerField(default=0)),
+                ("name", models.CharField(max_length=20)),
+                ("country", models.CharField(max_length=20)),
+                ("establish_date", models.DateField()),
+                ("logo", models.ImageField(upload_to="teams_logos")),
+                ("biography", models.TextField()),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='CareerPeriod',
+            name="CareerPeriod",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('win_matches', models.IntegerField(default=0)),
-                ('lose_matches', models.IntegerField(default=0)),
-                ('draw_matches', models.IntegerField(default=0)),
-                ('prize', models.IntegerField(default=0)),
-                ('role', models.CharField(max_length=15)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField(blank=True, null=True)),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='player_career', to='teams_and_players.player')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team_career', to='teams_and_players.team')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("win_matches", models.IntegerField(default=0)),
+                ("lose_matches", models.IntegerField(default=0)),
+                ("draw_matches", models.IntegerField(default=0)),
+                ("prize", models.IntegerField(default=0)),
+                ("role", models.CharField(max_length=15)),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField(blank=True, null=True)),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="player_career",
+                        to="teams_and_players.player",
+                    ),
+                ),
+                (
+                    "team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="team_career",
+                        to="teams_and_players.team",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

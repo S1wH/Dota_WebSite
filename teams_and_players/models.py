@@ -2,10 +2,10 @@ from django.db import models
 from django.db.models import Sum, Count
 
 # CONST
-WIN_MATCHES = 'win_matches'
-LOSE_MATCHES = 'lose_matches'
-DRAW_MATCHES = 'draw_matches'
-PRIZE = 'prize'
+WIN_MATCHES = "win_matches"
+LOSE_MATCHES = "lose_matches"
+DRAW_MATCHES = "draw_matches"
+PRIZE = "prize"
 
 
 class MatchStatistic(models.Model):
@@ -39,7 +39,7 @@ class Team(MatchStatistic):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     establish_date = models.DateField()
-    logo = models.ImageField(upload_to='teams_logos')
+    logo = models.ImageField(upload_to="teams_logos")
     biography = models.TextField()
 
     def players_careers(self):
@@ -47,14 +47,20 @@ class Team(MatchStatistic):
         return current_players_careers
 
     def avg_age(self):
-        all_players = Player.objects.filter(player_career__team=self, player_career__end_date=None)
+        all_players = Player.objects.filter(
+            player_career__team=self, player_career__end_date=None
+        )
         if all_players.exists():
-            avg_age = round(all_players.aggregate(Sum('age'))['age__sum'] / all_players.aggregate(Count('id'))['id__count'], 1)
+            avg_age = round(
+                all_players.aggregate(Sum("age"))["age__sum"]
+                / all_players.aggregate(Count("id"))["id__count"],
+                1,
+            )
             return avg_age
         return 0
 
     def __str__(self):
-        return f'{self.id} {self.name}'
+        return f"{self.id} {self.name}"
 
 
 class Player(models.Model):
@@ -63,7 +69,7 @@ class Player(models.Model):
     age = models.IntegerField()
     birthday = models.DateField()
     country = models.CharField(max_length=20)
-    photo = models.ImageField(upload_to='players_photos')
+    photo = models.ImageField(upload_to="players_photos")
     biography = models.TextField()
 
     def team(self):
@@ -71,19 +77,23 @@ class Player(models.Model):
 
     def teammates(self):
         team = self.team()
-        player_teammates = CareerPeriod.objects.filter(team=team, end_date=None).exclude(player=self)
+        player_teammates = CareerPeriod.objects.filter(
+            team=team, end_date=None
+        ).exclude(player=self)
         return player_teammates
 
     def __str__(self):
-        return f'name: {self.id} {self.nickname}'
+        return f"name: {self.id} {self.nickname}"
 
 
 class CareerPeriod(MatchStatistic):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_career')
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team_career')
+    player = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="player_career"
+    )
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_career")
     role = models.CharField(max_length=15)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.player} in {self.team} at period {self.start_date} - {self.end_date}'
+        return f"{self.player} in {self.team} at period {self.start_date} - {self.end_date}"
