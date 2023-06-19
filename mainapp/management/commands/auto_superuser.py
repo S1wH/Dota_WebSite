@@ -5,7 +5,7 @@ from users.models import MyUser
 class Command(BaseCommand):
     help = "script that creates a superuser"
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *args):
         MyUser.objects.filter(username="admin", is_superuser=True).delete()
 
         # Creating superuser
