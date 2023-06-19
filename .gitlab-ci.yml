@@ -22,7 +22,7 @@ stages:
   - deploy
 
 
-unit-test-job: 
+tests:
   stage: test
   image: python:3.10
   before_script:
@@ -31,13 +31,10 @@ unit-test-job:
   script:
     - echo "Running django tests!"
     - python manage.py test
-    - echo "All tests passed!"
-
-lint-test-job:
-  stage: test
-  script:
-    - echo "Linting code... This will take about 10 seconds."
-    - echo "No lint issues found."
+    - echo "All django tests passed!"
+    - echo "Running pylint tests!"
+    - pylint $(git ls-files '*.py')
+    - - echo "All pylint tests passed!"
 
 build-job: 
   stage: build
