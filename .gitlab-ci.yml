@@ -34,12 +34,13 @@ tests:
     - echo "All django tests passed!"
     - echo "Running pylint tests!"
     - pylint $(git ls-files '*.py')
-    - - echo "All pylint tests passed!"
+    - echo "All pylint tests passed!"
 
 build-job: 
   stage: build
   script:
     - echo "Compiling the code..."
+    -
     - echo "Compile complete."
 
 
