@@ -49,7 +49,7 @@ build-job:
       NGINX_PORT: $NGINX_PORT
   script:
     - echo "Running build stage!"
-    - docker compose build
+    - docker-compose up --build
     - echo "Build was successfully complete!!"
 
 
