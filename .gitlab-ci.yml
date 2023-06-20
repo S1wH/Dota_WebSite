@@ -37,7 +37,6 @@ tests:
     - echo "All pylint tests passed!"
 
 build-job:
-
   stage: build
   image: docker/compose:latest
   variables:
@@ -50,10 +49,10 @@ build-job:
     NGINX_PORT: $NGINX_PORT
   before_script:
     - docker info
-    - docker-compose --version
+    - docker compose --version
   script:
     - echo "Running build stage!"
-    - docker-compose build
+    - docker compose build
     - echo "Build was successfully complete!!"
 
 
