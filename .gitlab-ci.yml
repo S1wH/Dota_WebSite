@@ -38,9 +38,18 @@ tests:
 
 build-job: 
   stage: build
+  variables:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $secrets.POSTGRES_DB
+      POSTGRES_PORT: $POSTGRES_PORT
+      SECRET_KEY: $SECRET_KEY
+      DJANGO_PORT: $DJANGO_PORT
+      NGINX_PORT: $NGINX_PORT
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - echo "Running build stage!"
+    - docker compose up --build
+    - echo "Build was successfully complete!"
 
 
 deploy-job:
