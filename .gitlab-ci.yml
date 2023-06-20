@@ -36,20 +36,26 @@ tests:
     - pylint $(git ls-files '*.py')
     - echo "All pylint tests passed!"
 
-build-job: 
+build-job:
+
   stage: build
-  image: docker:20.10.7
+  image: docker/compose:latest
+  services:
+    - docker:dind
   variables:
-      POSTGRES_USER: $POSTGRES_USER
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $secrets.POSTGRES_DB
-      POSTGRES_PORT: $POSTGRES_PORT
-      SECRET_KEY: $SECRET_KEY
-      DJANGO_PORT: $DJANGO_PORT
-      NGINX_PORT: $NGINX_PORT
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $secrets.POSTGRES_DB
+    POSTGRES_PORT: $POSTGRES_PORT
+    SECRET_KEY: $SECRET_KEY
+    DJANGO_PORT: $DJANGO_PORT
+    NGINX_PORT: $NGINX_PORT
+  before_script:
+    - docker info
+    - docker-compose --version
   script:
     - echo "Running build stage!"
-    - docker-compose up --build
+    - docker-compose build
     - echo "Build was successfully complete!!"
 
 
