@@ -38,7 +38,6 @@ tests:
 
 build-job:
   stage: build
-  image: docker/compose:latest
   variables:
     POSTGRES_USER: $POSTGRES_USER
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
@@ -52,7 +51,7 @@ build-job:
     - docker compose --version
   script:
     - echo "Running build stage!"
-    - docker compose build
+    - docker-compose up -d
     - echo "Build was successfully complete!!"
 
 
