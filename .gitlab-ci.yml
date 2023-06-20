@@ -49,7 +49,7 @@ build-job:
   script:
     - echo "Running build stage!"
     - docker compose up --build
-    - echo "Build was successfully complete!"
+    - echo "Build was successfully complete!!"
 
 
 deploy-job:
