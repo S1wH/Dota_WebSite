@@ -38,6 +38,7 @@ tests:
 
 build-job: 
   stage: build
+  image: docker:20.10.7
   variables:
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
@@ -48,7 +49,7 @@ build-job:
       NGINX_PORT: $NGINX_PORT
   script:
     - echo "Running build stage!"
-    - docker-compose up --build
+    - docker compose up --build
     - echo "Build was successfully complete!!"
 
 
