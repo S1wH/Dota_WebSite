@@ -38,6 +38,9 @@ tests:
 
 build-job:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   variables:
     POSTGRES_USER: $POSTGRES_USER
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
