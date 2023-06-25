@@ -73,7 +73,7 @@ class Player(models.Model):
     biography = models.TextField()
 
     def team(self):
-        return CareerPeriod.objects.get(player=self, end_date=None).team
+        return self.player_career.get(end_date=None).team
 
     def teammates(self):
         team = self.team()
