@@ -444,6 +444,7 @@ disable=raw-checker-failed,
         consider-using-enumerate,
         unused-wildcard-import,
         wildcard-import,
+        unused-argument,
         arguments-differ
 
 
