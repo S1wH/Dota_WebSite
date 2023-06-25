@@ -17,6 +17,27 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers, serializers, viewsets
+# DRF
+from users.models import MyUser
+from news.api.views import ListAuthorsAPIView, ListAuthorAPIViewSerializer
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ['url', 'username', 'email', 'is_staff']
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = MyUser.objects.all()
+    serializer_class = UserSerializer
+
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,6 +49,12 @@ urlpatterns = [
     path("matches/", include("matches.urls")),
     path("tournaments/", include("tournaments.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(router.urls)),
+    # API Urls
+    path('api/news/', ListAuthorsAPIView.as_view()),
+    path('api/news-serializer/', ListAuthorAPIViewSerializer.as_view()),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
