@@ -443,7 +443,9 @@ disable=raw-checker-failed,
         inconsistent-return-statements,
         consider-using-enumerate,
         unused-wildcard-import,
-        wildcard-import
+        wildcard-import,
+        unused-argument,
+        arguments-differ
 
 
 # Enable the message, report, category or checker with the given id(s). You can
