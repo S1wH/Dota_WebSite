@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "tournaments",
     # OTHER
     "debug_toolbar",
+    'rest_framework',
     "django_cleanup.apps.CleanupConfig",
 ]
 
@@ -122,3 +123,11 @@ LOGOUT_REDIRECT_URL = "/"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
