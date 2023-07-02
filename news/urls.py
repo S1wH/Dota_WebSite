@@ -13,14 +13,23 @@ Including another URLconf
     1. Import to include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from news import views
 from news.api.views import (
-    ListAuthorsAPIView,
     ListAuthorAPIViewSerializer,
     ListNewsAPIView,
     DetailNewsAPIView,
+    ListAuthorAPIViewModelSerializer,
+    ListNewsModelAPIView,
+    ListAuthorsGenericView,
+    ListCreateAuthorsGenericView,
+    DetailNewsGenericView,
+    AuthorViewSet,
 )
+
+router = DefaultRouter()
+router.register('authors', AuthorViewSet)
 
 app_name = "newsapp"
 
@@ -36,8 +45,17 @@ urlpatterns = [
     path("update/<int:pk>/", views.NewsUpdateView.as_view(), name="news_update"),
     path("delete/<int:pk>/", views.NewsDeleteView.as_view(), name="news_delete"),
     path("create/", views.NewsCreateView.as_view(), name="news_create"),
-    path("api/authors/", ListAuthorsAPIView.as_view()),
+    # API
+    # path("api/authors/", ListAuthorsAPIView.as_view()),
     path("api/serializer-authors/", ListAuthorAPIViewSerializer.as_view()),
+    path("api/model-serializer-authors/", ListAuthorAPIViewModelSerializer.as_view()),
     path("api/news/", ListNewsAPIView.as_view()),
+    path("api/news/model/", ListNewsModelAPIView.as_view()),
     path("api/news/<int:pk>/", DetailNewsAPIView.as_view()),
+    # CBV (Generic Views)
+    path("generic/api/authors/", ListAuthorsGenericView.as_view()),
+    path("generic/api/authors/create/", ListCreateAuthorsGenericView.as_view()),
+    path("generic/api/news/<int:pk>/", DetailNewsGenericView.as_view()),
+    # viewsets
+    path('api/', include(router.urls)),
 ]

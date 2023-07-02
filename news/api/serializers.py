@@ -13,6 +13,16 @@ class AuthorSerializer(serializers.Serializer):
         pass
 
 
+# class AuthorModelSerializer(serializers.ModelSerializer):
+class AuthorModelSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Author
+        fields = '__all__'
+        # exclude = ('first_publish_date',)
+
+
 class NewsSerializer(serializers.Serializer):
     header = serializers.CharField(max_length=30)
     summary = serializers.CharField(max_length=100)
@@ -37,3 +47,24 @@ class NewsSerializer(serializers.Serializer):
         )
         instance.save()
         return instance
+
+
+class SuperAuthorField(serializers.RelatedField):
+    def to_representation(self, value):
+        result = value.nickname
+        if value.rating >= 5:
+            result += ' (SUPER AUTHOR)'
+        return result
+
+    def to_internal_value(self, data):
+        pass
+
+class NewsModelSerializer(serializers.ModelSerializer):
+
+    # author = serializers.StringRelatedField()
+    # author = AuthorModelSerializer(many=False)
+    author = SuperAuthorField(read_only=True)
+
+    class Meta:
+        model = News
+        fields = '__all__'
