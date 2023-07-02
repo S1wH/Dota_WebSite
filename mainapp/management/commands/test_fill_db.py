@@ -267,12 +267,23 @@ def create_match(stage, team1, team2):
     print(match)
 
 
+def get_winners_and_losers():
+    for match in MATCHES:
+        match.match_winner()
+        match.match_loser()
+        match.save()
+
+
 def create_stage_matches(stage):
     teams = stage.shuffle_teams()
     for pair in teams:
         team1, team2 = pair
         create_match(stage, team1, team2)
 
+
+def clear_matches():
+    MATCHES.clear()
+    MATCH_PERIODS.clear()
 
 def create_all_matches():
     for tournament in TOURNAMENTS:
@@ -281,6 +292,8 @@ def create_all_matches():
             group_stage = tournament.tournament_stages.get(
                 stage=TournamentStage.GROUP_STAGE
             )
+            for team in participants:
+                group_stage.teams.add(team)
             for i in range(len(participants)):
                 for j in range(i + 1, len(participants)):
                     create_match(
@@ -290,8 +303,10 @@ def create_all_matches():
                     )
             Match.objects.bulk_create(MATCHES)
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
-            MATCHES.clear()
-            MATCH_PERIODS.clear()
+            get_winners_and_losers()
+            Match.objects.bulk_update(MATCHES, ["winner", "loser"])
+            group_stage.group_stage_table()
+            clear_matches()
 
             one_eight = tournament.tournament_stages.get(
                 stage=TournamentStage.ONE_EIGHT
@@ -299,8 +314,10 @@ def create_all_matches():
             create_stage_matches(one_eight)
             Match.objects.bulk_create(MATCHES)
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
-            MATCHES.clear()
-            MATCH_PERIODS.clear()
+            get_winners_and_losers()
+            Match.objects.bulk_update(MATCHES, ["winner", "loser"])
+            one_eight.stage_winners()
+            clear_matches()
 
             quarter_finals = tournament.tournament_stages.get(
                 stage=TournamentStage.QUARTER_FINALS
@@ -308,8 +325,10 @@ def create_all_matches():
             create_stage_matches(quarter_finals)
             Match.objects.bulk_create(MATCHES)
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
-            MATCHES.clear()
-            MATCH_PERIODS.clear()
+            get_winners_and_losers()
+            Match.objects.bulk_update(MATCHES, ["winner", "loser"])
+            quarter_finals.stage_winners()
+            clear_matches()
 
             semi_finals = tournament.tournament_stages.get(
                 stage=TournamentStage.SEMI_FINALS
@@ -317,8 +336,10 @@ def create_all_matches():
             create_stage_matches(semi_finals)
             Match.objects.bulk_create(MATCHES)
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
-            MATCHES.clear()
-            MATCH_PERIODS.clear()
+            get_winners_and_losers()
+            Match.objects.bulk_update(MATCHES, ["winner", "loser"])
+            semi_finals.stage_winners()
+            clear_matches()
 
             final = tournament.tournament_stages.get(stage=TournamentStage.FINAL)
             teams = final.shuffle_teams()
@@ -326,8 +347,10 @@ def create_all_matches():
             create_match(final, team1, team2)
             Match.objects.bulk_create(MATCHES)
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
-            MATCHES.clear()
-            MATCH_PERIODS.clear()
+            get_winners_and_losers()
+            Match.objects.bulk_update(MATCHES, ["winner", "loser"])
+            final.stage_winners()
+            clear_matches()
 
 
 class Command(BaseCommand):

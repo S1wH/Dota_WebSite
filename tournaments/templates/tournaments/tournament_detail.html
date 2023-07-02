@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mathfilters %}
 
 {% block title %}
     Турнир {{object.name}}
@@ -26,7 +27,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for team, stats in stage.group_stage_table.items %}
+                    {% for team, stats in group_stage_table %}
                         <tr>
                             <th scope="row">
                                 {{ forloop.counter }}
@@ -36,9 +37,11 @@
                                 </a>
                             </th>
                             <td class="matches">{{ stats.0 }}</td>
-                            <td class="wins">{{ stats.1 }}</td>
-                            <td class="loses">{{ stats.2 }}</td>
-                            <td class="points">{{ stats.3 }}</td>
+                            {% with wins=stats.1|div:3%}
+                            <td class="wins">{{ wins|floatformat }}</td>
+                            <td class="loses">{{ stats.0|sub:wins|floatformat }}</td>
+                            {% endwith %}
+                            <td class="points">{{ stats.1 }}</td>
                         </tr>
                     {% endfor %}
                   </tbody>

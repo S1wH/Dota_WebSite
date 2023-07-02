@@ -20,6 +20,12 @@ class TestTournamentView(TestCase):
 
     def test_detail_get(self):
         tournament = mixer.blend(Tournament)
+        mixer.blend(
+            TournamentStage, tournament=tournament, stage=TournamentStage.GROUP_STAGE
+        )
+        mixer.blend(
+            TournamentStage, tournament=tournament, stage=TournamentStage.ONE_EIGHT
+        )
         response = self.client.get(f"/tournaments/{tournament.id}/")
         self.assertEqual(response.status_code, 200)
 
@@ -82,7 +88,18 @@ class TestTournamentView(TestCase):
 
     def test_detail_context(self):
         tournament = mixer.blend(Tournament)
-        mixer.blend(TournamentStage, stage="Group Stage", tournament=tournament)
-        mixer.blend(TournamentStage, stage="Final", tournament=tournament)
+        mixer.blend(
+            TournamentStage, stage=TournamentStage.GROUP_STAGE, tournament=tournament
+        )
+        mixer.blend(
+            TournamentStage, stage=TournamentStage.ONE_EIGHT, tournament=tournament
+        )
+        mixer.blend(
+            TournamentStage, stage=TournamentStage.QUARTER_FINALS, tournament=tournament
+        )
+        mixer.blend(
+            TournamentStage, stage=TournamentStage.SEMI_FINALS, tournament=tournament
+        )
+        mixer.blend(TournamentStage, stage=TournamentStage.FINAL, tournament=tournament)
         response = self.client.get(f"/tournaments/{tournament.id}/")
-        self.assertEqual(len(response.context["object"].tournament_stages.all()), 2)
+        self.assertEqual(len(response.context["object"].tournament_stages.all()), 5)

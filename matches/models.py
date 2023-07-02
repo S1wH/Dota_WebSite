@@ -42,6 +42,20 @@ class Match(models.Model):
         on_delete=models.CASCADE,
         related_name="tournamentstage_matches",
     )
+    winner = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        related_name="winner_match",
+        blank=True,
+        null=True,
+    )
+    loser = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        related_name="loser_match",
+        blank=True,
+        null=True,
+    )
 
     def save(
         self,
@@ -51,10 +65,12 @@ class Match(models.Model):
         update_fields=None,
         **kwargs,
     ):
-        if self.id and kwargs["extra"] == MATCH_PERIOD:
+        if self.id and kwargs.get("extra", None) == MATCH_PERIOD:
             periods_played = self.match_period.all().count()
             if periods_played == int(self.format):
                 self.status = PLAYED
+                self.match_winner()
+                self.match_loser()
             elif periods_played == 0:
                 self.status = INCOMING
             else:
@@ -77,18 +93,20 @@ class Match(models.Model):
         return f"{self.get_win_periods(self.team1)}:{self.get_win_periods(self.team2)}"
 
     def match_winner(self):
-        return (
+        self.winner = (
             self.team1
             if self.get_win_periods(self.team1) > self.get_win_periods(self.team2)
             else self.team2
         )
+        return self.winner
 
     def match_loser(self):
-        return (
+        self.loser = (
             self.team1
             if self.get_win_periods(self.team1) < self.get_win_periods(self.team2)
             else self.team2
         )
+        return self.loser
 
     def __str__(self):
         return f"Match between {self.team1} and {self.team2} on {self.tournament_stage}"

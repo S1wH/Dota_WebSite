@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 
@@ -34,8 +34,9 @@ INSTALLED_APPS = [
     "matches",
     "tournaments",
     # OTHER
+    "mathfilters",
     "debug_toolbar",
-    'rest_framework',
+    "rest_framework",
     "django_cleanup.apps.CleanupConfig",
 ]
 
@@ -127,7 +128,12 @@ INTERNAL_IPS = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "django_cache"),
+    }
 }
