@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
-from tournaments.models import Tournament
+from tournaments.models import Tournament, TournamentStage
 
 
 class TournamentsCurrentListView(ListView):
@@ -33,3 +33,14 @@ class TournamentsFutureListView(ListView):
 
 class TournamentDetailView(DetailView):
     model = Tournament
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["group_stage_table"] = (
+            TournamentStage.objects.get(
+                tournament=data["tournament"], stage=TournamentStage.GROUP_STAGE
+            )
+            .group_stage_table()
+            .items()
+        )
+        return data

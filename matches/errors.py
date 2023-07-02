@@ -21,5 +21,7 @@ class PlayedMatchPeriodDeleteError(Exception):
         self.match_period = match_period
 
     def __str__(self):
-        return f"Нельзя удалить MatchPeriod {self.match_period} " \
-               f"у сыгранного матча {self.match_period.match}"
+        return (
+            f"Нельзя удалить MatchPeriod {self.match_period} "
+            f"у сыгранного матча {self.match_period.match}"
+        )

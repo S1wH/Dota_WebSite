@@ -15,6 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 from news import views
+from news.api.views import (
+    ListAuthorsAPIView,
+    ListAuthorAPIViewSerializer,
+    ListNewsAPIView,
+    DetailNewsAPIView,
+)
 
 app_name = "newsapp"
 
@@ -30,4 +36,8 @@ urlpatterns = [
     path("update/<int:pk>/", views.NewsUpdateView.as_view(), name="news_update"),
     path("delete/<int:pk>/", views.NewsDeleteView.as_view(), name="news_delete"),
     path("create/", views.NewsCreateView.as_view(), name="news_create"),
+    path("api/authors/", ListAuthorsAPIView.as_view()),
+    path("api/serializer-authors/", ListAuthorAPIViewSerializer.as_view()),
+    path("api/news/", ListNewsAPIView.as_view()),
+    path("api/news/<int:pk>/", DetailNewsAPIView.as_view()),
 ]
