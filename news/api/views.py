@@ -105,6 +105,7 @@ class ListNewsModelAPIView(APIView):
             return Response(NewsModelSerializer(news).data, status=201)
         return Response({"errors": news_serializer.errors}, status=400)
 
+
 class DetailNewsAPIView(APIView):
     @check_news_object
     def get(self, request, *args, **kwargs):

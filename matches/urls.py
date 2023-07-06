@@ -13,8 +13,14 @@ Including another URLconf
     1. Import to include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from matches import views
+from matches.api.views import MatchViewSet, MatchPeriodViewSet
+
+router = DefaultRouter()
+router.register('matches', MatchViewSet)
+router.register('match_periods', MatchPeriodViewSet)
 
 app_name = "matchesapp"
 
@@ -34,4 +40,6 @@ urlpatterns = [
         views.MatchesPlayedListView.as_view(),
         name="matches_played_list",
     ),
+    # api views
+    path('api/', include(router.urls)),
 ]

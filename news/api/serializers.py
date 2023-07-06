@@ -13,9 +13,7 @@ class AuthorSerializer(serializers.Serializer):
         pass
 
 
-# class AuthorModelSerializer(serializers.ModelSerializer):
 class AuthorModelSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = Author
@@ -58,6 +56,7 @@ class SuperAuthorField(serializers.RelatedField):
 
     def to_internal_value(self, data):
         pass
+
 
 class NewsModelSerializer(serializers.ModelSerializer):
 
