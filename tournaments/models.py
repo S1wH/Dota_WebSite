@@ -38,7 +38,7 @@ class TournamentStage(models.Model):
     teams = models.ManyToManyField(Team, related_name="tournaments_stages")
     start_date = models.DateField()
     end_date = models.DateField()
-    group_table = models.JSONField(default=dict(), blank=True, null=True)
+    group_table = models.JSONField(default={}, blank=True, null=True)
 
     def group_stage_table(self):
         no_add = False

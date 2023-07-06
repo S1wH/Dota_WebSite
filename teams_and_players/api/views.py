@@ -1,5 +1,4 @@
 from rest_framework import viewsets, mixins
-from rest_framework.response import Response
 from teams_and_players.models import Team, Player, CareerPeriod
 from teams_and_players.api.serializers import (
     TeamSerializer,
