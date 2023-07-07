@@ -103,5 +103,5 @@ class TournamentStage(models.Model):
                 next_stage.teams.add(team)
         return winners
 
-    # def __str__(self):
-    #     return f"{self.stage} in {self.tournament}"
+    def __str__(self):
+        return f"{self.stage} in {self.tournament}"

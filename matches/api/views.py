@@ -1,4 +1,6 @@
 from rest_framework import viewsets, mixins
+from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from matches.models import Match, MatchPeriod
 from matches.api.serializers import MatchSerializer, MatchPeriodSerializer
 
@@ -13,10 +15,16 @@ class MatchViewSet(mixins.ListModelMixin,
         'team1',
         'team2',
         'winner',
-        'loser'
-    )
+        'loser',
+        'tournament_stage'
+    ).select_related('tournament_stage__tournament')
     serializer_class = MatchSerializer
-    filterset_fields = ['start_date', 'end_date']
+    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filterset_fields = {'start_date': ['gte'],
+                        'end_date': ['lte'],
+                        }
+    ordering_fields = ['status', 'format']
+    search_fields = ['winner__name']
 
 
 class MatchPeriodViewSet(mixins.ListModelMixin,
@@ -35,4 +43,5 @@ class MatchPeriodViewSet(mixins.ListModelMixin,
         'match__loser',
     )
     serializer_class = MatchPeriodSerializer
-    filterset_fields = ['match', 'win_team']
+    filter_backends = [SearchFilter]
+    search_fields = ['win_team__name']

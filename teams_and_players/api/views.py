@@ -26,7 +26,7 @@ class PlayerViewSet(mixins.ListModelMixin,
                   viewsets.GenericViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
-    filterset_fields = ['win_matches', 'lose_matches', 'prize', 'country']
+    filterset_fields = ['country']
 
 
 class CareerPeriodViewSet(mixins.ListModelMixin,
