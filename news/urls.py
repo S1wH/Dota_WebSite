@@ -29,7 +29,7 @@ from news.api.views import (
 )
 
 router = DefaultRouter()
-router.register('authors', AuthorViewSet)
+router.register("authors", AuthorViewSet)
 
 app_name = "newsapp"
 
@@ -57,5 +57,5 @@ urlpatterns = [
     path("generic/api/authors/create/", ListCreateAuthorsGenericView.as_view()),
     path("generic/api/news/<int:pk>/", DetailNewsGenericView.as_view()),
     # viewsets
-    path('api/', include(router.urls)),
+    path("api/", include(router.urls)),
 ]

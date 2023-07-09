@@ -1,4 +1,8 @@
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -8,7 +12,7 @@ from news.api.serializers import (
     AuthorSerializer,
     NewsSerializer,
     AuthorModelSerializer,
-    NewsModelSerializer
+    NewsModelSerializer,
 )
 
 

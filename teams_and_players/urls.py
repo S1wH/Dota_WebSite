@@ -16,18 +16,14 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from teams_and_players import views
-from teams_and_players.api.views import (
-                                        TeamViewSet,
-                                        PlayerViewSet,
-                                        CareerPeriodViewSet
-)
+from teams_and_players.api.views import TeamViewSet, PlayerViewSet, CareerPeriodViewSet
 
 app_name = "teams_and_players_app"
 
 router = DefaultRouter()
-router.register('teams', TeamViewSet)
-router.register('players', PlayerViewSet)
-router.register('career_periods', CareerPeriodViewSet)
+router.register("teams", TeamViewSet)
+router.register("players", PlayerViewSet)
+router.register("career_periods", CareerPeriodViewSet)
 
 urlpatterns = [
     # player urls
@@ -53,5 +49,5 @@ urlpatterns = [
     path("teams/update/<int:pk>/", views.TeamUpdateView.as_view(), name="update_team"),
     path("teams/delete/<int:pk>/", views.TeamDeleteView.as_view(), name="delete_team"),
     # api urls
-    path('api/', include(router.urls)),
+    path("api/", include(router.urls)),
 ]
