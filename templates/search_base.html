@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block content %}
+    <div class="links" style="padding-top: 30px; padding-bottom: 50px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+      {% block links %}
+      {% endblock %}
+    </div>
+    {% block search_results %}
+    {% endblock %}
+{% endblock %}

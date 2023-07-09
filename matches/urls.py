@@ -19,8 +19,8 @@ from matches import views
 from matches.api.views import MatchViewSet, MatchPeriodViewSet
 
 router = DefaultRouter()
-router.register('matches', MatchViewSet)
-router.register('match_periods', MatchPeriodViewSet)
+router.register("matches", MatchViewSet)
+router.register("match_periods", MatchPeriodViewSet)
 
 app_name = "matchesapp"
 
@@ -41,5 +41,5 @@ urlpatterns = [
         name="matches_played_list",
     ),
     # api views
-    path('api/', include(router.urls)),
+    path("api/", include(router.urls)),
 ]

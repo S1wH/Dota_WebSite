@@ -285,6 +285,7 @@ def clear_matches():
     MATCHES.clear()
     MATCH_PERIODS.clear()
 
+
 def create_all_matches():
     for tournament in TOURNAMENTS:
         participants = tournament.teams.all()

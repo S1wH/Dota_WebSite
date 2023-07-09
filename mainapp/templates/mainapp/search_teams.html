@@ -1,0 +1,78 @@
+{% extends "search_base.html" %}
+{% load static %}
+
+{% block title %}
+    Search Teams
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'teams_and_players.css' %}">
+{% endblock %}
+
+{% block links %}
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_news' %}">Новости</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_players' %}">Игроки</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'mainapp:search_teams' %}">Команды</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_matches' %}">Матчи</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block search_results %}
+    <div class="table-responsive" style="padding-top: 20px;">
+      <h3 style="text-align: center">Команды</h3>
+      <div class="table">
+        <table class="table table-hover table-info align-middle mb-0 bg-white">
+          <thead class="bg-light">
+            <tr>
+              <th>Команда</th>
+              <th style="text-align: center">Победы/Поражения</th>
+              <th style="text-align: center">Призовые</th>
+              <th style="text-align: center">Дата создания</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for team in object_list %}
+              <tr>
+                <td>
+                    <a href="{% url 'teams_and_players_app:one_team' pk=team.id %}" class="team_link" style="text-decoration: none; color: black;">
+                      <div class="d-flex align-items-center">
+                          <p style="font-size:20px; padding-top: 10px;">{{ forloop.counter }}</p>
+                          <img src="{{ team.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                          <div class="ms-3">
+                            <p class="fw-bold mb-1">{{ team.name }}</p>
+                          </div>
+                      </div>
+                    </a>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1" style="text-align: center">Матчей: {{ team.all_matches }}</p>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ team.win_rate }}%" aria-valuenow="{{ team.win_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ team.draw_rate }}%" aria-valuenow="{{ team.draw_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ team.lose_rate }}%" aria-valuenow="{{ team.lose_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="text-muted mb-0" style="text-align: center">{{ team.win_matches }}({{ team.win_rate }}%)
+                      /{{ team.draw_matches }}({{ team.draw_rate }}%) / {{team.lose_matches}}({{ team.lose_rate }}%)</p>
+                </td>
+                <td>
+                  <h5 style="text-align: center">$ {{ team.prize }}</h5>
+                </td>
+                <td>
+                  <h5 style="text-align: center">{{ team.establish_date }}</h5>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}

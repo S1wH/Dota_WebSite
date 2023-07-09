@@ -14,10 +14,9 @@ class AuthorSerializer(serializers.Serializer):
 
 
 class AuthorModelSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Author
-        fields = '__all__'
+        fields = "__all__"
         # exclude = ('first_publish_date',)
 
 
@@ -51,7 +50,7 @@ class SuperAuthorField(serializers.RelatedField):
     def to_representation(self, value):
         result = value.nickname
         if value.rating >= 5:
-            result += ' (SUPER AUTHOR)'
+            result += " (SUPER AUTHOR)"
         return result
 
     def to_internal_value(self, data):
@@ -59,11 +58,10 @@ class SuperAuthorField(serializers.RelatedField):
 
 
 class NewsModelSerializer(serializers.ModelSerializer):
-
     # author = serializers.StringRelatedField()
     # author = AuthorModelSerializer(many=False)
     author = SuperAuthorField(read_only=True)
 
     class Meta:
         model = News
-        fields = '__all__'
+        fields = "__all__"
