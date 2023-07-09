@@ -17,23 +17,6 @@ class MatchStatistic(models.Model):
     class Meta:
         abstract = True
 
-    def all_matches(self):
-        return self.win_matches + self.draw_matches + self.lose_matches
-
-    def rate(self, param):
-        if self.all_matches() != 0:
-            return round(param / self.all_matches() * 100)
-        return 0
-
-    def win_rate(self):
-        return self.rate(self.win_matches)
-
-    def lose_rate(self):
-        return self.rate(self.lose_matches)
-
-    def draw_rate(self):
-        return self.rate(self.draw_matches)
-
 
 class Team(MatchStatistic):
     name = models.CharField(max_length=20)

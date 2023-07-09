@@ -108,8 +108,8 @@ class Match(models.Model):
         )
         return self.loser
 
-    def __str__(self):
-        return f"Match between {self.team1} and {self.team2} on {self.tournament_stage}"
+    # def __str__(self):
+    #     return f"Match between {self.team1} and {self.team2} on {self.tournament_stage}"
 
 
 class NotPlayedMatchPeriodManager(models.Manager):
