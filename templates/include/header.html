@@ -23,18 +23,16 @@
                 <a class="nav-link active" href="#">Обсуждения</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Найдется всё" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Поиск</button>
-
+              <form action="{% url 'mainapp:search_news' %}" method="get">
+                <input name="s" class="form-control me-2" type="search" placeholder="Найдется всё" aria-label="Search">
+              </form>
               {% if user.is_authenticated %}
-              Hello, {{user.username}}
-              <a href="{% url 'usersapp:logout' %}" class="btn btn-outline-primary">Выйти</a>
+                Hello, {{user.username}}
+                <a href="{% url 'usersapp:logout' %}" class="btn btn-outline-primary">Выйти</a>
               {% else %}
-               <a href="{% url 'usersapp:login' %}" class="btn btn-outline-primary">Войти</a>
-              <a href="{% url 'usersapp:registration' %}" class="btn btn-outline-primary">Регистрация</a>
+                <a href="{% url 'usersapp:login' %}" class="btn btn-outline-primary">Войти</a>
+                <a href="{% url 'usersapp:registration' %}" class="btn btn-outline-primary">Регистрация</a>
               {% endif %}
-            </form>
           </div>
         </div>
     </nav>

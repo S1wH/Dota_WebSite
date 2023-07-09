@@ -1,0 +1,46 @@
+{% extends "search_base.html" %}
+{% load static %}
+
+{% block title %}
+    Search News
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'one_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+{% endblock %}
+
+{% block links %}
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'mainapp:search_news' %}">Новости</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_players' %}">Игроки</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_teams' %}">Команды</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_matches' %}">Матчи</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block search_results %}
+    <div class="all__news">
+        <h5 class="news__title" style="text-align: center;">Найденные новости</h5>
+        <div class="content">
+            <ul class="list__news">
+                {% for item in object_list %}
+                    <li class="item">
+                        <a class="item__link" href="{% url 'newsapp:one_news' news_id=item.id %}">
+                            <div class="description">{{ item.header }}</div>
+                            <div class="date">{{ item.publish_date.date }}</div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

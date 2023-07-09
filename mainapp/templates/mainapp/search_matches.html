@@ -1,0 +1,90 @@
+{% extends "search_base.html" %}
+{% load static %}
+
+{% block title %}
+    Search Matches
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'matches.css' %}">
+{% endblock %}
+
+{% block links %}
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_news' %}">Новости</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_players' %}">Игроки</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'mainapp:search_teams' %}">Команды</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'mainapp:search_matches' %}">Матчи</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block search_results %}
+    <div class="table-responsive" style="padding-top: 20px;">
+      <div class="table">
+        <table class="table table-hover table-info align-middle bg-white">
+            <tbody>
+                {% for match in object_list %}
+                  <tr>
+                    <td style="max-width: 100px;">
+                      <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <p class="fw-bold mb-1">{{ match.start_date.date|date:"d.m.y" }}  {{match.start_date.time}}</p>
+                          </div>
+                      </div>
+                    </td>
+                    <td style="display: flex; flex-direction: row; max-width: 350px; margin-left: 215px;">
+                        <div class="team1" style="width: 150px;">
+                            <img src="{{ match.team1.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ match.team1.name }}</p>
+                            </div>
+                        </div>
+                        <div class="score" style="margin-left: 25px;">
+                            {{ match.score }}
+                        </div>
+                        <div class="team2" style="width: 150px; margin-left: 50px;">
+                            <img src="{{ match.team2.logo.url }}" alt="" style="margin-left: 15px; width: 45px; height: 45px" class="rounded-circle"/>
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ match.team2.name }}</p>
+                            </div>
+                        </div>
+                    </td>
+                      <td>
+                          <div class="tournament">
+                            {{ match.tournament_stage.tournament.name }}
+                          </div>
+                      </td>
+                  </tr>
+                {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                {% if page_obj.previous_page_number != 1 %}
+                    <a href="?page=1" style="text-decoration: none;">1</a>
+                    <span>...</span>
+                {% endif %}
+                <a href="?page={{ page_obj.previous_page_number }}" style="text-decoration: none;">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+            <span class="current">{{ page_obj.number }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" style="text-decoration: none;">{{ page_obj.next_page_number }}</a>
+                {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                    <span>...</span>
+                    <a href="?page=1" style="text-decoration: none;">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

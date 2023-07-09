@@ -12,7 +12,7 @@ body{
     margin-left: 10px;
 }
 
-.today__news__title, .yesterday__news__title, .previous__news__title{
+.today__news__title, .yesterday__news__title, .previous__news__title, .news__title{
     text-align: center;
     padding-top: 50px;
 }
