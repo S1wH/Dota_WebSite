@@ -1,7 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.filters import OrderingFilter, SearchFilter
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 from matches.models import Match, MatchPeriod
 from matches.api.serializers import MatchSerializer, MatchPeriodSerializer
