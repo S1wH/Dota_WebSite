@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rest_framework",
     "django_cleanup.apps.CleanupConfig",
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -124,9 +125,14 @@ INTERNAL_IPS = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+        ],
     "PAGE_SIZE": 25,
 }
 

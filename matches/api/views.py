@@ -1,6 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+
 from matches.models import Match, MatchPeriod
 from matches.api.serializers import MatchSerializer, MatchPeriodSerializer
 
@@ -15,11 +17,12 @@ class MatchViewSet(
 ):
     queryset = (
         Match.objects.all()
-        .select_related("team1", "team2", "winner", "loser", "tournament_stage")
-        .select_related("tournament_stage__tournament")
+        .select_related("team1", "team2", "winner", "loser", "tournament_stage__tournament")
     )
     serializer_class = MatchSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+
+    permission_classes = [IsAuthenticated]
     filterset_fields = {
         "start_date": ["gte"],
         "end_date": ["lte"],
