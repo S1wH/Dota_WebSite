@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
+from rest_framework.authtoken.views import obtain_auth_token
 
 # DRF
 from users.models import MyUser
@@ -50,6 +51,7 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include(router.urls)),
+    path('api-token-auth/', obtain_auth_token)
 ]
 
 

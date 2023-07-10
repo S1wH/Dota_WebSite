@@ -8,6 +8,7 @@ class MatchSerializer(serializers.ModelSerializer):
     team2 = TeamSerializer()
     winner = TeamSerializer()
     loser = TeamSerializer()
+    tournament_stage = serializers.StringRelatedField()
 
     class Meta:
         model = Match
