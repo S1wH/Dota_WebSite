@@ -1,4 +1,3 @@
-from datetime import date
 from rest_framework.test import APITestCase, APIClient
 from mixer.backend.django import mixer
 from users.models import MyUser

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from matches.models import Match, MatchPeriod
-from teams_and_players.api.serializers import TeamSerializer
 
 
 class MatchSerializer(serializers.ModelSerializer):
