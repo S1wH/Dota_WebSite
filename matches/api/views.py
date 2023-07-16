@@ -53,6 +53,7 @@ class MatchPeriodViewSet(
             "match__loser",
         )
     )
+    permission_classes = [IsAuthenticated]
     serializer_class = MatchPeriodSerializer
-    filter_backends = [SearchFilter]
-    search_fields = ["win_team__name"]
+    # filter_backends = [SearchFilter]
+    search_fields = ["match__winner__name"]

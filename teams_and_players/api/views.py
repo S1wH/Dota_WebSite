@@ -1,4 +1,6 @@
 from rest_framework import viewsets, mixins
+from rest_framework.permissions import IsAuthenticated
+
 from teams_and_players.models import Team, Player, CareerPeriod
 from teams_and_players.api.serializers import (
     TeamSerializer,
@@ -17,6 +19,7 @@ class TeamViewSet(
 ):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    permission_classes = [IsAuthenticated]
     filterset_fields = ["win_matches", "lose_matches", "prize", "country"]
 
 
