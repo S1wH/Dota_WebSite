@@ -21,5 +21,7 @@ DATABASES = {
     }
 }
 
+SIMPLE_JWT['SIGNING_KEY'] = SECRET_KEY
+
 STATIC_ROOT = "static"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
