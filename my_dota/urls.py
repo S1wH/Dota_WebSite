@@ -54,7 +54,7 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path('api-token-auth/', obtain_auth_token),
     path('auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls.authtoken')),
     path('auth-jwt/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth-jwt/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth-jwt/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
