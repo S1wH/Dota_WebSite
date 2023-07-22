@@ -2,10 +2,9 @@ from rest_framework import viewsets, mixins
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-
-
 from matches.models import Match, MatchPeriod
-from matches.api.serializers import MatchSerializer, MatchPeriodSerializer
+from matches.api.serializers import MatchSerializerV10, MatchSerializerV11, MatchPeriodSerializer
+from my_dota.version import Version
 
 
 class MatchViewSet(
@@ -20,9 +19,7 @@ class MatchViewSet(
         Match.objects.all()
         .select_related("team1", "team2", "winner", "loser", "tournament_stage__tournament")
     )
-    serializer_class = MatchSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
-
     permission_classes = [IsAuthenticated]
     filterset_fields = {
         "start_date": ["gte"],
@@ -30,6 +27,12 @@ class MatchViewSet(
     }
     ordering_fields = ["status", "format"]
     search_fields = ["winner__name"]
+    versioning_class = Version
+
+    def get_serializer_class(self):
+        if self.request.version == 'v1.0':
+            return MatchSerializerV10
+        return MatchSerializerV11
 
 
 class MatchPeriodViewSet(
@@ -57,3 +60,4 @@ class MatchPeriodViewSet(
     serializer_class = MatchPeriodSerializer
     filter_backends = [SearchFilter]
     search_fields = ["match__winner__name"]
+    versioning_class = Version
