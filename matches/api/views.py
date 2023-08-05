@@ -21,10 +21,7 @@ class MatchViewSet(
     )
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     permission_classes = [IsAuthenticated]
-    filterset_fields = {
-        "start_date": ["gte"],
-        "end_date": ["lte"],
-    }
+    filterset_fields = ['status']
     ordering_fields = ["status", "format"]
     search_fields = ["winner__name"]
     versioning_class = Version

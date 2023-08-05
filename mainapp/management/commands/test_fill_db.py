@@ -215,11 +215,12 @@ def create_tournaments():
         )
         TOURNAMENTS.append(tournament)
         print(tournament)
+
     Tournament.objects.bulk_create(TOURNAMENTS)
     for tournament in TOURNAMENTS:
         for team in TEAMS:
             tournament.teams.add(team)
-            tournament.save()
+        tournament.save()
 
 
 def create_stages():

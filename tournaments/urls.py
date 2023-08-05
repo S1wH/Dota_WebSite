@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from tournaments import views
+from tournaments.api.views import TournamentViewSet, TournamentStageViewSet
+
+router = DefaultRouter()
+router.register("tournaments", TournamentViewSet)
+router.register("tournament_stages", TournamentStageViewSet)
 
 app_name = "tournaments_app"
 
@@ -20,4 +26,6 @@ urlpatterns = [
         name="tournaments_future_list",
     ),
     path("<int:pk>/", views.TournamentDetailView.as_view(), name="one_tournament"),
+    # api views
+    path('api/', include(router.urls)),
 ]

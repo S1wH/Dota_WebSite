@@ -43,7 +43,7 @@ class Team(MatchStatistic):
         return 0
 
     def __str__(self):
-        return f"{self.id} {self.name}"
+        return self.name
 
 
 class Player(models.Model):
@@ -66,7 +66,7 @@ class Player(models.Model):
         return player_teammates
 
     def __str__(self):
-        return f"name: {self.id} {self.nickname}"
+        return self.nickname
 
 
 class CareerPeriod(MatchStatistic):

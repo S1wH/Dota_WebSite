@@ -31,7 +31,7 @@ class PlayerViewSet(
     mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Player.objects.all()
+    queryset = Player.objects.all().prefetch_related("player_career")
     serializer_class = PlayerSerializer
     filterset_fields = ["country"]
 
