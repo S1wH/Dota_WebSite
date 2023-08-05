@@ -1,8 +1,8 @@
 import logging
 import asyncio
+from datetime import date
 from aiogram import Bot, Dispatcher, types
 from aiogram.dispatcher.filters import Text
-from datetime import date
 from connection import make_request, get_token, BASE_URL
 
 API_TOKEN = '6404033562:AAFFUFrDwtt59l9_ON_An2npr2ZnMRr6WQ4'
@@ -30,7 +30,9 @@ async def get_current_matches(message: types.Message):
         if response:
             result = ''
             for i in range(0, 5):
-                result += 'Match between ' + str(response[i]['team1']) + ' and ' + str(response[i]['team2']) + '\n'
+                result += 'Match between ' +\
+                          str(response[i]['team1']) +\
+                          ' and ' + str(response[i]['team2']) + '\n'
             await message.answer(result)
         else:
             await message.answer('No current matches')
@@ -85,7 +87,8 @@ async def get_player(message: types.Message):
         response = await make_request(BASE_URL + 'teams_and_players/api/players/', TOKEN)
         if response:
             for player in response:
-                if cur_player.lower() in player["name"].lower() or cur_player.lower() in player["nickname"].lower():
+                if cur_player.lower() in player["name"].lower() \
+                        or cur_player.lower() in player["nickname"].lower():
                     team = None
                     for period in player["player_career"]:
                         if not period["end_date"]:

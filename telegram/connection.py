@@ -22,7 +22,8 @@ async def refresh_token(token):
 
 async def set_connection(url: str, token):
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers={'Authorization': f'JWT {token["access"]}'}) as response:
+        async with session.get(url, headers=
+        {'Authorization': f'JWT {token["access"]}'}) as response:
             response = await response.json()
             if await check_authorization(response):
                 return response
