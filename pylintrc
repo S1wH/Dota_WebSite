@@ -445,6 +445,8 @@ disable=raw-checker-failed,
         unused-wildcard-import,
         wildcard-import,
         unused-argument,
+        too-many-nested-blocks,
+        global-statement,
         arguments-differ
 
 
