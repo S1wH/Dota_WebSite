@@ -1,6 +1,6 @@
 import time
-from .models import Author
 from django_rq import job
+from .models import Author
 
 
 @job
