@@ -56,6 +56,9 @@ urlpatterns = [
     path("generic/api/authors/", ListAuthorsGenericView.as_view()),
     path("generic/api/authors/create/", ListCreateAuthorsGenericView.as_view()),
     path("generic/api/news/<int:pk>/", DetailNewsGenericView.as_view()),
+    # Author report
+    path("get-report/", views.get_report_view, name='get_report'),
+    path("get-job-result/", views.get_job_result, name='get_job_result'),
     # viewsets
     path("api/", include(router.urls)),
 ]
