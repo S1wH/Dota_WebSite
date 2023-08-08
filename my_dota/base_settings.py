@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "djoser",
     'drf_yasg',
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -185,4 +186,14 @@ SIMPLE_JWT = {
         "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER":
         "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        # 'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
 }

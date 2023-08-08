@@ -1,3 +1,4 @@
+import django_rq
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -9,8 +10,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from rq.job import Job
+
 from news.models import News, Author
 from news.forms import NewsForm
+from .jobs import get_report, get_report_fast
 
 
 def get_news_info(request):
@@ -157,3 +161,23 @@ class NewsDeleteView(IsAdmin, DeleteView):
     # get_context_data
     # post
     # get_success_url
+
+
+def get_report_view(request):
+    result = get_report.delay()
+    print('job', result)
+    print('RESULT', result.return_value())
+    print('id failed', result.is_failed)
+    get_report_fast.delay()
+    return HttpResponseRedirect('/')
+
+
+def get_job_result(request):
+    job_id = request.GET.get('job_id')
+    redis_conn = django_rq.get_connection()
+    job = Job.fetch(job_id, redis_conn)  # fetch Job from redis
+    return render(request, 'news/job_result.html',
+                    {
+                        'job': job
+                    }
+                )
