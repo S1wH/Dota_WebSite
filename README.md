@@ -22,3 +22,15 @@ python manage.py test_fill_db
 ```shell
 python manage.py auto_superuser
 ```
+## **Quickstart**
+There are several ways to start Dota WebSite
+- Base django command
+```shell
+python manage.py runserver
+```
+Site will be available at http://127.0.0.1:8000
+- Start Docker container with docker-compose
+```shell
+docker-compose up --build
+```
+Site will be available at http://localhost
