@@ -12,6 +12,7 @@ All configurations are added in `requirements.txt`
 - Django REST Framework
 - Docker
 - Celery
+- RabbitMQ
 - Aiogram
 ## **Useful commands**
 - Fill sqlite database with test data
@@ -46,7 +47,19 @@ sudo systemctl start rabbitmq-server
 ```shell
 celery -A my_dota worker
 ```
-- Run django
+- Run django project
 ```shell
 python manage.py runserver
 ```
+## **Telegram bot**
+There is a telegram bot that is linked to Dota WebSite api.
+To use a bot you have to:
+- Run django project
+```shell
+python manage.py runserver
+```
+- Run telegram bot
+```shell
+python .\telegram\main.py
+```
+
