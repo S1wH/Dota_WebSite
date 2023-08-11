@@ -1,6 +1,7 @@
 aiogram==2.25.1
 aiohttp==3.8.5
 aiosignal==1.3.1
+amqp==5.1.1
 annotated-types==0.5.0
 anyio==3.7.1
 asgiref==3.6.0
@@ -8,11 +9,16 @@ astroid==2.15.5
 async-timeout==4.0.2
 attrs==23.1.0
 Babel==2.9.1
+billiard==4.1.0
 black==23.3.0
+celery==5.3.1
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==3.0.1
 click==8.1.3
+click-didyoumean==0.3.0
+click-plugins==1.1.1
+click-repl==0.3.0
 colorama==0.4.6
 coreapi==2.3.3
 coreschema==0.0.4
@@ -20,6 +26,7 @@ cryptography==41.0.2
 defusedxml==0.7.1
 dill==0.3.6
 Django==4.1.7
+django-celery-monitor==1.1.2
 django-cleanup==7.0.0
 django-debug-toolbar==4.0.0
 django-environ==0.10.0
@@ -42,6 +49,7 @@ inflection==0.5.1
 isort==5.12.0
 itypes==1.2.0
 Jinja2==3.1.2
+kombu==5.3.1
 lazy-object-proxy==1.9.0
 magic-filter==1.0.11
 Markdown==3.4.3
@@ -55,6 +63,7 @@ packaging==23.1
 pathspec==0.11.1
 Pillow==9.4.0
 platformdirs==3.5.3
+prompt-toolkit==3.0.39
 pycparser==2.21
 pydantic==2.0.3
 pydantic_core==2.3.0
@@ -82,7 +91,9 @@ tzdata==2022.7
 uritemplate==4.1.1
 urllib3==1.26.14
 uvicorn==0.23.1
+vine==5.0.0
 watchfiles==0.19.0
+wcwidth==0.2.6
 websockets==11.0.3
 wrapt==1.15.0
 yarl==1.9.2

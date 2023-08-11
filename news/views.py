@@ -177,7 +177,7 @@ def get_job_result(request):
     redis_conn = django_rq.get_connection()
     job = Job.fetch(job_id, redis_conn)  # fetch Job from redis
     return render(request, 'news/job_result.html',
-                    {
-                        'job': job
-                    }
-                )
+                  {
+                      'job': job
+                  }
+                  )

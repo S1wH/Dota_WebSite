@@ -20,6 +20,7 @@ from mainapp.views import (
     SearchTeamsListView,
     SearchMatchesListView,
     SearchPlayersListView,
+    TasksListView
 )
 
 app_name = "mainapp"
@@ -30,4 +31,5 @@ urlpatterns = [
     path("search/players/", SearchPlayersListView.as_view(), name="search_players"),
     path("search/teams/", SearchTeamsListView.as_view(), name="search_teams"),
     path("search/matches/", SearchMatchesListView.as_view(), name="search_matches"),
+    path("tasks/", TasksListView.as_view(), name="tasks")
 ]

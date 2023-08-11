@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Success
+{% endblock %}
+
+<div class="content">
+    <div class="task_id">{{ task.task_id }}</div>
+    <div class="task_state">{{ task.state }}</div>
+    <div class="task_info">{{ task.info }}</div>
+</div>

@@ -4,13 +4,16 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from news.models import News
 from teams_and_players.models import Team, Player
-from teams_and_players.views import PlayerListView, TeamListView
 from matches.models import Match
+from mainapp.models import QueueTask
+from teams_and_players.views import PlayerListView, TeamListView
 from matches.views import (
     MatchesPlayedListView,
     MatchesIncomingListView,
     MatchesOngoingListView,
 )
+from my_dota.celery import app
+from celery.result import AsyncResult
 
 SEARCH = "search"
 
@@ -22,6 +25,18 @@ def index_view(request):
         "mainapp/index.html",
         context={"main_news": News.important_news(), "videos": videos},
     )
+
+
+class TasksListView(ListView):
+    model = QueueTask
+    template_name = "mainapp/tasks.html"
+
+    def get_queryset(self):
+        tasks = QueueTask.objects.all()
+        for task in tasks:
+            task.status = AsyncResult(task.task_id, app=app).status
+            task.save()
+        return tasks
 
 
 class SearchTeamsListView(ListView):
@@ -54,9 +69,9 @@ class SearchMatchesListView(ListView):
     def get_queryset(self):
         prev_search = cache.get(SEARCH)
         return (
-            MatchesOngoingListView.get_queryset(MatchesOngoingListView())
-            | MatchesIncomingListView.get_queryset(MatchesIncomingListView())
-            | MatchesPlayedListView.get_queryset(MatchesPlayedListView())
+                MatchesOngoingListView.get_queryset(MatchesOngoingListView())
+                | MatchesIncomingListView.get_queryset(MatchesIncomingListView())
+                | MatchesPlayedListView.get_queryset(MatchesPlayedListView())
         ).filter(
             Q(team1__name__icontains=prev_search)
             | Q(team2__name__icontains=prev_search)
