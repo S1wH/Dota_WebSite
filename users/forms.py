@@ -1,8 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-
 from mainapp.models import QueueTask
-from .models import MyUser
 from mainapp.tasks import send_email
+from .models import MyUser
 
 
 class RegistrationForm(UserCreationForm):

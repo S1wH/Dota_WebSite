@@ -2,18 +2,18 @@ from django.core.cache import cache
 from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import ListView
+from celery.result import AsyncResult
 from news.models import News
-from teams_and_players.models import Team, Player
-from matches.models import Match
 from mainapp.models import QueueTask
+from teams_and_players.models import Team, Player
 from teams_and_players.views import PlayerListView, TeamListView
+from matches.models import Match
 from matches.views import (
     MatchesPlayedListView,
     MatchesIncomingListView,
     MatchesOngoingListView,
 )
 from my_dota.celery import app
-from celery.result import AsyncResult
 
 SEARCH = "search"
 

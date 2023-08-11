@@ -1,7 +1,5 @@
-from celery.result import AsyncResult
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.shortcuts import render
 from django.contrib.auth.views import LoginView as LoginViewAuth
 from .models import MyUser
 from .forms import RegistrationForm
