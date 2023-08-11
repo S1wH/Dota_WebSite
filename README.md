@@ -62,4 +62,4 @@ python manage.py runserver
 ```shell
 python .\telegram\main.py
 ```
-
+Bot in telegram - https://t.me/Dota_WebSite_bot
