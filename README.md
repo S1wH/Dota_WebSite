@@ -15,3 +15,8 @@ python manage.py test_fill_db
 ```shell
 python manage.py auto_superuser
 ```
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
