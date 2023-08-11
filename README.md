@@ -46,3 +46,7 @@ sudo systemctl start rabbitmq-server
 ```shell
 celery -A my_dota worker
 ```
+- Run django
+```shell
+python manage.py auto_superuser
+```
