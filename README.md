@@ -4,6 +4,7 @@ Dota WebSite is an educational project that was written on Python web framework 
 ___
 ## **Compatibility**
 Tested on Python 3.11
+
 All configurations are added in `requirements.txt`
 ## **Stack**
 - Python
