@@ -6,6 +6,7 @@ ___
 Tested on Python 3.11
 All configurations are added in `requirements.txt`
 ## **Useful commands**
-+ Fill sqlite database with test data
+- Fill sqlite database with test data
 ```python manage.py test_fill_db```
-+ Add superuser - ```python manage.py auto_superuser```
+- Add superuser
+```python manage.py auto_superuser```
