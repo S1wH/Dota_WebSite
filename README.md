@@ -5,6 +5,13 @@ ___
 ## **Compatibility**
 Tested on Python 3.11
 All configurations are added in `requirements.txt`
+## **Stack**
+- Python
+- Django
+- Django REST Framework
+- Docker
+- Celery
+- Aiogram
 ## **Useful commands**
 - Fill sqlite database with test data
 ```shell
