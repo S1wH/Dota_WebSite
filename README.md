@@ -34,3 +34,15 @@ Site will be available at http://127.0.0.1:8000
 docker-compose up --build
 ```
 Site will be available at http://localhost
+## **Additions for Ubuntu**
+If you want to use queue tasks you have to:
+- Start RabbitMQ server 
+```shell
+sudo apt-get install rabbitmq-server
+sudo systemctl enable rabbitmq-server
+sudo systemctl start rabbitmq-server
+```
+- Start celery worker
+```shell
+celery -A my_dota worker
+```
