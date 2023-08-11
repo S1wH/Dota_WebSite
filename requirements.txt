@@ -26,7 +26,6 @@ cryptography==41.0.2
 defusedxml==0.7.1
 dill==0.3.6
 Django==4.1.7
-django-celery-monitor==1.1.2
 django-cleanup==7.0.0
 django-debug-toolbar==4.0.0
 django-environ==0.10.0
@@ -34,6 +33,7 @@ django-filter==23.2
 django-mathfilters==1.0.0
 django-rq==2.8.1
 django-templated-mail==1.1.1
+django-utils==0.0.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 djoser==2.2.0
