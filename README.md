@@ -34,7 +34,7 @@ Site will be available at http://127.0.0.1:8000
 docker-compose up --build
 ```
 Site will be available at http://localhost
-## **Additions for Ubuntu**
+## **Queue tasks**
 If you want to use queue tasks you have to:
 - Start RabbitMQ server 
 ```shell
