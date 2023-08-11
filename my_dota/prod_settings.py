@@ -8,7 +8,7 @@ POSTGRES_PORT = "POSTGRES_PORT"
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["0.0.0.0"]
 
 DATABASES = {
     "default": {

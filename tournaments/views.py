@@ -36,6 +36,9 @@ class TournamentDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+        print(TournamentStage.objects.get(
+                tournament=data["tournament"], stage=TournamentStage.GROUP_STAGE
+            ).group_stage_table())
         data["group_stage_table"] = (
             TournamentStage.objects.get(
                 tournament=data["tournament"], stage=TournamentStage.GROUP_STAGE

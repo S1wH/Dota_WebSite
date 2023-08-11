@@ -265,7 +265,6 @@ def create_match(stage, team1, team2):
         MATCH_PERIODS.append(match_period)
         amount_periods += 1
     MATCHES.append(match)
-    print(match)
 
 
 def get_winners_and_losers():
