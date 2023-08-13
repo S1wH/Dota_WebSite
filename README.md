@@ -51,15 +51,4 @@ celery -A my_dota worker
 ```shell
 python manage.py runserver
 ```
-## **Telegram bot**
-There is a telegram bot that is linked to Dota WebSite api.
-To use a bot you have to:
-- Run django project
-```shell
-python manage.py runserver
-```
-- Run telegram bot
-```shell
-python .\telegram\main.py
-```
-Bot in telegram - https://t.me/Dota_WebSite_bot
+Bot in telegram that is linked to this site's API - https://t.me/Dota_WebSite_bot
