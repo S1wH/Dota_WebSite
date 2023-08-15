@@ -62,7 +62,7 @@ def create_news():
 def create_images():
     for item in NEWS:
         for i in range(3):
-            with open("one_news.jpg", "rb") as file:
+            with open("static/photos/one_news.jpg", "rb") as file:
                 image = Image.objects.create(
                     title=f"title {i} for {item}",
                     image=ImageFile(file),
