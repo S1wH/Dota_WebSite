@@ -35,6 +35,8 @@ def create_authors():
         AUTHORS.append(author)
         print(author)
     Author.objects.bulk_create(AUTHORS)
+    for author in AUTHORS:
+        author.save()
 
 
 def create_news():
@@ -216,8 +218,8 @@ def create_tournaments():
         TOURNAMENTS.append(tournament)
         print(tournament)
 
-    Tournament.objects.bulk_create(TOURNAMENTS)
     for tournament in TOURNAMENTS:
+        tournament.save()
         for team in TEAMS:
             tournament.teams.add(team)
         tournament.save()
@@ -302,7 +304,8 @@ def create_all_matches():
                         participants[i],
                         participants[j],
                     )
-            Match.objects.bulk_create(MATCHES)
+            for match in MATCHES:
+                match.save()
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
             get_winners_and_losers()
             Match.objects.bulk_update(MATCHES, ["winner", "loser"])
@@ -313,7 +316,8 @@ def create_all_matches():
                 stage=TournamentStage.ONE_EIGHT
             )
             create_stage_matches(one_eight)
-            Match.objects.bulk_create(MATCHES)
+            for match in MATCHES:
+                match.save()
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
             get_winners_and_losers()
             Match.objects.bulk_update(MATCHES, ["winner", "loser"])
@@ -324,7 +328,8 @@ def create_all_matches():
                 stage=TournamentStage.QUARTER_FINALS
             )
             create_stage_matches(quarter_finals)
-            Match.objects.bulk_create(MATCHES)
+            for match in MATCHES:
+                match.save()
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
             get_winners_and_losers()
             Match.objects.bulk_update(MATCHES, ["winner", "loser"])
@@ -335,7 +340,8 @@ def create_all_matches():
                 stage=TournamentStage.SEMI_FINALS
             )
             create_stage_matches(semi_finals)
-            Match.objects.bulk_create(MATCHES)
+            for match in MATCHES:
+                match.save()
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
             get_winners_and_losers()
             Match.objects.bulk_update(MATCHES, ["winner", "loser"])
@@ -346,7 +352,8 @@ def create_all_matches():
             teams = final.shuffle_teams()
             team1, team2 = teams[0]
             create_match(final, team1, team2)
-            Match.objects.bulk_create(MATCHES)
+            for match in MATCHES:
+                match.save()
             MatchPeriod.objects.bulk_create(MATCH_PERIODS)
             get_winners_and_losers()
             Match.objects.bulk_update(MATCHES, ["winner", "loser"])
